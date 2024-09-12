@@ -1,0 +1,1601 @@
+{
+    "name": "Payment Completed -> Create Trello Board & Send Email Automation",
+    "flow": [
+        {
+            "id": 5,
+            "module": "util:BasicTrigger",
+            "version": 1,
+            "parameters": {
+                "values": [
+                    {
+                        "spec": [
+                            {
+                                "name": "paymentStatus",
+                                "value": "true"
+                            },
+                            {
+                                "name": "emailAddress",
+                                "value": "nick@leftclick.ai"
+                            },
+                            {
+                                "name": "amount",
+                                "value": "5000"
+                            },
+                            {
+                                "name": "companyName",
+                                "value": "LeftClick"
+                            },
+                            {
+                                "name": "firstName",
+                                "value": "Sarah"
+                            },
+                            {
+                                "name": "lastName",
+                                "value": "Jackson"
+                            },
+                            {
+                                "name": "commissionSalesperson",
+                                "value": "Peter"
+                            }
+                        ]
+                    }
+                ]
+            },
+            "mapper": {},
+            "metadata": {
+                "designer": {
+                    "x": 0,
+                    "y": 0,
+                    "name": "Payment Completed"
+                },
+                "restore": {
+                    "parameters": {
+                        "values": {
+                            "items": [
+                                {
+                                    "spec": {
+                                        "mode": "chose",
+                                        "items": [
+                                            null,
+                                            null,
+                                            null,
+                                            null,
+                                            null,
+                                            null,
+                                            null
+                                        ]
+                                    }
+                                }
+                            ]
+                        }
+                    }
+                },
+                "parameters": [
+                    {
+                        "name": "values",
+                        "type": "array",
+                        "label": "Bundles",
+                        "required": true,
+                        "spec": [
+                            {
+                                "name": "spec",
+                                "label": "Items",
+                                "type": "array",
+                                "required": true,
+                                "spec": [
+                                    {
+                                        "name": "name",
+                                        "label": "Name",
+                                        "required": true,
+                                        "type": "text"
+                                    },
+                                    {
+                                        "name": "value",
+                                        "label": "Value",
+                                        "required": true,
+                                        "type": "text"
+                                    }
+                                ]
+                            }
+                        ]
+                    }
+                ],
+                "interface": [
+                    {
+                        "name": "paymentstatus",
+                        "label": "paymentstatus",
+                        "type": "text"
+                    },
+                    {
+                        "name": "emailaddress",
+                        "label": "emailaddress",
+                        "type": "text"
+                    },
+                    {
+                        "name": "amount",
+                        "label": "amount",
+                        "type": "text"
+                    },
+                    {
+                        "name": "companyname",
+                        "label": "companyname",
+                        "type": "text"
+                    },
+                    {
+                        "name": "firstname",
+                        "label": "firstname",
+                        "type": "text"
+                    },
+                    {
+                        "name": "lastname",
+                        "label": "lastname",
+                        "type": "text"
+                    },
+                    {
+                        "name": "commissionsalesperson",
+                        "label": "commissionsalesperson",
+                        "type": "text"
+                    }
+                ]
+            }
+        },
+        {
+            "id": 7,
+            "module": "trello:createABoard",
+            "version": 4,
+            "parameters": {
+                "__IMTCONN__": 2760571
+            },
+            "mapper": {
+                "name": "{{5.companyname}} Board",
+                "prefs_permissionLevel": "public",
+                "prefs_voting": "public",
+                "prefs_comments": "public",
+                "prefs_invitations": "admins",
+                "prefs_selfJoin": true,
+                "prefs_background": "sky"
+            },
+            "metadata": {
+                "designer": {
+                    "x": 300,
+                    "y": 0
+                },
+                "restore": {
+                    "parameters": {
+                        "__IMTCONN__": {
+                            "label": "Trello (nick@leftclick.ai) (nick79054420)",
+                            "data": {
+                                "scoped": "true",
+                                "connection": "trello"
+                            }
+                        }
+                    },
+                    "expect": {
+                        "idOrganization": {
+                            "mode": "edit"
+                        },
+                        "prefs_permissionLevel": {
+                            "mode": "chose",
+                            "label": "Public"
+                        },
+                        "prefs_voting": {
+                            "mode": "chose",
+                            "label": "All"
+                        },
+                        "prefs_comments": {
+                            "mode": "chose",
+                            "label": "All"
+                        },
+                        "prefs_invitations": {
+                            "mode": "chose",
+                            "label": "Members and administrators"
+                        },
+                        "prefs_selfJoin": {
+                            "mode": "chose"
+                        },
+                        "defaultLabels": {
+                            "mode": "chose"
+                        },
+                        "defaultLists": {
+                            "mode": "chose"
+                        },
+                        "idBoardSource": {
+                            "mode": "edit"
+                        },
+                        "prefs_cardCovers": {
+                            "mode": "chose"
+                        },
+                        "prefs_background": {
+                            "mode": "chose",
+                            "label": "Sky"
+                        },
+                        "prefs_cardAging": {
+                            "mode": "chose",
+                            "label": "Empty"
+                        }
+                    }
+                },
+                "parameters": [
+                    {
+                        "name": "__IMTCONN__",
+                        "type": "account:trello",
+                        "label": "Connection",
+                        "required": true
+                    }
+                ],
+                "expect": [
+                    {
+                        "name": "name",
+                        "type": "text",
+                        "label": "Name",
+                        "validate": {
+                            "max": 16384
+                        },
+                        "required": true
+                    },
+                    {
+                        "name": "description",
+                        "type": "text",
+                        "label": "Description",
+                        "validate": {
+                            "max": 16384
+                        }
+                    },
+                    {
+                        "name": "idOrganization",
+                        "type": "select",
+                        "label": "Organization ID",
+                        "mode": "edit"
+                    },
+                    {
+                        "name": "prefs_permissionLevel",
+                        "type": "select",
+                        "label": "Permission level",
+                        "validate": {
+                            "enum": [
+                                "private",
+                                "org",
+                                "public"
+                            ]
+                        }
+                    },
+                    {
+                        "name": "prefs_voting",
+                        "type": "select",
+                        "label": "Voting",
+                        "validate": {
+                            "enum": [
+                                "disabled",
+                                "members",
+                                "observers",
+                                "org",
+                                "public"
+                            ]
+                        }
+                    },
+                    {
+                        "name": "prefs_comments",
+                        "type": "select",
+                        "label": "Comments",
+                        "validate": {
+                            "enum": [
+                                "disabled",
+                                "members",
+                                "observers",
+                                "org",
+                                "public"
+                            ]
+                        }
+                    },
+                    {
+                        "name": "prefs_invitations",
+                        "type": "select",
+                        "label": "Invitations",
+                        "validate": {
+                            "enum": [
+                                "admins",
+                                "members"
+                            ]
+                        }
+                    },
+                    {
+                        "name": "prefs_selfJoin",
+                        "type": "boolean",
+                        "label": "Self-join"
+                    },
+                    {
+                        "name": "defaultLabels",
+                        "type": "boolean",
+                        "label": "Default labels"
+                    },
+                    {
+                        "name": "defaultLists",
+                        "type": "boolean",
+                        "label": "Default lists"
+                    },
+                    {
+                        "name": "idBoardSource",
+                        "type": "select",
+                        "label": "Board source ID",
+                        "mode": "edit"
+                    },
+                    {
+                        "name": "prefs_cardCovers",
+                        "type": "boolean",
+                        "label": "Card covers"
+                    },
+                    {
+                        "name": "prefs_background",
+                        "type": "select",
+                        "label": "Background",
+                        "validate": {
+                            "enum": [
+                                "custom",
+                                "blue",
+                                "orange",
+                                "green",
+                                "red",
+                                "purple",
+                                "pink",
+                                "lime",
+                                "sky",
+                                "grey"
+                            ]
+                        }
+                    },
+                    {
+                        "name": "prefs_cardAging",
+                        "type": "select",
+                        "label": "Card aging",
+                        "validate": {
+                            "enum": [
+                                "pirate",
+                                "regular"
+                            ]
+                        }
+                    },
+                    {
+                        "name": "name",
+                        "type": "text",
+                        "label": "Name",
+                        "validate": {
+                            "max": 16384
+                        },
+                        "required": true
+                    },
+                    {
+                        "name": "description",
+                        "type": "text",
+                        "label": "Description",
+                        "validate": {
+                            "max": 16384
+                        }
+                    },
+                    {
+                        "name": "idOrganization",
+                        "type": "select",
+                        "label": "Organization ID",
+                        "mode": "edit"
+                    },
+                    {
+                        "name": "prefs_permissionLevel",
+                        "type": "select",
+                        "label": "Permission level",
+                        "validate": {
+                            "enum": [
+                                "private",
+                                "org",
+                                "public"
+                            ]
+                        }
+                    },
+                    {
+                        "name": "prefs_voting",
+                        "type": "select",
+                        "label": "Voting",
+                        "validate": {
+                            "enum": [
+                                "disabled",
+                                "members",
+                                "observers",
+                                "org",
+                                "public"
+                            ]
+                        }
+                    },
+                    {
+                        "name": "prefs_comments",
+                        "type": "select",
+                        "label": "Comments",
+                        "validate": {
+                            "enum": [
+                                "disabled",
+                                "members",
+                                "observers",
+                                "org",
+                                "public"
+                            ]
+                        }
+                    },
+                    {
+                        "name": "prefs_invitations",
+                        "type": "select",
+                        "label": "Invitations",
+                        "validate": {
+                            "enum": [
+                                "admins",
+                                "members"
+                            ]
+                        }
+                    },
+                    {
+                        "name": "prefs_selfJoin",
+                        "type": "boolean",
+                        "label": "Self-join"
+                    },
+                    {
+                        "name": "defaultLabels",
+                        "type": "boolean",
+                        "label": "Default labels"
+                    },
+                    {
+                        "name": "defaultLists",
+                        "type": "boolean",
+                        "label": "Default lists"
+                    },
+                    {
+                        "name": "idBoardSource",
+                        "type": "select",
+                        "label": "Board source ID",
+                        "mode": "edit"
+                    },
+                    {
+                        "name": "prefs_cardCovers",
+                        "type": "boolean",
+                        "label": "Card covers"
+                    },
+                    {
+                        "name": "prefs_background",
+                        "type": "select",
+                        "label": "Background",
+                        "validate": {
+                            "enum": [
+                                "custom",
+                                "blue",
+                                "orange",
+                                "green",
+                                "red",
+                                "purple",
+                                "pink",
+                                "lime",
+                                "sky",
+                                "grey"
+                            ]
+                        }
+                    },
+                    {
+                        "name": "prefs_cardAging",
+                        "type": "select",
+                        "label": "Card aging",
+                        "validate": {
+                            "enum": [
+                                "pirate",
+                                "regular"
+                            ]
+                        }
+                    }
+                ],
+                "advanced": true
+            }
+        },
+        {
+            "id": 9,
+            "module": "trello:getBoardLists",
+            "version": 4,
+            "parameters": {
+                "__IMTCONN__": 2760571
+            },
+            "mapper": {
+                "board_id": "{{7.id}}",
+                "limit": "1",
+                "filter": "all"
+            },
+            "metadata": {
+                "designer": {
+                    "x": 600,
+                    "y": 0
+                },
+                "restore": {
+                    "parameters": {
+                        "__IMTCONN__": {
+                            "label": "Trello (nick@leftclick.ai) (nick79054420)",
+                            "data": {
+                                "scoped": "true",
+                                "connection": "trello"
+                            }
+                        }
+                    },
+                    "expect": {
+                        "board_id": {
+                            "mode": "edit"
+                        },
+                        "filter": {
+                            "mode": "chose",
+                            "label": "All lists"
+                        }
+                    }
+                },
+                "parameters": [
+                    {
+                        "name": "__IMTCONN__",
+                        "type": "account:trello",
+                        "label": "Connection",
+                        "required": true
+                    }
+                ],
+                "expect": [
+                    {
+                        "name": "board_id",
+                        "type": "select",
+                        "label": "Board ID",
+                        "required": true
+                    },
+                    {
+                        "name": "limit",
+                        "type": "uinteger",
+                        "label": "Maximum number of returned lists",
+                        "required": true
+                    },
+                    {
+                        "name": "filter",
+                        "type": "select",
+                        "label": "Filter",
+                        "validate": {
+                            "enum": [
+                                "all",
+                                "closed",
+                                "open"
+                            ]
+                        }
+                    }
+                ]
+            }
+        },
+        {
+            "id": 10,
+            "module": "trello:createCard",
+            "version": 4,
+            "parameters": {
+                "__IMTCONN__": 2760571
+            },
+            "mapper": {
+                "list_id_select_or_manual": "manual",
+                "name": "Send them a swag box.",
+                "description": "Log into swag.com, enter the client information, and ship their swag box (type A).",
+                "position": "top",
+                "due_date": "{{addDays(now; 2)}}",
+                "dueComplete": false,
+                "list_id": "{{9.id}}"
+            },
+            "metadata": {
+                "designer": {
+                    "x": 900,
+                    "y": 0
+                },
+                "restore": {
+                    "parameters": {
+                        "__IMTCONN__": {
+                            "label": "Trello (nick@leftclick.ai) (nick79054420)",
+                            "data": {
+                                "scoped": "true",
+                                "connection": "trello"
+                            }
+                        }
+                    },
+                    "expect": {
+                        "list_id_select_or_manual": {
+                            "label": "Enter manually"
+                        },
+                        "position": {
+                            "mode": "chose",
+                            "label": "To the top"
+                        },
+                        "dueComplete": {
+                            "mode": "chose"
+                        },
+                        "select_or_manual_cardID": {
+                            "label": "Empty"
+                        },
+                        "labels_id": {
+                            "mode": "chose"
+                        },
+                        "members_id": {
+                            "mode": "chose"
+                        }
+                    }
+                },
+                "parameters": [
+                    {
+                        "name": "__IMTCONN__",
+                        "type": "account:trello",
+                        "label": "Connection",
+                        "required": true
+                    }
+                ],
+                "expect": [
+                    {
+                        "name": "list_id_select_or_manual",
+                        "type": "select",
+                        "label": "Enter a List ID",
+                        "required": true,
+                        "validate": {
+                            "enum": [
+                                "manual",
+                                "select"
+                            ]
+                        }
+                    },
+                    {
+                        "name": "name",
+                        "type": "text",
+                        "label": "Name"
+                    },
+                    {
+                        "name": "description",
+                        "type": "text",
+                        "label": "Description"
+                    },
+                    {
+                        "name": "position",
+                        "type": "select",
+                        "label": "Position",
+                        "validate": {
+                            "enum": [
+                                "top",
+                                "bottom"
+                            ]
+                        }
+                    },
+                    {
+                        "name": "start",
+                        "type": "date",
+                        "label": "Start date",
+                        "time": false
+                    },
+                    {
+                        "name": "due_date",
+                        "type": "date",
+                        "label": "Due date",
+                        "time": true
+                    },
+                    {
+                        "name": "dueComplete",
+                        "type": "boolean",
+                        "label": "Due complete",
+                        "required": true
+                    },
+                    {
+                        "name": "urlSource",
+                        "type": "url",
+                        "label": "File URL"
+                    },
+                    {
+                        "name": "filename",
+                        "type": "text",
+                        "label": "File name"
+                    },
+                    {
+                        "name": "filedata",
+                        "type": "buffer",
+                        "label": "File data"
+                    },
+                    {
+                        "name": "select_or_manual_cardID",
+                        "type": "select",
+                        "label": "Copy card",
+                        "validate": {
+                            "enum": [
+                                "manually",
+                                "select"
+                            ]
+                        }
+                    },
+                    {
+                        "name": "list_id",
+                        "type": "text",
+                        "label": "List ID",
+                        "required": true
+                    },
+                    {
+                        "name": "labels_id",
+                        "type": "array",
+                        "label": "Labels",
+                        "spec": {
+                            "type": "text",
+                            "label": "Label ID",
+                            "name": "value"
+                        }
+                    },
+                    {
+                        "name": "members_id",
+                        "type": "array",
+                        "label": "Members",
+                        "spec": {
+                            "type": "text",
+                            "label": "Member ID",
+                            "name": "value"
+                        }
+                    }
+                ],
+                "advanced": true
+            }
+        },
+        {
+            "id": 11,
+            "module": "trello:createCard",
+            "version": 4,
+            "parameters": {
+                "__IMTCONN__": 2760571
+            },
+            "mapper": {
+                "list_id_select_or_manual": "manual",
+                "name": "Record a video introduction.",
+                "description": "Salesperson to record a brief, customized 3min Loom introduction to welcome them aboard and improve consolidation/reduce churn.",
+                "position": "bottom",
+                "due_date": "{{addDays(now; 3)}}",
+                "dueComplete": false,
+                "list_id": "{{9.id}}"
+            },
+            "metadata": {
+                "designer": {
+                    "x": 1200,
+                    "y": 0
+                },
+                "restore": {
+                    "parameters": {
+                        "__IMTCONN__": {
+                            "label": "Trello (nick@leftclick.ai) (nick79054420)",
+                            "data": {
+                                "scoped": "true",
+                                "connection": "trello"
+                            }
+                        }
+                    },
+                    "expect": {
+                        "list_id_select_or_manual": {
+                            "label": "Enter manually"
+                        },
+                        "position": {
+                            "mode": "chose",
+                            "label": "Bottom"
+                        },
+                        "dueComplete": {
+                            "mode": "chose"
+                        },
+                        "select_or_manual_cardID": {
+                            "label": "Empty"
+                        },
+                        "labels_id": {
+                            "mode": "chose"
+                        },
+                        "members_id": {
+                            "mode": "chose"
+                        }
+                    }
+                },
+                "parameters": [
+                    {
+                        "name": "__IMTCONN__",
+                        "type": "account:trello",
+                        "label": "Connection",
+                        "required": true
+                    }
+                ],
+                "expect": [
+                    {
+                        "name": "list_id_select_or_manual",
+                        "type": "select",
+                        "label": "Enter a List ID",
+                        "required": true,
+                        "validate": {
+                            "enum": [
+                                "manual",
+                                "select"
+                            ]
+                        }
+                    },
+                    {
+                        "name": "name",
+                        "type": "text",
+                        "label": "Name"
+                    },
+                    {
+                        "name": "description",
+                        "type": "text",
+                        "label": "Description"
+                    },
+                    {
+                        "name": "position",
+                        "type": "select",
+                        "label": "Position",
+                        "validate": {
+                            "enum": [
+                                "top",
+                                "bottom"
+                            ]
+                        }
+                    },
+                    {
+                        "name": "start",
+                        "type": "date",
+                        "label": "Start date",
+                        "time": false
+                    },
+                    {
+                        "name": "due_date",
+                        "type": "date",
+                        "label": "Due date",
+                        "time": true
+                    },
+                    {
+                        "name": "dueComplete",
+                        "type": "boolean",
+                        "label": "Due complete",
+                        "required": true
+                    },
+                    {
+                        "name": "urlSource",
+                        "type": "url",
+                        "label": "File URL"
+                    },
+                    {
+                        "name": "filename",
+                        "type": "text",
+                        "label": "File name"
+                    },
+                    {
+                        "name": "filedata",
+                        "type": "buffer",
+                        "label": "File data"
+                    },
+                    {
+                        "name": "select_or_manual_cardID",
+                        "type": "select",
+                        "label": "Copy card",
+                        "validate": {
+                            "enum": [
+                                "manually",
+                                "select"
+                            ]
+                        }
+                    },
+                    {
+                        "name": "list_id",
+                        "type": "text",
+                        "label": "List ID",
+                        "required": true
+                    },
+                    {
+                        "name": "labels_id",
+                        "type": "array",
+                        "label": "Labels",
+                        "spec": {
+                            "type": "text",
+                            "label": "Label ID",
+                            "name": "value"
+                        }
+                    },
+                    {
+                        "name": "members_id",
+                        "type": "array",
+                        "label": "Members",
+                        "spec": {
+                            "type": "text",
+                            "label": "Member ID",
+                            "name": "value"
+                        }
+                    }
+                ],
+                "advanced": true
+            }
+        },
+        {
+            "id": 16,
+            "module": "google-sheets:addRow",
+            "version": 2,
+            "parameters": {
+                "__IMTCONN__": 231853
+            },
+            "mapper": {
+                "mode": "select",
+                "insertUnformatted": false,
+                "valueInputOption": "USER_ENTERED",
+                "insertDataOption": "INSERT_ROWS",
+                "from": "drive",
+                "spreadsheetId": "/1ix0C5VFbKTVv7pMawSesCccXg8bIZjGmWJeXSG2Fs40",
+                "sheetId": "Sheet1",
+                "includesHeaders": true,
+                "values": {
+                    "0": "{{now}}",
+                    "1": "{{5.companyname}}",
+                    "2": "{{5.amount}}",
+                    "3": "{{5.firstname}}",
+                    "4": "{{5.lastname}}",
+                    "5": "{{5.commissionsalesperson}}",
+                    "6": "{{5.emailaddress}}"
+                }
+            },
+            "metadata": {
+                "designer": {
+                    "x": 1500,
+                    "y": 0
+                },
+                "restore": {
+                    "parameters": {
+                        "__IMTCONN__": {
+                            "label": "1SecondCopy (info@1secondcopy.com)",
+                            "data": {
+                                "scoped": "true",
+                                "connection": "google"
+                            }
+                        }
+                    },
+                    "expect": {
+                        "mode": {
+                            "label": "Select by path"
+                        },
+                        "insertUnformatted": {
+                            "mode": "chose"
+                        },
+                        "valueInputOption": {
+                            "mode": "chose",
+                            "label": "User entered"
+                        },
+                        "insertDataOption": {
+                            "mode": "chose",
+                            "label": "Insert rows"
+                        },
+                        "from": {
+                            "label": "My Drive"
+                        },
+                        "spreadsheetId": {
+                            "path": [
+                                "Sales Dashboard"
+                            ]
+                        },
+                        "sheetId": {
+                            "label": "Sheet1"
+                        },
+                        "includesHeaders": {
+                            "nested": [
+                                {
+                                    "name": "values",
+                                    "label": "Values",
+                                    "type": "collection",
+                                    "spec": [
+                                        {
+                                            "name": "0",
+                                            "label": "Date (A)",
+                                            "type": "text"
+                                        },
+                                        {
+                                            "name": "1",
+                                            "label": "Company Name (B)",
+                                            "type": "text"
+                                        },
+                                        {
+                                            "name": "2",
+                                            "label": "Amount (C)",
+                                            "type": "text"
+                                        },
+                                        {
+                                            "name": "3",
+                                            "label": "Client First Name (D)",
+                                            "type": "text"
+                                        },
+                                        {
+                                            "name": "4",
+                                            "label": "Client Last Name (E)",
+                                            "type": "text"
+                                        },
+                                        {
+                                            "name": "5",
+                                            "label": "Commission Salesperson (F)",
+                                            "type": "text"
+                                        },
+                                        {
+                                            "name": "6",
+                                            "label": "Email Address (G)",
+                                            "type": "text"
+                                        },
+                                        {
+                                            "name": "7",
+                                            "label": "(H)",
+                                            "type": "text"
+                                        },
+                                        {
+                                            "name": "8",
+                                            "label": "(I)",
+                                            "type": "text"
+                                        },
+                                        {
+                                            "name": "9",
+                                            "label": "(J)",
+                                            "type": "text"
+                                        },
+                                        {
+                                            "name": "10",
+                                            "label": "(K)",
+                                            "type": "text"
+                                        },
+                                        {
+                                            "name": "11",
+                                            "label": "(L)",
+                                            "type": "text"
+                                        },
+                                        {
+                                            "name": "12",
+                                            "label": "(M)",
+                                            "type": "text"
+                                        },
+                                        {
+                                            "name": "13",
+                                            "label": "(N)",
+                                            "type": "text"
+                                        },
+                                        {
+                                            "name": "14",
+                                            "label": "(O)",
+                                            "type": "text"
+                                        },
+                                        {
+                                            "name": "15",
+                                            "label": "(P)",
+                                            "type": "text"
+                                        },
+                                        {
+                                            "name": "16",
+                                            "label": "(Q)",
+                                            "type": "text"
+                                        },
+                                        {
+                                            "name": "17",
+                                            "label": "(R)",
+                                            "type": "text"
+                                        },
+                                        {
+                                            "name": "18",
+                                            "label": "(S)",
+                                            "type": "text"
+                                        },
+                                        {
+                                            "name": "19",
+                                            "label": "(T)",
+                                            "type": "text"
+                                        },
+                                        {
+                                            "name": "20",
+                                            "label": "(U)",
+                                            "type": "text"
+                                        },
+                                        {
+                                            "name": "21",
+                                            "label": "(V)",
+                                            "type": "text"
+                                        },
+                                        {
+                                            "name": "22",
+                                            "label": "(W)",
+                                            "type": "text"
+                                        },
+                                        {
+                                            "name": "23",
+                                            "label": "(X)",
+                                            "type": "text"
+                                        },
+                                        {
+                                            "name": "24",
+                                            "label": "(Y)",
+                                            "type": "text"
+                                        },
+                                        {
+                                            "name": "25",
+                                            "label": "(Z)",
+                                            "type": "text"
+                                        }
+                                    ]
+                                }
+                            ],
+                            "label": "Yes"
+                        }
+                    }
+                },
+                "parameters": [
+                    {
+                        "name": "__IMTCONN__",
+                        "type": "account:google",
+                        "label": "Connection",
+                        "required": true
+                    }
+                ],
+                "expect": [
+                    {
+                        "name": "mode",
+                        "type": "select",
+                        "label": "Choose a Method",
+                        "required": true,
+                        "validate": {
+                            "enum": [
+                                "select",
+                                "fromAll",
+                                "map"
+                            ]
+                        }
+                    },
+                    {
+                        "name": "insertUnformatted",
+                        "type": "boolean",
+                        "label": "Unformatted",
+                        "required": true
+                    },
+                    {
+                        "name": "valueInputOption",
+                        "type": "select",
+                        "label": "Value input option",
+                        "validate": {
+                            "enum": [
+                                "USER_ENTERED",
+                                "RAW"
+                            ]
+                        }
+                    },
+                    {
+                        "name": "insertDataOption",
+                        "type": "select",
+                        "label": "Insert data option",
+                        "validate": {
+                            "enum": [
+                                "INSERT_ROWS",
+                                "OVERWRITE"
+                            ]
+                        }
+                    },
+                    {
+                        "name": "from",
+                        "type": "select",
+                        "label": "Choose a Drive",
+                        "required": true,
+                        "validate": {
+                            "enum": [
+                                "drive",
+                                "share",
+                                "team"
+                            ]
+                        }
+                    },
+                    {
+                        "name": "spreadsheetId",
+                        "type": "file",
+                        "label": "Spreadsheet ID",
+                        "required": true
+                    },
+                    {
+                        "name": "sheetId",
+                        "type": "select",
+                        "label": "Sheet Name",
+                        "required": true
+                    },
+                    {
+                        "name": "includesHeaders",
+                        "type": "select",
+                        "label": "Table contains headers",
+                        "required": true,
+                        "validate": {
+                            "enum": [
+                                true,
+                                false
+                            ]
+                        }
+                    },
+                    {
+                        "name": "values",
+                        "type": "collection",
+                        "label": "Values",
+                        "spec": [
+                            {
+                                "name": "0",
+                                "type": "text",
+                                "label": "Date (A)"
+                            },
+                            {
+                                "name": "1",
+                                "type": "text",
+                                "label": "Company Name (B)"
+                            },
+                            {
+                                "name": "2",
+                                "type": "text",
+                                "label": "Amount (C)"
+                            },
+                            {
+                                "name": "3",
+                                "type": "text",
+                                "label": "Client First Name (D)"
+                            },
+                            {
+                                "name": "4",
+                                "type": "text",
+                                "label": "Client Last Name (E)"
+                            },
+                            {
+                                "name": "5",
+                                "type": "text",
+                                "label": "Commission Salesperson (F)"
+                            },
+                            {
+                                "name": "6",
+                                "type": "text",
+                                "label": "Email Address (G)"
+                            },
+                            {
+                                "name": "7",
+                                "type": "text",
+                                "label": "(H)"
+                            },
+                            {
+                                "name": "8",
+                                "type": "text",
+                                "label": "(I)"
+                            },
+                            {
+                                "name": "9",
+                                "type": "text",
+                                "label": "(J)"
+                            },
+                            {
+                                "name": "10",
+                                "type": "text",
+                                "label": "(K)"
+                            },
+                            {
+                                "name": "11",
+                                "type": "text",
+                                "label": "(L)"
+                            },
+                            {
+                                "name": "12",
+                                "type": "text",
+                                "label": "(M)"
+                            },
+                            {
+                                "name": "13",
+                                "type": "text",
+                                "label": "(N)"
+                            },
+                            {
+                                "name": "14",
+                                "type": "text",
+                                "label": "(O)"
+                            },
+                            {
+                                "name": "15",
+                                "type": "text",
+                                "label": "(P)"
+                            },
+                            {
+                                "name": "16",
+                                "type": "text",
+                                "label": "(Q)"
+                            },
+                            {
+                                "name": "17",
+                                "type": "text",
+                                "label": "(R)"
+                            },
+                            {
+                                "name": "18",
+                                "type": "text",
+                                "label": "(S)"
+                            },
+                            {
+                                "name": "19",
+                                "type": "text",
+                                "label": "(T)"
+                            },
+                            {
+                                "name": "20",
+                                "type": "text",
+                                "label": "(U)"
+                            },
+                            {
+                                "name": "21",
+                                "type": "text",
+                                "label": "(V)"
+                            },
+                            {
+                                "name": "22",
+                                "type": "text",
+                                "label": "(W)"
+                            },
+                            {
+                                "name": "23",
+                                "type": "text",
+                                "label": "(X)"
+                            },
+                            {
+                                "name": "24",
+                                "type": "text",
+                                "label": "(Y)"
+                            },
+                            {
+                                "name": "25",
+                                "type": "text",
+                                "label": "(Z)"
+                            }
+                        ]
+                    }
+                ]
+            }
+        },
+        {
+            "id": 15,
+            "module": "email:ActionSendEmail",
+            "version": 7,
+            "parameters": {
+                "account": 231843,
+                "saveAfterSent": false
+            },
+            "mapper": {
+                "to": [
+                    "{{5.emailaddress}}"
+                ],
+                "subject": "Welcome aboard, {{5.firstname}}!",
+                "contentType": "html",
+                "attachments": [],
+                "cc": [],
+                "bcc": [],
+                "from": "",
+                "sender": "",
+                "replyTo": "",
+                "inReplyTo": "",
+                "references": [],
+                "priority": "normal",
+                "headers": [],
+                "html": "Hey {{5.firstname}},\n<br><br>\nJust wanted to extend a warm welcome. {{5.commissionsalesperson}} ran me through {{5.companyname}} and I'm excited to build together.\n<br><br>\nBelow you'll find a link to our project management board. Unlike other companies, we actually show you exactly how far along we are in every project that we do for you. Clients love this level of transparency and (anecdotally) I find it leads to healthier communication & expectations.\n<br><br>\n<a href=\"{{7.url}}\">Here's the link: {{7.shortUrl}}</a>\n<br><br>\nLooking forward to kicking this off for you!\n<br><br>\nThanks,<br>\nNick"
+            },
+            "metadata": {
+                "designer": {
+                    "x": 1800,
+                    "y": 0
+                },
+                "restore": {
+                    "parameters": {
+                        "account": {
+                            "label": "1SecondCopy (info@1secondcopy.com)",
+                            "data": {
+                                "scoped": "true",
+                                "connection": "google-restricted"
+                            }
+                        },
+                        "saveAfterSent": {
+                            "label": "No"
+                        }
+                    },
+                    "expect": {
+                        "to": {
+                            "mode": "chose",
+                            "items": [
+                                null
+                            ]
+                        },
+                        "contentType": {
+                            "label": "HTML"
+                        },
+                        "attachments": {
+                            "mode": "chose"
+                        },
+                        "cc": {
+                            "mode": "chose"
+                        },
+                        "bcc": {
+                            "mode": "chose"
+                        },
+                        "references": {
+                            "mode": "chose"
+                        },
+                        "priority": {
+                            "label": "Normal"
+                        }
+                    }
+                },
+                "parameters": [
+                    {
+                        "name": "account",
+                        "type": "account:smtp,google-restricted,microsoft-smtp-imap",
+                        "label": "Connection",
+                        "required": true
+                    },
+                    {
+                        "name": "saveAfterSent",
+                        "type": "select",
+                        "label": "Save message after sending",
+                        "required": true,
+                        "validate": {
+                            "enum": [
+                                true,
+                                false
+                            ]
+                        }
+                    },
+                    {
+                        "type": "hidden"
+                    }
+                ],
+                "expect": [
+                    {
+                        "name": "to",
+                        "type": "array",
+                        "label": "To",
+                        "required": true,
+                        "spec": {
+                            "name": "value",
+                            "type": "email",
+                            "label": "Email address",
+                            "required": true
+                        }
+                    },
+                    {
+                        "name": "subject",
+                        "type": "text",
+                        "label": "Subject"
+                    },
+                    {
+                        "name": "contentType",
+                        "type": "select",
+                        "label": "Content Type",
+                        "required": true,
+                        "validate": {
+                            "enum": [
+                                "html",
+                                "text"
+                            ]
+                        }
+                    },
+                    {
+                        "name": "attachments",
+                        "type": "array",
+                        "label": "Attachments",
+                        "spec": [
+                            {
+                                "name": "fileName",
+                                "label": "File name",
+                                "type": "filename",
+                                "required": true,
+                                "semantic": "file:name"
+                            },
+                            {
+                                "name": "data",
+                                "label": "Data",
+                                "type": "buffer",
+                                "required": true,
+                                "semantic": "file:data"
+                            },
+                            {
+                                "name": "cid",
+                                "label": "Content-ID",
+                                "type": "text"
+                            }
+                        ]
+                    },
+                    {
+                        "name": "cc",
+                        "type": "array",
+                        "label": "Copy recipient",
+                        "spec": {
+                            "name": "value",
+                            "type": "email",
+                            "label": "Email address"
+                        }
+                    },
+                    {
+                        "name": "bcc",
+                        "type": "array",
+                        "label": "Blind copy recipient",
+                        "spec": {
+                            "name": "value",
+                            "type": "email",
+                            "label": "Email address"
+                        }
+                    },
+                    {
+                        "name": "from",
+                        "type": "text",
+                        "label": "From"
+                    },
+                    {
+                        "name": "sender",
+                        "type": "text",
+                        "label": "Sender"
+                    },
+                    {
+                        "name": "replyTo",
+                        "type": "text",
+                        "label": "Reply-To"
+                    },
+                    {
+                        "name": "inReplyTo",
+                        "type": "text",
+                        "label": "In-Reply-To"
+                    },
+                    {
+                        "name": "references",
+                        "type": "array",
+                        "label": "References",
+                        "spec": {
+                            "type": "text",
+                            "label": "Reference",
+                            "required": true,
+                            "name": "value"
+                        }
+                    },
+                    {
+                        "name": "priority",
+                        "type": "select",
+                        "label": "Priority",
+                        "validate": {
+                            "enum": [
+                                "high",
+                                "normal",
+                                "low"
+                            ]
+                        }
+                    },
+                    {
+                        "name": "headers",
+                        "type": "array",
+                        "label": "Headers",
+                        "spec": [
+                            {
+                                "name": "key",
+                                "label": "Key",
+                                "type": "text",
+                                "required": true
+                            },
+                            {
+                                "name": "value",
+                                "label": "Value",
+                                "type": "text",
+                                "required": true
+                            }
+                        ]
+                    },
+                    {
+                        "name": "html",
+                        "type": "text",
+                        "label": "Content"
+                    }
+                ]
+            }
+        }
+    ],
+    "metadata": {
+        "instant": false,
+        "version": 1,
+        "scenario": {
+            "roundtrips": 1,
+            "maxErrors": 3,
+            "autoCommit": true,
+            "autoCommitTriggerLast": true,
+            "sequential": false,
+            "slots": null,
+            "confidential": false,
+            "dataloss": false,
+            "dlq": false,
+            "freshVariables": false
+        },
+        "designer": {
+            "orphans": []
+        },
+        "zone": "us1.make.com"
+    }
+}

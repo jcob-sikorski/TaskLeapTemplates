@@ -1,0 +1,2030 @@
+{
+    "name": "Parasite Medium SEO System",
+    "flow": [
+        {
+            "id": 5,
+            "module": "apify:finishedActorRuns",
+            "version": 1,
+            "parameters": {
+                "__IMTHOOK__": 1418808
+            },
+            "mapper": {},
+            "metadata": {
+                "designer": {
+                    "x": -202,
+                    "y": -18
+                },
+                "restore": {
+                    "parameters": {
+                        "__IMTHOOK__": {
+                            "label": "Finished Medium Scraper",
+                            "data": {
+                                "editable": "false"
+                            }
+                        }
+                    }
+                },
+                "parameters": [
+                    {
+                        "name": "__IMTHOOK__",
+                        "type": "hook:apify",
+                        "label": "Webhook",
+                        "required": true
+                    }
+                ]
+            }
+        },
+        {
+            "id": 6,
+            "module": "apify:fetchDatasetItems",
+            "version": 1,
+            "parameters": {
+                "__IMTCONN__": 2721790
+            },
+            "mapper": {
+                "datasetId": "JGHi25Z4S74QwghVL",
+                "type": "clean",
+                "format": "json",
+                "limit": "1"
+            },
+            "metadata": {
+                "designer": {
+                    "x": 86,
+                    "y": -17
+                },
+                "restore": {
+                    "parameters": {
+                        "__IMTCONN__": {
+                            "label": "nickolassaraev@gmail.com",
+                            "data": {
+                                "scoped": "true",
+                                "connection": "apify"
+                            }
+                        }
+                    },
+                    "expect": {
+                        "type": {
+                            "mode": "chose",
+                            "label": "Clean"
+                        },
+                        "format": {
+                            "mode": "chose",
+                            "label": "JSON"
+                        }
+                    }
+                },
+                "parameters": [
+                    {
+                        "name": "__IMTCONN__",
+                        "type": "account:apify",
+                        "label": "Connection",
+                        "required": true
+                    }
+                ],
+                "expect": [
+                    {
+                        "name": "datasetId",
+                        "type": "text",
+                        "label": "Dataset ID",
+                        "required": true
+                    },
+                    {
+                        "name": "type",
+                        "type": "select",
+                        "label": "Data transformation",
+                        "required": true,
+                        "validate": {
+                            "enum": [
+                                "clean",
+                                "simplified",
+                                "none"
+                            ]
+                        }
+                    },
+                    {
+                        "name": "format",
+                        "type": "select",
+                        "label": "Format",
+                        "required": true,
+                        "validate": {
+                            "enum": [
+                                "json",
+                                "csv",
+                                "html",
+                                "xml",
+                                "rss",
+                                "xlsx"
+                            ]
+                        }
+                    },
+                    {
+                        "name": "limit",
+                        "type": "uinteger",
+                        "label": "Limit",
+                        "validate": {
+                            "max": 100000,
+                            "min": 1
+                        }
+                    },
+                    {
+                        "name": "offset",
+                        "type": "uinteger",
+                        "label": "Offset",
+                        "validate": {
+                            "min": 0
+                        }
+                    }
+                ]
+            }
+        },
+        {
+            "id": 7,
+            "module": "regexp:HTMLToText",
+            "version": 1,
+            "parameters": {},
+            "mapper": {
+                "html": "{{6.raw_article}}",
+                "newline": "lf",
+                "uppercaseHeadings": true
+            },
+            "metadata": {
+                "designer": {
+                    "x": 394,
+                    "y": -17
+                },
+                "restore": {
+                    "expect": {
+                        "newline": {
+                            "label": "LF (\\n) - Unix/Mac OS X"
+                        }
+                    }
+                },
+                "expect": [
+                    {
+                        "name": "html",
+                        "type": "text",
+                        "label": "HTML"
+                    },
+                    {
+                        "name": "newline",
+                        "type": "select",
+                        "label": "Line break",
+                        "required": true,
+                        "validate": {
+                            "enum": [
+                                "lf",
+                                "crlf",
+                                "cr"
+                            ]
+                        }
+                    },
+                    {
+                        "name": "uppercaseHeadings",
+                        "type": "boolean",
+                        "label": "Uppercase headings",
+                        "required": true
+                    }
+                ]
+            }
+        },
+        {
+            "id": 8,
+            "module": "util:SetVariables",
+            "version": 1,
+            "parameters": {},
+            "mapper": {
+                "variables": [
+                    {
+                        "name": "raw_text",
+                        "value": "{{get(split(7.text; newline + \"Share\" + newline); 2)}}"
+                    }
+                ],
+                "scope": "roundtrip"
+            },
+            "metadata": {
+                "designer": {
+                    "x": 704,
+                    "y": -20
+                },
+                "restore": {
+                    "expect": {
+                        "variables": {
+                            "items": [
+                                null
+                            ]
+                        },
+                        "scope": {
+                            "label": "One cycle"
+                        }
+                    }
+                },
+                "expect": [
+                    {
+                        "name": "variables",
+                        "type": "array",
+                        "label": "Variables",
+                        "spec": [
+                            {
+                                "name": "name",
+                                "label": "Variable name",
+                                "type": "text",
+                                "required": true
+                            },
+                            {
+                                "name": "value",
+                                "label": "Variable value",
+                                "type": "any"
+                            }
+                        ]
+                    },
+                    {
+                        "name": "scope",
+                        "type": "select",
+                        "label": "Variable lifetime",
+                        "required": true,
+                        "validate": {
+                            "enum": [
+                                "roundtrip",
+                                "execution"
+                            ]
+                        }
+                    }
+                ],
+                "interface": [
+                    {
+                        "name": "raw_text",
+                        "label": "raw_text",
+                        "type": "any"
+                    }
+                ]
+            }
+        },
+        {
+            "id": 9,
+            "module": "openai-gpt-3:CreateCompletion",
+            "version": 1,
+            "parameters": {
+                "__IMTCONN__": 1134482
+            },
+            "mapper": {
+                "select": "chat",
+                "max_tokens": "4096",
+                "temperature": "0.7",
+                "top_p": "1",
+                "n_completions": "1",
+                "frequency_penalty": "0.6",
+                "response_format": "text",
+                "model": "gpt-4o",
+                "messages": [
+                    {
+                        "role": "system",
+                        "content": "You are a helpful, intelligent writing assistant."
+                    },
+                    {
+                        "role": "user",
+                        "content": "Your task is to convert a blog post into a list of extremely detailed bullet points."
+                    },
+                    {
+                        "role": "user",
+                        "content": "Welcome to The Cusp: cutting-edge AI news (and its implications) explained in simple English.\n\nIn this week’s issue:\n\nAI models can now surf the internet for you.\n\nCompressing audio 10x with no loss in quality? AWS is about to get hit — hard.\n\nNew: Semantic Mixing and the virtually limitless ways AI can add concepts as easily as we add numbers.\n\nLet’s dive in.\n\nAI Models Can Now Surf The Internet\n\nAI has made incredible strides in language and image generation over the last two years.\n\nBut models still struggle with making that information factual and relevant. GPT-3, for instance, is known for generating impressive-sounding paragraphs on any topic — until you realize much of it is complete nonsense.\n\nThat’s where WebGPT comes in.\n\nWebGPT is a conversational interface that searches the internet and finds real-world information for you before processing it internally. It can provide relevant results for things like:\n\nHow the features of one product compare to another in 2022\n\nThe average price of a good or service at Walmart\n\nThe current weather in a given location\n\nIt was actually technically done in 2021 by OpenAI. But Twitter did its thing and recreated it using advanced prompts last week.\n\nUntil now, real-world relevance has been the #1 challenge for AI chatbots. WebGPT and approaches like it unlock a new world of possibilities for AI-powered tools, and they’re going to upset the economy.\n\nHow does it work?\n\nIt’s simpler than you think. WebGPT takes two principles:\n\nLanguage models are fantastic at summarizing information\n\nGoogle is the world’s largest repository of information (and it’s usually checked in some way for accuracy)\n\nFirst, WebGPT searches the internet for results on the topic you’re asking. Then, it uses GPT-3 to summarize those results into a cohesive answer.\n\nMultiple prompt chains can refine the answer using a consensus-based approach to ensure contextual relevance and accuracy.\n\nWhy is this a big deal?\n\nThis is a huge development for three reasons:\n\nIt gives chatbots and digital assistants access to real-world data: a memory of sorts\n\nIt lets the intelligence of the model exist separately from the information in the model\n\nYou can now implement this yourself, without waiting for a major company to deem it “okay”\n\nPlus, this means major AI companies no longer need to worry about training their language model on billions of factoids and data points (like GPT-3 or Jurassic-1).\n\nAs long as you give them a question, they can go off and find the answer — completely on their own. Given how models have been hitting a ceiling in both parameter size and data availability, this changes everything.\n\nHow can we take advantage of this?\n\nHere’s the cool part: you can use this approach internally, too.\n\nConversational models, until now, have been limited to information they’ve read during training. GPT-3, for instance, is really only relevant up until ~ mid 2021.\n\nWanted to write about something that happened afterwards, like COVID-19? Your content would be almost guaranteed gibberish.\n\nBut with this new development, you can make flexible agents that reference any data — including that of your company.\n\nFor instance, let’s say you’re running an email marketing campaign. You can now make an agent that:\n\nPulls in data about a subscriber from your CRM.\n\nReads factual information about that user; hobbies, interests, etc.\n\nGenerates a templated email with that information.\n\nEither sends it automatically, closing the loop — or hands it off to a human agent to click send.\n\nAlternatively, let’s say you run a company chatbot to help minimize customer service requests. With this new development, you can make an agent that:\n\nSearches your company’s docs for relevant information.\n\nSummarizes it using GPT-3.\n\nReturns the answer to the user in natural language.\n\nAs long as you have data, you can now make a chatbot that understands and responds to it with relevance and accuracy.\n\nThere are so many more applications. I’ll list a few of them here:\n\nInstant news commentary and analysis — new event triggers a workflow that takes in a topic, searches the web for historical examples and supporting information, and then drafts a relevant piece within seconds for immediate publishing.\n\nAcademic paper writing. Until now, asking complex logical questions concerning facts often resulted in nonsense (i.e why does the mechanism of action of X cause Y?). Now, you can train a secondary model to classify “factual” questions, use that model as a trigger for WebGPT, and then return the factual search results before integrating them into a paper.\n\nSimilarly, you can draft a large portion of customer service emails. Use the aforementioned secondary model to classify factual questions and then use WebGPT to reference your internal company database for answers. Add extra steps as necessary to clean up the output.\n\nCompressing audio 10x with no loss in quality?\n\nFacebook recently released Encodec, a new AI-powered audio compression technique that compresses audio files by up to 10x (!) with no loss in quality.\n\nThe idea is similar to image and video compression, which we covered last week: AI identifies data patterns and removes redundancy.\n\nBut Encodec does it an order of magnitude better and achieves virtually lossless hypercompression. It’s also real-time. I.e., the algorithm can analyze, compress, and decompress audio signals as they’re being sent or received.\n\nHow can we take advantage of this?\n\nAny company whose primary mode of communication is voice (e.g., phone calls, conference calls, VoIP, etc.) can now save an incredible amount of money in bandwidth, storage, and processing costs.\n\nNetflix, for instance, spends $228 million/year on AWS transfer costs. Imagine them cutting that by 90%. The math is a little more complicated in reality, but companies will undoubtedly massively decrease their data expenditures.\n\nCompanies will scramble to adopt this technology. And validation of this approach means more hypercompression is probably on the horizon. There’s no fundamental reason why this technique couldn’t be applied to video or 3D environments, for instance.\n\nYou could:\n\nLook for investment opportunities in companies whose primary expenditures are data. AWS costs (roughly) $0.12 per GB transferred — that’s going to change dramatically with technologies like this. Necessary disclaimer: I’m not a financial advisor & this isn’t financial advice.\n\nBuild a service that implements Encodec or uses a similar approach. A simple endpoint that receives an audio file and returns its compressed version, for instance. Market your service to small or mid-sized streaming platforms as a way to cut transfer costs by >90%.\n\nThe implications of real-time, lossless audio compression will also have far-reaching effects on culture and our economy.\n\nFor example, imagine you’re a doctor in a remote location and need to consult with a specialist. Most VoIP connections require at least 64kbs. But with Encodec, you could have a high-quality call with almost no lag — even on 6kbps.\n\nPlaces that were previously off-limits because of poor internet service will probably grow into attractive destinations over the next few years. Satellite might only get 30mbps in Fiji… but will that matter when your computer automatically upsamples that to 300mbps?\n\nSemantic Mixing\n\nThis one is fun: Semantic Mixing is a recently-unveiled approach that lets you add concepts as easily as you might add numbers.\n\nWatermelon plus speaker, for instance, yields a vaguely watermelon-slice-shaped speaker. Rabbit plus tiger looks like a realistic (if scary) new bunny breed.\n\nIt works primarily on objects, letting you mix and match characteristics from two or more items. The results are often extremely plausible and always possess the form of the source image modified by the style of the second.\n\nWhy is this a big deal?\n\nSemantic Mixing isn’t going to change the world. Img2Img has been a thing for a while.\n\nBut, compared to earlier approaches to combining image characteristics, this one has significantly more commercial potential due to the increased coherency.\n\nHow can we take advantage of it?\n\nBecause each output maintains the form of the source image, your result is predictable. This opens myriad doors, specifically for e-commerce applications: product ideation, prototyping, and testing.\n\nRun an e-commerce brand? Take a product mockup (like a t-shirt) and iterate over thousands of common animals, objects, and colors automatically. You can do this for cultural or meme products, too.\n\nQuickly determine consumer preference before manufacturing with generated images. Semantically mix hundreds of different product types, run extremely similar ad campaigns, and split test for results.\n\nThat’s a wrap!\n\nEnjoyed this? Consider sharing with someone you know. And if you’re reading this because someone you know sent you this, get the next newsletter by signing up here.\n\nSee you next week.\n\n– Nick"
+                    },
+                    {
+                        "role": "assistant",
+                        "content": "- **AI Models Can Now Surf The Internet:**\n\n  - Significant advancements in language and image generation over the past two years.\n\n  - Existing models, like GPT-3, struggle with factual accuracy and relevance.\n\n  - Introduction of WebGPT:\n\n    - Searches the internet to find real-world information before processing it internally.\n\n    - Provides relevant results on product comparisons, prices at Walmart, current weather conditions, etc.\n\n    - Initially created by OpenAI in 2021; recently recreated using advanced prompts on Twitter.\n\n\n\n- **Functionality of WebGPT:**\n\n  - Combines two principles:\n\n    - Language models excel at summarizing information.\n\n    - Google is a vast repository of relatively accurate information.\n\n  - Process:\n\n    - Searches the internet for answers to user queries.\n\n    - Uses GPT-3 to summarize these results cohesively.\n\n    - Refines answers through multiple prompt chains using a consensus-based approach.\n\n\n\n- **Significance:**\n\n  - Grants chatbots and digital assistants access to real-time data (a form of memory).\n\n  - Separates model intelligence from stored information within the model itself.\n\n  - Enables independent implementation without waiting for major companies' approval.\n\n\n\n- **Applications and Advantages:**\n\n  – Allows creation of flexible agents that can reference any data (including company-specific info).\n\n      Examples include email marketing campaigns or customer service chatbots that pull personalized data/relevant documents respectively before generating responses. \n\n   – Potential applications span various fields such as instant news commentary/analysis, academic paper writing (classifying \"factual\" questions), automated customer service emails referencing internal databases.\n\n\n\n**Compressing Audio by Up To Ten Times Without Quality Loss:**\n\n\n\n - Facebook’s new AI-powered audio compression technique “Encodec” offers tenfold file size reduction while maintaining quality. \n\n- Similar to image and video compression, Encodec identifies data patterns and removes redundancy.\n\n  - Operates in real-time, analyzing, compressing, and decompressing audio signals as they are transmitted.\n\n\n\n- **Business Impact:**\n\n  - Significant cost savings for companies reliant on voice communication (e.g., phone calls, VoIP).\n\n  - Example: Netflix could drastically reduce its $228 million annual AWS transfer costs.\n\n  - Potential for widespread adoption; hypercompression may extend to video or 3D environments.\n\n  \n\n- **Opportunities:**\n\n   – Investments in companies with high data expenditures will become lucrative as operational costs drop. \n\n   – Building services that leverage Encodec for small/mid-sized streaming platforms could cut transfer costs by >90%.\n\n   – Broader cultural/economic impacts include enabling high-quality remote consultations even in low-bandwidth areas.\n\n\n\n**Semantic Mixing:**\n\n\n\n- **Concept Overview:**\n\n    - New approach allowing the combination of concepts as easily as adding numbers.\n\n    - Example outcomes include objects like a \"watermelon-shaped speaker\" or a \"rabbit-tiger hybrid.\"\n\n    - Primarily works on objects by mixing characteristics from different items with plausible results.\n\n\n\n- **Significance and Commercial Potential:**\n\n    – Semantic Mixing does not revolutionize but enhances Img2Img approaches due to improved coherency. \n\n    – High commercial potential for e-commerce applications—product ideation, prototyping, testing.\n\n\n\n- **Practical Uses:**\n\n     Examples:\n\n       * E-commerce brands can iterate product mockups (like t-shirts) with various animals/objects/colors automatically.\n\n       * Testing consumer preferences rapidly through generated images before manufacturing products. \n\n       * Running split tests with semantically mixed product types to determine optimal designs based on ad campaign results.\n\n\n\n**Conclusion & Call-to-action:** \n\n\n\n– Share insights from this issue within networks/communities. Subscription link provided for new readers interested in cutting-edge AI news updates directly via newsletter."
+                    },
+                    {
+                        "role": "user",
+                        "content": "Welcome to The Cusp: cutting-edge AI news (and its implications) explained in simple English.\n\nIn this week’s issue:\n\nThe results are in: Google officially destroys AI generated content. But by how much — and is it still profitable to use?\n\nNew AI developments set to decimate the interior design industry in just a few years.\n\nAre you in 3D? Companies like Quixel are in for a major shock thanks to this AI.\n\nLet’s dive in.\n\n1. Google Penalizes AI Generated Content By At Least 20%, Probably More\n\nLast year, large language models like GPT-3 made headlines for their ability to generate eerily human-like text. Naturally, affiliate marketers and content writers (myself included) were quick to try and game the system.\n\nBut it turns out, Google fought back.\n\nNeil Patel, a popular internet marketing blogger, just announced the first real test of Google’s new stance on AI generated writing. And the results are definitive: AI generated content destroys your search traffic.\n\nNeil took 50 websites, and separated them into two groups. One group was AI-generated only — for the other, he had humans write, edit, or perform a mix of both approaches.\n\nThen he waited for Google to index them. The results? Purely AI generated content was given a 20% penalty right off the bat — and that’s just the average. In some cases, the penalty was as high as 60%.\n\nMany of you will be thinking: 20%… that’s it? Why is this a big deal?\n\nBecause there are massive, asymmetrical gains the higher up you are on Google search. Traffic increases exponentially the closer you are to the top.\n\nIf you’re in first place, you get double what you’d get in second. If you’re in second, you get almost six times more clicks than if you’re in eighth.\n\nSo getting dinged just 20% for using AI is almost always enough to shift you down at least a couple of places — which means you’re losing 75% or more of your traffic.\n\nThere’s some silver lining, though. Content that was generated by AI, but *modified* by humans, only dropped an average of 6%.\n\nSince AI writing routinely provides speedups of 4x-5x, this is probably still a very worthwhile investment — especially for low-competition keywords.\n\nHow can we take advantage of this?\n\nRun a website and want to rank better?\n\nDon’t try to automatically generate content — that’s a race to the bottom.\n\nInstead, augment your current, capable writers with AI like GPT-3 or Jurassic-1.\n\nMake sure they edit the result for clarity, style, and tone of voice.\n\nDollar for dollar, you’ll increase output by ~400% with a loss in rank potential of just 6%. If you’re targeting longer-tail keywords without much competition, that’s more than enough to offset the decrease plus give you a big leg up in terms of volume.\n\n2. 3D Interior Designers Will Soon Be Obsolete, Thanks to AI\n\nNeRF (neural radiance fields) just got a big upgrade.\n\nThe above clip was built from a couple dozen interior photographs. NeRF seamlessly wove those photos together, and — with the help of style transfer — lets you instantly change the colors, mood, and furniture.\n\nThe library in question (NeRF Studio) is still in development, but it’s already clear that it has the potential to disrupt the $4.1 billion interior design software industry.\n\nAnd it’s not just because NeRF is free: it’s also orders of magnitude faster than traditional methods of design.\n\nIn the past, you had to take dozens of photos of a space, create a detailed floor plan, and then pay someone hundreds (or thousands) of dollars for a mockup.\n\nMore recently, solutions like Matterport have gained popularity; they use 3D scanning to quickly create a model of a space. But Matterport quality is notoriously crappy, and the imaging process is slow and non-intuitive.\n\nNeRF, on the other hand, takes just a few minutes.\n\nIt’s not long before everybody in the 3D interior design industry makes the switch — and when they do, the market is in for a massive upset.\n\nInstant render services\n\nIn addition to 3D interior design, instant render services are another AI-driven approach that’s quickly gaining popularity.\n\nInterior AI is a free design mockup app that takes images of your room and then uses Stable Diffusion to superimpose new imagery, complete with furniture and other objects, to show you how your space could look.\n\n\n\nThe above example, while not incredible, already serves a market niche. And given the rate of growth of image generation AI — I mean, we went from blurry, 16x16 cows to completely realistic human faces in just 6 years — similar services will soon outperform human designers on every level.\n\nHow can we take advantage of this?\n\nIn design? There’s a ton of quick money on the table.\n\nLearn how NeRF works, and begin implementing it into your workflow\n\nIn addition to the improved output, create information products (course, ebook, etc) teaching other designers to do the same\n\nAlternatively: in architecture or real estate? You’re about to get a lot more efficient.\n\nUse NeRF to quickly create 3D models of properties\n\nAutomate the ideation process with instant render AI\n\nGenerate models of what a space could look like, then send to a designer for touchups\n\nYou don’t have to be on the receiving end of major disruptions to your industry. Plan ahead, make some changes to your workflow, and profit.\n\n3. AI Texture Generation Will Soon Give Companies Like Quixel A Run For Their Money\n\nSpeaking of 3D: AI texture generation has made massive leaps and bounds in the past few years. And it’s about to give companies like Quixel, who create and sell 3D textures, a run for their money.\n\nFor those not in the know, Quixel creates 3D textures that are used in video games, movies, and other CGI.\n\nBut these textures take a ton of time and money to create — photographers have to travel to remote locations to zoom in on real-world objects and take pictures of them at different angles to create a comprehensive texture library.\n\nNow? AI can do all of that work in a fraction of the time, and for a fraction of the cost.\n\nRunway.ml recently released a cutting-edge texture generation feature to helps designers, artists, and 3D professionals make textures in a tenth of the time. And while it’s not quite on par with Quixel’s patented Megascan library yet, it’s getting close — and fast.\n\nPlus (and this is very important) it can generate an infinite variety of textures that don’t exist in the real world.\n\nWhat does this mean?\n\nThe 3D mapping and modelling industry is worth approximately $13B, according to Mordor Intelligence.\n\nBut in conjunction with Stable Diffusion 3D models, texture generators will almost certainly unemploy vast swathes of this industry in the very near future. An entire industry is poised to disappear virtually overnight.\n\nHow can we take advantage of this?\n\nLuckily, if you’re a forward-thinker, there’s plenty of time to prepare and make a splash.\n\nFirst, learn how to use Stable Diffusion to generate your own textures (or use a pre-made solution like Runway.ml)\n\nCreate a pipeline that generates & upscales high quality 3D textures\n\nBefore they go bust, sell as many as you can on marketplaces like CGTrader. When sales start slowing down (and they will), pitch the pipeline itself for extra runway\n\nCreate information products that teach CGI professionals how to begin working with AI\n\nWhile it’s always sad to see a creative industry get automated, there’s no denying the economic potential. And what’s more: AI 3D asset generation will have tremendous (positive) impacts on media, storytelling, and our culture. At least we’ll have something to watch when we’re unemployed laying on the couch.\n\nEnjoyed this? Consider sharing with someone you know. And if you’re reading this because someone you know sent you this, get the next newsletter by signing up here.\n\nSee you next week.\n\n– Nick"
+                    },
+                    {
+                        "role": "assistant",
+                        "content": "### Summary of The Cusp: AI News & Implications\n\n\n\n**1. Google Penalizes AI-Generated Content by At Least 20%**\n\n\n\n- **Context:**\n\n  - Large language models like GPT-3 gained traction for generating human-like text.\n\n  - Affiliate marketers and content writers tested automated content creation.\n\n  \n\n- **Study Results:**\n\n  - Neil Patel's test with two groups (AI-generated vs. human-modified):\n\n    - Purely AI-generated content faced a minimum average penalty of 20%.\n\n    - Penalties could be as high as 60%.\n\n    - Human-modified AI content dropped only by an average of 6%.\n\n\n\n- **Implications:**\n\n   – Slight penalties lead to significant drops in search rankings due to exponential traffic increases at the top positions.\n\n   – Even a small penalty can result in losing up to 75% of traffic.\n\n\n\n- **Strategy for Marketers/Writers:**\n\n   – Use AI tools like GPT-3 or Jurassic-1 to assist, not replace, human writers.\n\n   – Ensure human editing for clarity, style, and tone.\n\n   – Focus on low competition keywords; potential output increase ~400% with minimal rank loss.\n\n**2. AI in Interior Design: NeRF Technology**\n\n\n\n- **NeRF (Neural Radiance Fields):**\n\n  - Upgraded technology allows seamless integration and transformation of interior photographs.\n\n  - Potential to disrupt the $4.1 billion interior design software industry.\n\n  - Faster than traditional methods, requiring only a few minutes versus days.\n\n\n\n- **Advantages over Existing Solutions:**\n\n  - Outperforms popular tools like Matterport in quality and speed.\n\n  - Instant render services like Interior AI use style transfer to visualize new designs, gaining rapid traction.\n\n\n\n- **Implications for Designers & Real Estate:**\n\n   – NeRF can expedite the creation of 3D models from photographs.\n\n   – Instant render services can automate ideation processes, drafting mockups with new imagery.\n\n\n\n- **Opportunities:**\n\n   – Implement NeRF in existing workflows or create educational products about its use.\n\n   – Utilize AI to streamline architectural or real estate project visualizations.\n\n\n\n**3. AI Texture Generation vs. Quixel**\n\n\n\n- **AI Advancements:**\n\n  - Tools like Runway.ml rapidly generate high-quality textures at a fraction of the traditional cost and time.\n\n  - While not yet equal to Quixel’s Megascan library, they are progressing quickly.\n\n\n\n- **Industry Impact:**\n\n   – The $13B mapping and modeling industry faces significant disruption as AI can create infinite varieties of non-existent textures.\n\n\n\n- **Strategic Moves:**\n\n   – Learn to use Stable Diffusion for texture generation.\n\n   – Develop pipelines for creating & upscaling high-quality textures; sell on platforms like CGTrader.\n\n   – Create educational materials for CGI professionals transitioning to AI tools.\n\n### Conclusion\n\n- Share these insights with peers or subscribe for more updates on cutting-edge AI developments impacting various industries."
+                    },
+                    {
+                        "role": "user",
+                        "content": "{{8.raw_text}}"
+                    }
+                ]
+            },
+            "metadata": {
+                "designer": {
+                    "x": 999,
+                    "y": -20,
+                    "name": "Blog -> Bullet Point"
+                },
+                "restore": {
+                    "parameters": {
+                        "__IMTCONN__": {
+                            "label": "1SecondCopy",
+                            "data": {
+                                "scoped": "true",
+                                "connection": "openai-gpt-3"
+                            }
+                        }
+                    },
+                    "expect": {
+                        "select": {
+                            "label": "Create a Chat Completion (GPT Models)"
+                        },
+                        "logit_bias": {
+                            "mode": "chose"
+                        },
+                        "response_format": {
+                            "mode": "chose",
+                            "label": "Text"
+                        },
+                        "stop": {
+                            "mode": "chose"
+                        },
+                        "additionalParameters": {
+                            "mode": "chose"
+                        },
+                        "model": {
+                            "mode": "chose",
+                            "label": "gpt-4o (system)"
+                        },
+                        "messages": {
+                            "mode": "chose",
+                            "items": [
+                                {
+                                    "role": {
+                                        "mode": "chose",
+                                        "label": "System"
+                                    }
+                                },
+                                {
+                                    "role": {
+                                        "mode": "chose",
+                                        "label": "User"
+                                    }
+                                },
+                                {
+                                    "role": {
+                                        "mode": "chose",
+                                        "label": "User"
+                                    }
+                                },
+                                {
+                                    "role": {
+                                        "mode": "chose",
+                                        "label": "Assistant"
+                                    }
+                                },
+                                {
+                                    "role": {
+                                        "mode": "chose",
+                                        "label": "User"
+                                    }
+                                },
+                                {
+                                    "role": {
+                                        "mode": "chose",
+                                        "label": "Assistant"
+                                    }
+                                },
+                                {
+                                    "role": {
+                                        "mode": "chose",
+                                        "label": "User"
+                                    }
+                                }
+                            ]
+                        }
+                    }
+                },
+                "parameters": [
+                    {
+                        "name": "__IMTCONN__",
+                        "type": "account:openai-gpt-3",
+                        "label": "Connection",
+                        "required": true
+                    }
+                ],
+                "expect": [
+                    {
+                        "name": "select",
+                        "type": "select",
+                        "label": "Select Method",
+                        "required": true,
+                        "validate": {
+                            "enum": [
+                                "chat",
+                                "prompt"
+                            ]
+                        }
+                    },
+                    {
+                        "name": "max_tokens",
+                        "type": "number",
+                        "label": "Max Tokens",
+                        "required": true
+                    },
+                    {
+                        "name": "temperature",
+                        "type": "number",
+                        "label": "Temperature",
+                        "validate": {
+                            "max": 2,
+                            "min": 0
+                        }
+                    },
+                    {
+                        "name": "top_p",
+                        "type": "number",
+                        "label": "Top P",
+                        "validate": {
+                            "max": 1,
+                            "min": 0
+                        }
+                    },
+                    {
+                        "name": "n_completions",
+                        "type": "number",
+                        "label": "Number"
+                    },
+                    {
+                        "name": "frequency_penalty",
+                        "type": "number",
+                        "label": "Frequency Penalty",
+                        "validate": {
+                            "max": 2,
+                            "min": -2
+                        }
+                    },
+                    {
+                        "name": "presence_penalty",
+                        "type": "number",
+                        "label": "Presence Penalty",
+                        "validate": {
+                            "max": 2,
+                            "min": -2
+                        }
+                    },
+                    {
+                        "name": "logit_bias",
+                        "type": "array",
+                        "label": "Token Probability",
+                        "spec": {
+                            "spec": [
+                                {
+                                    "name": "token",
+                                    "type": "text",
+                                    "label": "Token ID",
+                                    "required": true
+                                },
+                                {
+                                    "name": "probability",
+                                    "type": "number",
+                                    "label": "Probability",
+                                    "required": true,
+                                    "validate": {
+                                        "max": 100,
+                                        "min": -100
+                                    }
+                                }
+                            ],
+                            "type": "collection",
+                            "label": "Token Probability",
+                            "name": "value"
+                        }
+                    },
+                    {
+                        "name": "response_format",
+                        "type": "select",
+                        "label": "Response Format",
+                        "validate": {
+                            "enum": [
+                                "text",
+                                "json_object"
+                            ]
+                        }
+                    },
+                    {
+                        "name": "seed",
+                        "type": "integer",
+                        "label": "Seed"
+                    },
+                    {
+                        "name": "stop",
+                        "type": "array",
+                        "label": "Stop Sequences",
+                        "validate": {
+                            "maxItems": 4
+                        },
+                        "spec": {
+                            "type": "text",
+                            "label": "Stop Sequence",
+                            "name": "value"
+                        }
+                    },
+                    {
+                        "name": "additionalParameters",
+                        "type": "array",
+                        "label": "Other Input Parameters",
+                        "spec": {
+                            "spec": [
+                                {
+                                    "name": "key",
+                                    "type": "text",
+                                    "label": "Parameter Name",
+                                    "required": true
+                                },
+                                {
+                                    "name": "type",
+                                    "type": "select",
+                                    "label": "Input Type",
+                                    "options": [
+                                        {
+                                            "label": "Text",
+                                            "value": "text",
+                                            "nested": [
+                                                {
+                                                    "name": "value",
+                                                    "type": "text",
+                                                    "label": "Parameter Value"
+                                                }
+                                            ],
+                                            "default": true
+                                        },
+                                        {
+                                            "label": "Number",
+                                            "value": "number",
+                                            "nested": [
+                                                {
+                                                    "name": "value",
+                                                    "type": "number",
+                                                    "label": "Parameter Value"
+                                                }
+                                            ]
+                                        },
+                                        {
+                                            "label": "Boolean",
+                                            "value": "boolean",
+                                            "nested": [
+                                                {
+                                                    "name": "value",
+                                                    "type": "boolean",
+                                                    "label": "Parameter Value"
+                                                }
+                                            ]
+                                        },
+                                        {
+                                            "label": "Date",
+                                            "value": "date",
+                                            "nested": [
+                                                {
+                                                    "name": "value",
+                                                    "type": "date",
+                                                    "label": "Parameter Value"
+                                                }
+                                            ]
+                                        },
+                                        {
+                                            "label": "Any",
+                                            "value": "any",
+                                            "nested": [
+                                                {
+                                                    "name": "value",
+                                                    "type": "any",
+                                                    "label": "Parameter Value"
+                                                }
+                                            ]
+                                        }
+                                    ]
+                                }
+                            ],
+                            "type": "collection",
+                            "label": "Input Parameter",
+                            "name": "value"
+                        }
+                    },
+                    {
+                        "name": "model",
+                        "type": "select",
+                        "label": "Model",
+                        "required": true
+                    },
+                    {
+                        "name": "messages",
+                        "type": "array",
+                        "label": "Messages",
+                        "required": true,
+                        "spec": {
+                            "spec": [
+                                {
+                                    "name": "role",
+                                    "type": "select",
+                                    "label": "Role",
+                                    "options": [
+                                        {
+                                            "label": "System",
+                                            "value": "system"
+                                        },
+                                        {
+                                            "label": "User",
+                                            "value": "user"
+                                        },
+                                        {
+                                            "label": "Assistant",
+                                            "value": "assistant"
+                                        }
+                                    ],
+                                    "required": true
+                                },
+                                {
+                                    "name": "content",
+                                    "type": "text",
+                                    "label": "Message Content"
+                                }
+                            ],
+                            "type": "collection",
+                            "label": "Message",
+                            "name": "value"
+                        }
+                    }
+                ],
+                "advanced": true
+            }
+        },
+        {
+            "id": 10,
+            "module": "openai-gpt-3:CreateCompletion",
+            "version": 1,
+            "parameters": {
+                "__IMTCONN__": 1134482
+            },
+            "mapper": {
+                "select": "chat",
+                "max_tokens": "4096",
+                "temperature": "0.7",
+                "top_p": "1",
+                "n_completions": "1",
+                "frequency_penalty": "0.6",
+                "response_format": "text",
+                "model": "gpt-4o",
+                "messages": [
+                    {
+                        "role": "system",
+                        "content": "You are a helpful, intelligent writing assistant."
+                    },
+                    {
+                        "role": "user",
+                        "content": "Your task is to convert a list of detailed bullet points into a high quality blog post. Use spartan, to-the-point language. Write the article in Markdown (atx) format."
+                    },
+                    {
+                        "role": "user",
+                        "content": "​\n\n- **AI Models Can Now Surf The Internet:**\n\n  - Significant advancements in language and image generation over the past two years.\n\n  - Existing models, like GPT-3, struggle with factual accuracy and relevance.\n\n  - Introduction of WebGPT:\n\n    - Searches the internet to find real-world information before processing it internally.\n\n    - Provides relevant results on product comparisons, prices at Walmart, current weather conditions, etc.\n\n    - Initially created by OpenAI in 2021; recently recreated using advanced prompts on Twitter.\n\n\n\n- **Functionality of WebGPT:**\n\n  - Combines two principles:\n\n    - Language models excel at summarizing information.\n\n    - Google is a vast repository of relatively accurate information.\n\n  - Process:\n\n    - Searches the internet for answers to user queries.\n\n    - Uses GPT-3 to summarize these results cohesively.\n\n    - Refines answers through multiple prompt chains using a consensus-based approach.\n\n\n\n- **Significance:**\n\n  - Grants chatbots and digital assistants access to real-time data (a form of memory).\n\n  - Separates model intelligence from stored information within the model itself.\n\n  - Enables independent implementation without waiting for major companies' approval.\n\n\n\n- **Applications and Advantages:**\n\n  – Allows creation of flexible agents that can reference any data (including company-specific info).\n\n      Examples include email marketing campaigns or customer service chatbots that pull personalized data/relevant documents respectively before generating responses. \n\n   – Potential applications span various fields such as instant news commentary/analysis, academic paper writing (classifying \"factual\" questions), automated customer service emails referencing internal databases.\n\n\n\n**Compressing Audio by Up To Ten Times Without Quality Loss:**\n\n\n\n - Facebook’s new AI-powered audio compression technique “Encodec” offers tenfold file size reduction while maintaining quality. \n\n- Similar to image and video compression, Encodec identifies data patterns and removes redundancy.\n\n  - Operates in real-time, analyzing, compressing, and decompressing audio signals as they are transmitted.\n\n\n\n- **Business Impact:**\n\n  - Significant cost savings for companies reliant on voice communication (e.g., phone calls, VoIP).\n\n  - Example: Netflix could drastically reduce its $228 million annual AWS transfer costs.\n\n  - Potential for widespread adoption; hypercompression may extend to video or 3D environments.\n\n  \n\n- **Opportunities:**\n\n   – Investments in companies with high data expenditures will become lucrative as operational costs drop. \n\n   – Building services that leverage Encodec for small/mid-sized streaming platforms could cut transfer costs by >90%.\n\n   – Broader cultural/economic impacts include enabling high-quality remote consultations even in low-bandwidth areas.\n\n\n\n**Semantic Mixing:**\n\n\n\n- **Concept Overview:**\n\n    - New approach allowing the combination of concepts as easily as adding numbers.\n\n    - Example outcomes include objects like a \"watermelon-shaped speaker\" or a \"rabbit-tiger hybrid.\"\n\n    - Primarily works on objects by mixing characteristics from different items with plausible results.\n\n\n\n- **Significance and Commercial Potential:**\n\n    – Semantic Mixing does not revolutionize but enhances Img2Img approaches due to improved coherency. \n\n    – High commercial potential for e-commerce applications—product ideation, prototyping, testing.\n\n\n\n- **Practical Uses:**\n\n     Examples:\n\n       * E-commerce brands can iterate product mockups (like t-shirts) with various animals/objects/colors automatically.\n\n       * Testing consumer preferences rapidly through generated images before manufacturing products. \n\n       * Running split tests with semantically mixed product types to determine optimal designs based on ad campaign results.\n\n\n\n**Conclusion & Call-to-action:** \n\n\n\n– Share insights from this issue within networks/communities. Subscription link provided for new readers interested in cutting-edge AI news updates directly via newsletter."
+                    },
+                    {
+                        "role": "assistant",
+                        "content": "Welcome to The Cusp: cutting-edge AI news (and its implications) explained in simple English.\n\nIn this week’s issue:\n\nAI models can now surf the internet for you.\n\nCompressing audio 10x with no loss in quality? AWS is about to get hit — hard.\n\nNew: Semantic Mixing and the virtually limitless ways AI can add concepts as easily as we add numbers.\n\nLet’s dive in.\n\n## AI Models Can Now Surf The Internet\n\nAI has made incredible strides in language and image generation over the last two years.\n\nBut models still struggle with making that information factual and relevant. GPT-3, for instance, is known for generating impressive-sounding paragraphs on any topic — until you realize much of it is complete nonsense.\n\nThat’s where WebGPT comes in.\n\nWebGPT is a conversational interface that searches the internet and finds real-world information for you before processing it internally. It can provide relevant results for things like:\n\nHow the features of one product compare to another in 2022\n\nThe average price of a good or service at Walmart\n\nThe current weather in a given location\n\nIt was actually technically done in 2021 by OpenAI. But Twitter did its thing and recreated it using advanced prompts last week.\n\nUntil now, real-world relevance has been the #1 challenge for AI chatbots. WebGPT and approaches like it unlock a new world of possibilities for AI-powered tools, and they’re going to upset the economy.\n\n## How does it work?\n\nIt’s simpler than you think. WebGPT takes two principles:\n\nLanguage models are fantastic at summarizing information\n\nGoogle is the world’s largest repository of information (and it’s usually checked in some way for accuracy)\n\nFirst, WebGPT searches the internet for results on the topic you’re asking. Then, it uses GPT-3 to summarize those results into a cohesive answer.\n\nMultiple prompt chains can refine the answer using a consensus-based approach to ensure contextual relevance and accuracy.\n\n## Why is this a big deal?\n\nThis is a huge development for three reasons:\n\nIt gives chatbots and digital assistants access to real-world data: a memory of sorts\n\nIt lets the intelligence of the model exist separately from the information in the model\n\nYou can now implement this yourself, without waiting for a major company to deem it “okay”\n\nPlus, this means major AI companies no longer need to worry about training their language model on billions of factoids and data points (like GPT-3 or Jurassic-1).\n\nAs long as you give them a question, they can go off and find the answer — completely on their own. Given how models have been hitting a ceiling in both parameter size and data availability, this changes everything.\n\n## How can we take advantage of this?\n\nHere’s the cool part: you can use this approach internally, too.\n\nConversational models, until now, have been limited to information they’ve read during training. GPT-3, for instance, is really only relevant up until ~ mid 2021.\n\nWanted to write about something that happened afterwards, like COVID-19? Your content would be almost guaranteed gibberish.\n\nBut with this new development, you can make flexible agents that reference any data — including that of your company.\n\nFor instance, let’s say you’re running an email marketing campaign. You can now make an agent that:\n\n- Pulls in data about a subscriber from your CRM.\n\n- Reads factual information about that user; hobbies, interests, etc.\n\n- Generates a templated email with that information.\n\n- Either sends it automatically, closing the loop — or hands it off to a human agent to click send.\n\nAlternatively, let’s say you run a company chatbot to help minimize customer service requests. With this new development, you can make an agent that:\n\nSearches your company’s docs for relevant information.\n\nSummarizes it using GPT-3.\n\nReturns the answer to the user in natural language.\n\nAs long as you have data, you can now make a chatbot that understands and responds to it with relevance and accuracy.\n\nThere are so many more applications. I’ll list a few of them here:\n\nInstant news commentary and analysis — new event triggers a workflow that takes in a topic, searches the web for historical examples and supporting information, and then drafts a relevant piece within seconds for immediate publishing.\n\nAcademic paper writing. Until now, asking complex logical questions concerning facts often resulted in nonsense (i.e why does the mechanism of action of X cause Y?). Now, you can train a secondary model to classify “factual” questions, use that model as a trigger for WebGPT, and then return the factual search results before integrating them into a paper.\n\nSimilarly, you can draft a large portion of customer service emails. Use the aforementioned secondary model to classify factual questions and then use WebGPT to reference your internal company database for answers. Add extra steps as necessary to clean up the output.\n\n## Compressing audio 10x with no loss in quality?\n\nFacebook recently released Encodec, a new AI-powered audio compression technique that compresses audio files by up to 10x (!) with no loss in quality.\n\nThe idea is similar to image and video compression, which we covered last week: AI identifies data patterns and removes redundancy.\n\nBut Encodec does it an order of magnitude better and achieves virtually lossless hypercompression. It’s also real-time. I.e., the algorithm can analyze, compress, and decompress audio signals as they’re being sent or received.\n\n## How can we take advantage of this?\n\nAny company whose primary mode of communication is voice (e.g., phone calls, conference calls, VoIP, etc.) can now save an incredible amount of money in bandwidth, storage, and processing costs.\n\nNetflix, for instance, spends $228 million/year on AWS transfer costs. Imagine them cutting that by 90%. The math is a little more complicated in reality, but companies will undoubtedly massively decrease their data expenditures.\n\nCompanies will scramble to adopt this technology. And validation of this approach means more hypercompression is probably on the horizon. There’s no fundamental reason why this technique couldn’t be applied to video or 3D environments, for instance.\n\nYou could:\n\nLook for investment opportunities in companies whose primary expenditures are data. AWS costs (roughly) $0.12 per GB transferred — that’s going to change dramatically with technologies like this. Necessary disclaimer: I’m not a financial advisor & this isn’t financial advice.\n\nBuild a service that implements Encodec or uses a similar approach. A simple endpoint that receives an audio file and returns its compressed version, for instance. Market your service to small or mid-sized streaming platforms as a way to cut transfer costs by >90%.\n\nThe implications of real-time, lossless audio compression will also have far-reaching effects on culture and our economy.\n\nFor example, imagine you’re a doctor in a remote location and need to consult with a specialist. Most VoIP connections require at least 64kbs. But with Encodec, you could have a high-quality call with almost no lag — even on 6kbps.\n\nPlaces that were previously off-limits because of poor internet service will probably grow into attractive destinations over the next few years. Satellite might only get 30mbps in Fiji… but will that matter when your computer automatically upsamples that to 300mbps?\n\n## Semantic Mixing\n\nThis one is fun: Semantic Mixing is a recently-unveiled approach that lets you add concepts as easily as you might add numbers.\n\nWatermelon plus speaker, for instance, yields a vaguely watermelon-slice-shaped speaker. Rabbit plus tiger looks like a realistic (if scary) new bunny breed.\n\nIt works primarily on objects, letting you mix and match characteristics from two or more items. The results are often extremely plausible and always possess the form of the source image modified by the style of the second.\n\n## Why is this a big deal?\n\nSemantic Mixing isn’t going to change the world. Img2Img has been a thing for a while.\n\nBut, compared to earlier approaches to combining image characteristics, this one has significantly more commercial potential due to the increased coherency.\n\n## How can we take advantage of it?\n\nBecause each output maintains the form of the source image, your result is predictable. This opens myriad doors, specifically for e-commerce applications: product ideation, prototyping, and testing.\n\nRun an e-commerce brand? Take a product mockup (like a t-shirt) and iterate over thousands of common animals, objects, and colors automatically. You can do this for cultural or meme products, too.\n\nQuickly determine consumer preference before manufacturing with generated images. Semantically mix hundreds of different product types, run extremely similar ad campaigns, and split test for results.\n\nThat’s a wrap!\n\nEnjoyed this? Consider sharing with someone you know. And if you’re reading this because someone you know sent you this, get the next newsletter by signing up here.\n\nSee you next week.\n\n– Nick"
+                    },
+                    {
+                        "role": "user",
+                        "content": "​\n\n### Summary of The Cusp: AI News & Implications\n\n\n\n**1. Google Penalizes AI-Generated Content by At Least 20%**\n\n\n\n- **Context:**\n\n  - Large language models like GPT-3 gained traction for generating human-like text.\n\n  - Affiliate marketers and content writers tested automated content creation.\n\n  \n\n- **Study Results:**\n\n  - Neil Patel's test with two groups (AI-generated vs. human-modified):\n\n    - Purely AI-generated content faced a minimum average penalty of 20%.\n\n    - Penalties could be as high as 60%.\n\n    - Human-modified AI content dropped only by an average of 6%.\n\n\n\n- **Implications:**\n\n   – Slight penalties lead to significant drops in search rankings due to exponential traffic increases at the top positions.\n\n   – Even a small penalty can result in losing up to 75% of traffic.\n\n\n\n- **Strategy for Marketers/Writers:**\n\n   – Use AI tools like GPT-3 or Jurassic-1 to assist, not replace, human writers.\n\n   – Ensure human editing for clarity, style, and tone.\n\n   – Focus on low competition keywords; potential output increase ~400% with minimal rank loss.\n\n**2. AI in Interior Design: NeRF Technology**\n\n\n\n- **NeRF (Neural Radiance Fields):**\n\n  - Upgraded technology allows seamless integration and transformation of interior photographs.\n\n  - Potential to disrupt the $4.1 billion interior design software industry.\n\n  - Faster than traditional methods, requiring only a few minutes versus days.\n\n\n\n- **Advantages over Existing Solutions:**\n\n  - Outperforms popular tools like Matterport in quality and speed.\n\n  - Instant render services like Interior AI use style transfer to visualize new designs, gaining rapid traction.\n\n\n\n- **Implications for Designers & Real Estate:**\n\n   – NeRF can expedite the creation of 3D models from photographs.\n\n   – Instant render services can automate ideation processes, drafting mockups with new imagery.\n\n\n\n- **Opportunities:**\n\n   – Implement NeRF in existing workflows or create educational products about its use.\n\n   – Utilize AI to streamline architectural or real estate project visualizations.\n\n\n\n**3. AI Texture Generation vs. Quixel**\n\n\n\n- **AI Advancements:**\n\n  - Tools like Runway.ml rapidly generate high-quality textures at a fraction of the traditional cost and time.\n\n  - While not yet equal to Quixel’s Megascan library, they are progressing quickly.\n\n\n\n- **Industry Impact:**\n\n   – The $13B mapping and modeling industry faces significant disruption as AI can create infinite varieties of non-existent textures.\n\n\n\n- **Strategic Moves:**\n\n   – Learn to use Stable Diffusion for texture generation.\n\n   – Develop pipelines for creating & upscaling high-quality textures; sell on platforms like CGTrader.\n\n   – Create educational materials for CGI professionals transitioning to AI tools.\n\n### Conclusion\n\n- Share these insights with peers or subscribe for more updates on cutting-edge AI developments impacting various industries."
+                    },
+                    {
+                        "role": "assistant",
+                        "content": "Welcome to The Cusp: cutting-edge AI news (and its implications) explained in simple English.\n\nIn this week’s issue:\n\nThe results are in: Google officially destroys AI generated content. But by how much — and is it still profitable to use?\n\nNew AI developments set to decimate the interior design industry in just a few years.\n\nAre you in 3D? Companies like Quixel are in for a major shock thanks to this AI.\n\nLet’s dive in.\n\n## 1. Google Penalizes AI Generated Content By At Least 20%, Probably More\n\nLast year, large language models like GPT-3 made headlines for their ability to generate eerily human-like text. Naturally, affiliate marketers and content writers (myself included) were quick to try and game the system.\n\nBut it turns out, Google fought back.\n\nNeil Patel, a popular internet marketing blogger, just announced the first real test of Google’s new stance on AI generated writing. And the results are definitive: AI generated content destroys your search traffic.\n\nNeil took 50 websites, and separated them into two groups. One group was AI-generated only — for the other, he had humans write, edit, or perform a mix of both approaches.\n\nThen he waited for Google to index them. The results? Purely AI generated content was given a 20% penalty right off the bat — and that’s just the average. In some cases, the penalty was as high as 60%.\n\nMany of you will be thinking: 20%… that’s it? Why is this a big deal?\n\nBecause there are massive, asymmetrical gains the higher up you are on Google search. Traffic increases exponentially the closer you are to the top.\n\nIf you’re in first place, you get double what you’d get in second. If you’re in second, you get almost six times more clicks than if you’re in eighth.\n\nSo getting dinged just 20% for using AI is almost always enough to shift you down at least a couple of places — which means you’re losing 75% or more of your traffic.\n\nThere’s some silver lining, though. Content that was generated by AI, but *modified* by humans, only dropped an average of 6%.\n\nSince AI writing routinely provides speedups of 4x-5x, this is probably still a very worthwhile investment — especially for low-competition keywords.\n\n## How can we take advantage of this?\n\nRun a website and want to rank better?\n\nDon’t try to automatically generate content — that’s a race to the bottom.\n\nInstead, augment your current, capable writers with AI like GPT-3 or Jurassic-1.\n\nMake sure they edit the result for clarity, style, and tone of voice.\n\nDollar for dollar, you’ll increase output by ~400% with a loss in rank potential of just 6%. If you’re targeting longer-tail keywords without much competition, that’s more than enough to offset the decrease plus give you a big leg up in terms of volume.\n\n## 2. 3D Interior Designers Will Soon Be Obsolete, Thanks to AI\n\nNeRF (neural radiance fields) just got a big upgrade.\n\nThe above clip was built from a couple dozen interior photographs. NeRF seamlessly wove those photos together, and — with the help of style transfer — lets you instantly change the colors, mood, and furniture.\n\nThe library in question (NeRF Studio) is still in development, but it’s already clear that it has the potential to disrupt the $4.1 billion interior design software industry.\n\nAnd it’s not just because NeRF is free: it’s also orders of magnitude faster than traditional methods of design.\n\nIn the past, you had to take dozens of photos of a space, create a detailed floor plan, and then pay someone hundreds (or thousands) of dollars for a mockup.\n\nMore recently, solutions like Matterport have gained popularity; they use 3D scanning to quickly create a model of a space. But Matterport quality is notoriously crappy, and the imaging process is slow and non-intuitive.\n\nNeRF, on the other hand, takes just a few minutes.\n\nIt’s not long before everybody in the 3D interior design industry makes the switch — and when they do, the market is in for a massive upset.\n\n## Instant render services\n\nIn addition to 3D interior design, instant render services are another AI-driven approach that’s quickly gaining popularity.\n\nInterior AI is a free design mockup app that takes images of your room and then uses Stable Diffusion to superimpose new imagery, complete with furniture and other objects, to show you how your space could look.\n\n\n\nThe above example, while not incredible, already serves a market niche. And given the rate of growth of image generation AI — I mean, we went from blurry, 16x16 cows to completely realistic human faces in just 6 years — similar services will soon outperform human designers on every level.\n\n## How can we take advantage of this?\n\nIn design? There’s a ton of quick money on the table.\n\nLearn how NeRF works, and begin implementing it into your workflow\n\nIn addition to the improved output, create information products (course, ebook, etc) teaching other designers to do the same\n\nAlternatively: in architecture or real estate? You’re about to get a lot more efficient.\n\n- Use NeRF to quickly create 3D models of properties\n\n- Automate the ideation process with instant render AI\n\n- Generate models of what a space could look like, then send to a designer for touchups\n\nYou don’t have to be on the receiving end of major disruptions to your industry. Plan ahead, make some changes to your workflow, and profit.\n\n## 3. AI Texture Generation Will Soon Give Companies Like Quixel A Run For Their Money\n\nSpeaking of 3D: AI texture generation has made massive leaps and bounds in the past few years. And it’s about to give companies like Quixel, who create and sell 3D textures, a run for their money.\n\nFor those not in the know, Quixel creates 3D textures that are used in video games, movies, and other CGI.\n\nBut these textures take a ton of time and money to create — photographers have to travel to remote locations to zoom in on real-world objects and take pictures of them at different angles to create a comprehensive texture library.\n\nNow? AI can do all of that work in a fraction of the time, and for a fraction of the cost.\n\nRunway.ml recently released a cutting-edge texture generation feature to helps designers, artists, and 3D professionals make textures in a tenth of the time. And while it’s not quite on par with Quixel’s patented Megascan library yet, it’s getting close — and fast.\n\nPlus (and this is very important) it can generate an infinite variety of textures that don’t exist in the real world.\n\n## What does this mean?\n\nThe 3D mapping and modelling industry is worth approximately $13B, according to Mordor Intelligence.\n\nBut in conjunction with Stable Diffusion 3D models, texture generators will almost certainly unemploy vast swathes of this industry in the very near future. An entire industry is poised to disappear virtually overnight.\n\n## How can we take advantage of this?\n\nLuckily, if you’re a forward-thinker, there’s plenty of time to prepare and make a splash.\n\nFirst, learn how to use Stable Diffusion to generate your own textures (or use a pre-made solution like Runway.ml)\n\nCreate a pipeline that generates & upscales high quality 3D textures\n\nBefore they go bust, sell as many as you can on marketplaces like CGTrader. When sales start slowing down (and they will), pitch the pipeline itself for extra runway\n\nCreate information products that teach CGI professionals how to begin working with AI\n\nWhile it’s always sad to see a creative industry get automated, there’s no denying the economic potential. And what’s more: AI 3D asset generation will have tremendous (positive) impacts on media, storytelling, and our culture. At least we’ll have something to watch when we’re unemployed laying on the couch.\n\nEnjoyed this? Consider sharing with someone you know. And if you’re reading this because someone you know sent you this, get the next newsletter by signing up here.\n\nSee you next week.\n\n– Nick"
+                    },
+                    {
+                        "role": "user",
+                        "content": "{{9.result}}"
+                    }
+                ]
+            },
+            "metadata": {
+                "designer": {
+                    "x": 1310,
+                    "y": -21,
+                    "name": "Bullet Point -> Blog"
+                },
+                "restore": {
+                    "parameters": {
+                        "__IMTCONN__": {
+                            "label": "1SecondCopy",
+                            "data": {
+                                "scoped": "true",
+                                "connection": "openai-gpt-3"
+                            }
+                        }
+                    },
+                    "expect": {
+                        "select": {
+                            "label": "Create a Chat Completion (GPT Models)"
+                        },
+                        "logit_bias": {
+                            "mode": "chose"
+                        },
+                        "response_format": {
+                            "mode": "chose",
+                            "label": "Text"
+                        },
+                        "stop": {
+                            "mode": "chose"
+                        },
+                        "additionalParameters": {
+                            "mode": "chose"
+                        },
+                        "model": {
+                            "mode": "chose",
+                            "label": "gpt-4o (system)"
+                        },
+                        "messages": {
+                            "mode": "chose",
+                            "items": [
+                                {
+                                    "role": {
+                                        "mode": "chose",
+                                        "label": "System"
+                                    }
+                                },
+                                {
+                                    "role": {
+                                        "mode": "chose",
+                                        "label": "User"
+                                    }
+                                },
+                                {
+                                    "role": {
+                                        "mode": "chose",
+                                        "label": "User"
+                                    }
+                                },
+                                {
+                                    "role": {
+                                        "mode": "chose",
+                                        "label": "Assistant"
+                                    }
+                                },
+                                {
+                                    "role": {
+                                        "mode": "chose",
+                                        "label": "User"
+                                    }
+                                },
+                                {
+                                    "role": {
+                                        "mode": "chose",
+                                        "label": "Assistant"
+                                    }
+                                },
+                                {
+                                    "role": {
+                                        "mode": "chose",
+                                        "label": "User"
+                                    }
+                                }
+                            ]
+                        }
+                    }
+                },
+                "parameters": [
+                    {
+                        "name": "__IMTCONN__",
+                        "type": "account:openai-gpt-3",
+                        "label": "Connection",
+                        "required": true
+                    }
+                ],
+                "expect": [
+                    {
+                        "name": "select",
+                        "type": "select",
+                        "label": "Select Method",
+                        "required": true,
+                        "validate": {
+                            "enum": [
+                                "chat",
+                                "prompt"
+                            ]
+                        }
+                    },
+                    {
+                        "name": "max_tokens",
+                        "type": "number",
+                        "label": "Max Tokens",
+                        "required": true
+                    },
+                    {
+                        "name": "temperature",
+                        "type": "number",
+                        "label": "Temperature",
+                        "validate": {
+                            "max": 2,
+                            "min": 0
+                        }
+                    },
+                    {
+                        "name": "top_p",
+                        "type": "number",
+                        "label": "Top P",
+                        "validate": {
+                            "max": 1,
+                            "min": 0
+                        }
+                    },
+                    {
+                        "name": "n_completions",
+                        "type": "number",
+                        "label": "Number"
+                    },
+                    {
+                        "name": "frequency_penalty",
+                        "type": "number",
+                        "label": "Frequency Penalty",
+                        "validate": {
+                            "max": 2,
+                            "min": -2
+                        }
+                    },
+                    {
+                        "name": "presence_penalty",
+                        "type": "number",
+                        "label": "Presence Penalty",
+                        "validate": {
+                            "max": 2,
+                            "min": -2
+                        }
+                    },
+                    {
+                        "name": "logit_bias",
+                        "type": "array",
+                        "label": "Token Probability",
+                        "spec": {
+                            "spec": [
+                                {
+                                    "name": "token",
+                                    "type": "text",
+                                    "label": "Token ID",
+                                    "required": true
+                                },
+                                {
+                                    "name": "probability",
+                                    "type": "number",
+                                    "label": "Probability",
+                                    "required": true,
+                                    "validate": {
+                                        "max": 100,
+                                        "min": -100
+                                    }
+                                }
+                            ],
+                            "type": "collection",
+                            "label": "Token Probability",
+                            "name": "value"
+                        }
+                    },
+                    {
+                        "name": "response_format",
+                        "type": "select",
+                        "label": "Response Format",
+                        "validate": {
+                            "enum": [
+                                "text",
+                                "json_object"
+                            ]
+                        }
+                    },
+                    {
+                        "name": "seed",
+                        "type": "integer",
+                        "label": "Seed"
+                    },
+                    {
+                        "name": "stop",
+                        "type": "array",
+                        "label": "Stop Sequences",
+                        "validate": {
+                            "maxItems": 4
+                        },
+                        "spec": {
+                            "type": "text",
+                            "label": "Stop Sequence",
+                            "name": "value"
+                        }
+                    },
+                    {
+                        "name": "additionalParameters",
+                        "type": "array",
+                        "label": "Other Input Parameters",
+                        "spec": {
+                            "spec": [
+                                {
+                                    "name": "key",
+                                    "type": "text",
+                                    "label": "Parameter Name",
+                                    "required": true
+                                },
+                                {
+                                    "name": "type",
+                                    "type": "select",
+                                    "label": "Input Type",
+                                    "options": [
+                                        {
+                                            "label": "Text",
+                                            "value": "text",
+                                            "nested": [
+                                                {
+                                                    "name": "value",
+                                                    "type": "text",
+                                                    "label": "Parameter Value"
+                                                }
+                                            ],
+                                            "default": true
+                                        },
+                                        {
+                                            "label": "Number",
+                                            "value": "number",
+                                            "nested": [
+                                                {
+                                                    "name": "value",
+                                                    "type": "number",
+                                                    "label": "Parameter Value"
+                                                }
+                                            ]
+                                        },
+                                        {
+                                            "label": "Boolean",
+                                            "value": "boolean",
+                                            "nested": [
+                                                {
+                                                    "name": "value",
+                                                    "type": "boolean",
+                                                    "label": "Parameter Value"
+                                                }
+                                            ]
+                                        },
+                                        {
+                                            "label": "Date",
+                                            "value": "date",
+                                            "nested": [
+                                                {
+                                                    "name": "value",
+                                                    "type": "date",
+                                                    "label": "Parameter Value"
+                                                }
+                                            ]
+                                        },
+                                        {
+                                            "label": "Any",
+                                            "value": "any",
+                                            "nested": [
+                                                {
+                                                    "name": "value",
+                                                    "type": "any",
+                                                    "label": "Parameter Value"
+                                                }
+                                            ]
+                                        }
+                                    ]
+                                }
+                            ],
+                            "type": "collection",
+                            "label": "Input Parameter",
+                            "name": "value"
+                        }
+                    },
+                    {
+                        "name": "model",
+                        "type": "select",
+                        "label": "Model",
+                        "required": true
+                    },
+                    {
+                        "name": "messages",
+                        "type": "array",
+                        "label": "Messages",
+                        "required": true,
+                        "spec": {
+                            "spec": [
+                                {
+                                    "name": "role",
+                                    "type": "select",
+                                    "label": "Role",
+                                    "options": [
+                                        {
+                                            "label": "System",
+                                            "value": "system"
+                                        },
+                                        {
+                                            "label": "User",
+                                            "value": "user"
+                                        },
+                                        {
+                                            "label": "Assistant",
+                                            "value": "assistant"
+                                        }
+                                    ],
+                                    "required": true
+                                },
+                                {
+                                    "name": "content",
+                                    "type": "text",
+                                    "label": "Message Content"
+                                }
+                            ],
+                            "type": "collection",
+                            "label": "Message",
+                            "name": "value"
+                        }
+                    }
+                ],
+                "advanced": true
+            }
+        },
+        {
+            "id": 14,
+            "module": "openai-gpt-3:CreateCompletion",
+            "version": 1,
+            "parameters": {
+                "__IMTCONN__": 1134482
+            },
+            "mapper": {
+                "select": "chat",
+                "max_tokens": "4096",
+                "temperature": "0.7",
+                "top_p": "1",
+                "n_completions": "1",
+                "frequency_penalty": "0.6",
+                "response_format": "text",
+                "model": "gpt-4o",
+                "messages": [
+                    {
+                        "role": "system",
+                        "content": "You are a helpful, intelligent writing assistant."
+                    },
+                    {
+                        "role": "user",
+                        "content": "Your task is to rewrite a title. Retain the topic and the purpose of the title, but write it in different words. Your output should be only the rewritten title—nothing else."
+                    },
+                    {
+                        "role": "user",
+                        "content": "{{6.title}}"
+                    }
+                ]
+            },
+            "metadata": {
+                "designer": {
+                    "x": 1619,
+                    "y": -19,
+                    "name": "Rewrite Title"
+                },
+                "restore": {
+                    "parameters": {
+                        "__IMTCONN__": {
+                            "label": "1SecondCopy",
+                            "data": {
+                                "scoped": "true",
+                                "connection": "openai-gpt-3"
+                            }
+                        }
+                    },
+                    "expect": {
+                        "select": {
+                            "label": "Create a Chat Completion (GPT Models)"
+                        },
+                        "logit_bias": {
+                            "mode": "chose"
+                        },
+                        "response_format": {
+                            "mode": "chose",
+                            "label": "Text"
+                        },
+                        "stop": {
+                            "mode": "chose"
+                        },
+                        "additionalParameters": {
+                            "mode": "chose"
+                        },
+                        "model": {
+                            "mode": "chose",
+                            "label": "gpt-4o (system)"
+                        },
+                        "messages": {
+                            "mode": "chose",
+                            "items": [
+                                {
+                                    "role": {
+                                        "mode": "chose",
+                                        "label": "System"
+                                    }
+                                },
+                                {
+                                    "role": {
+                                        "mode": "chose",
+                                        "label": "User"
+                                    }
+                                },
+                                {
+                                    "role": {
+                                        "mode": "chose",
+                                        "label": "User"
+                                    }
+                                }
+                            ]
+                        }
+                    }
+                },
+                "parameters": [
+                    {
+                        "name": "__IMTCONN__",
+                        "type": "account:openai-gpt-3",
+                        "label": "Connection",
+                        "required": true
+                    }
+                ],
+                "expect": [
+                    {
+                        "name": "select",
+                        "type": "select",
+                        "label": "Select Method",
+                        "required": true,
+                        "validate": {
+                            "enum": [
+                                "chat",
+                                "prompt"
+                            ]
+                        }
+                    },
+                    {
+                        "name": "max_tokens",
+                        "type": "number",
+                        "label": "Max Tokens",
+                        "required": true
+                    },
+                    {
+                        "name": "temperature",
+                        "type": "number",
+                        "label": "Temperature",
+                        "validate": {
+                            "max": 2,
+                            "min": 0
+                        }
+                    },
+                    {
+                        "name": "top_p",
+                        "type": "number",
+                        "label": "Top P",
+                        "validate": {
+                            "max": 1,
+                            "min": 0
+                        }
+                    },
+                    {
+                        "name": "n_completions",
+                        "type": "number",
+                        "label": "Number"
+                    },
+                    {
+                        "name": "frequency_penalty",
+                        "type": "number",
+                        "label": "Frequency Penalty",
+                        "validate": {
+                            "max": 2,
+                            "min": -2
+                        }
+                    },
+                    {
+                        "name": "presence_penalty",
+                        "type": "number",
+                        "label": "Presence Penalty",
+                        "validate": {
+                            "max": 2,
+                            "min": -2
+                        }
+                    },
+                    {
+                        "name": "logit_bias",
+                        "type": "array",
+                        "label": "Token Probability",
+                        "spec": {
+                            "spec": [
+                                {
+                                    "name": "token",
+                                    "type": "text",
+                                    "label": "Token ID",
+                                    "required": true
+                                },
+                                {
+                                    "name": "probability",
+                                    "type": "number",
+                                    "label": "Probability",
+                                    "required": true,
+                                    "validate": {
+                                        "max": 100,
+                                        "min": -100
+                                    }
+                                }
+                            ],
+                            "type": "collection",
+                            "label": "Token Probability",
+                            "name": "value"
+                        }
+                    },
+                    {
+                        "name": "response_format",
+                        "type": "select",
+                        "label": "Response Format",
+                        "validate": {
+                            "enum": [
+                                "text",
+                                "json_object"
+                            ]
+                        }
+                    },
+                    {
+                        "name": "seed",
+                        "type": "integer",
+                        "label": "Seed"
+                    },
+                    {
+                        "name": "stop",
+                        "type": "array",
+                        "label": "Stop Sequences",
+                        "validate": {
+                            "maxItems": 4
+                        },
+                        "spec": {
+                            "type": "text",
+                            "label": "Stop Sequence",
+                            "name": "value"
+                        }
+                    },
+                    {
+                        "name": "additionalParameters",
+                        "type": "array",
+                        "label": "Other Input Parameters",
+                        "spec": {
+                            "spec": [
+                                {
+                                    "name": "key",
+                                    "type": "text",
+                                    "label": "Parameter Name",
+                                    "required": true
+                                },
+                                {
+                                    "name": "type",
+                                    "type": "select",
+                                    "label": "Input Type",
+                                    "options": [
+                                        {
+                                            "label": "Text",
+                                            "value": "text",
+                                            "nested": [
+                                                {
+                                                    "name": "value",
+                                                    "type": "text",
+                                                    "label": "Parameter Value"
+                                                }
+                                            ],
+                                            "default": true
+                                        },
+                                        {
+                                            "label": "Number",
+                                            "value": "number",
+                                            "nested": [
+                                                {
+                                                    "name": "value",
+                                                    "type": "number",
+                                                    "label": "Parameter Value"
+                                                }
+                                            ]
+                                        },
+                                        {
+                                            "label": "Boolean",
+                                            "value": "boolean",
+                                            "nested": [
+                                                {
+                                                    "name": "value",
+                                                    "type": "boolean",
+                                                    "label": "Parameter Value"
+                                                }
+                                            ]
+                                        },
+                                        {
+                                            "label": "Date",
+                                            "value": "date",
+                                            "nested": [
+                                                {
+                                                    "name": "value",
+                                                    "type": "date",
+                                                    "label": "Parameter Value"
+                                                }
+                                            ]
+                                        },
+                                        {
+                                            "label": "Any",
+                                            "value": "any",
+                                            "nested": [
+                                                {
+                                                    "name": "value",
+                                                    "type": "any",
+                                                    "label": "Parameter Value"
+                                                }
+                                            ]
+                                        }
+                                    ]
+                                }
+                            ],
+                            "type": "collection",
+                            "label": "Input Parameter",
+                            "name": "value"
+                        }
+                    },
+                    {
+                        "name": "model",
+                        "type": "select",
+                        "label": "Model",
+                        "required": true
+                    },
+                    {
+                        "name": "messages",
+                        "type": "array",
+                        "label": "Messages",
+                        "required": true,
+                        "spec": {
+                            "spec": [
+                                {
+                                    "name": "role",
+                                    "type": "select",
+                                    "label": "Role",
+                                    "options": [
+                                        {
+                                            "label": "System",
+                                            "value": "system"
+                                        },
+                                        {
+                                            "label": "User",
+                                            "value": "user"
+                                        },
+                                        {
+                                            "label": "Assistant",
+                                            "value": "assistant"
+                                        }
+                                    ],
+                                    "required": true
+                                },
+                                {
+                                    "name": "content",
+                                    "type": "text",
+                                    "label": "Message Content"
+                                }
+                            ],
+                            "type": "collection",
+                            "label": "Message",
+                            "name": "value"
+                        }
+                    }
+                ],
+                "advanced": true
+            }
+        },
+        {
+            "id": 12,
+            "module": "markdown:Compile",
+            "version": 2,
+            "parameters": {},
+            "mapper": {
+                "data": "{{10.result}}",
+                "gfm": true,
+                "sanitize": false
+            },
+            "metadata": {
+                "designer": {
+                    "x": 1968,
+                    "y": -20
+                },
+                "restore": {
+                    "expect": {
+                        "gfm": {
+                            "mode": "chose"
+                        },
+                        "sanitize": {
+                            "mode": "chose"
+                        }
+                    }
+                },
+                "expect": [
+                    {
+                        "name": "data",
+                        "type": "text",
+                        "label": "Markdown"
+                    },
+                    {
+                        "name": "gfm",
+                        "type": "boolean",
+                        "label": "GitHub Flavored Markdown",
+                        "required": true
+                    },
+                    {
+                        "name": "sanitize",
+                        "type": "boolean",
+                        "label": "Sanitize",
+                        "required": true
+                    }
+                ]
+            }
+        },
+        {
+            "id": 13,
+            "module": "google-docs:createADocument",
+            "version": 1,
+            "parameters": {
+                "__IMTCONN__": 2721796
+            },
+            "mapper": {
+                "name": "{{6.title}}",
+                "content": "{{12.data}}",
+                "destination": "drive",
+                "header": false,
+                "footer": false,
+                "folderId": "/"
+            },
+            "metadata": {
+                "designer": {
+                    "x": 2261,
+                    "y": -26
+                },
+                "restore": {
+                    "parameters": {
+                        "__IMTCONN__": {
+                            "label": "nick@1secondcopy.com (nick@1secondcopy.com)",
+                            "data": {
+                                "scoped": "true",
+                                "connection": "google"
+                            }
+                        }
+                    },
+                    "expect": {
+                        "destination": {
+                            "label": "My Drive"
+                        },
+                        "folderId": {
+                            "mode": "chose",
+                            "path": [
+                                "/"
+                            ]
+                        }
+                    }
+                },
+                "parameters": [
+                    {
+                        "name": "__IMTCONN__",
+                        "type": "account:google",
+                        "label": "Connection",
+                        "required": true
+                    }
+                ],
+                "expect": [
+                    {
+                        "name": "name",
+                        "type": "text",
+                        "label": "Name",
+                        "required": true
+                    },
+                    {
+                        "name": "content",
+                        "type": "text",
+                        "label": "Content",
+                        "required": true
+                    },
+                    {
+                        "name": "destination",
+                        "type": "select",
+                        "label": "Choose a Drive",
+                        "required": true,
+                        "validate": {
+                            "enum": [
+                                "drive",
+                                "share",
+                                "team"
+                            ]
+                        }
+                    },
+                    {
+                        "name": "header",
+                        "type": "boolean",
+                        "label": "Insert a Header",
+                        "required": true
+                    },
+                    {
+                        "name": "footer",
+                        "type": "boolean",
+                        "label": "Insert a Footer",
+                        "required": true
+                    },
+                    {
+                        "name": "folderId",
+                        "type": "folder",
+                        "label": "New Document's Location",
+                        "required": true
+                    },
+                    {
+                        "name": "name",
+                        "type": "text",
+                        "label": "Name",
+                        "required": true
+                    },
+                    {
+                        "name": "content",
+                        "type": "text",
+                        "label": "Content",
+                        "required": true
+                    },
+                    {
+                        "name": "destination",
+                        "type": "select",
+                        "label": "Choose a Drive",
+                        "required": true,
+                        "validate": {
+                            "enum": [
+                                "drive",
+                                "share",
+                                "team"
+                            ]
+                        }
+                    },
+                    {
+                        "name": "header",
+                        "type": "boolean",
+                        "label": "Insert a Header",
+                        "required": true
+                    },
+                    {
+                        "name": "footer",
+                        "type": "boolean",
+                        "label": "Insert a Footer",
+                        "required": true
+                    },
+                    {
+                        "name": "folderId",
+                        "type": "folder",
+                        "label": "New Document's Location",
+                        "required": true
+                    }
+                ]
+            }
+        },
+        {
+            "id": 4,
+            "module": "google-sheets:addRow",
+            "version": 2,
+            "parameters": {
+                "__IMTCONN__": 2721796
+            },
+            "mapper": {
+                "mode": "select",
+                "insertUnformatted": false,
+                "valueInputOption": "USER_ENTERED",
+                "insertDataOption": "INSERT_ROWS",
+                "from": "drive",
+                "spreadsheetId": "/1DQ1hA0nTAtTh2mjn3QAd53oy76hmSAQKimIR_aGgf_o",
+                "sheetId": "Sheet1",
+                "includesHeaders": true,
+                "values": {
+                    "0": "{{now}}",
+                    "1": "{{6.title}}",
+                    "2": "{{6.url}}",
+                    "3": "{{6.author}}",
+                    "4": "{{6.author_url}}",
+                    "5": "{{6.published_at}}",
+                    "6": "{{6.raw_article}}",
+                    "7": "{{14.result}}",
+                    "8": "{{13.webViewLink}}"
+                }
+            },
+            "metadata": {
+                "designer": {
+                    "x": 2577,
+                    "y": -26
+                },
+                "restore": {
+                    "parameters": {
+                        "__IMTCONN__": {
+                            "label": "nick@1secondcopy.com (nick@1secondcopy.com)",
+                            "data": {
+                                "scoped": "true",
+                                "connection": "google"
+                            }
+                        }
+                    },
+                    "expect": {
+                        "mode": {
+                            "label": "Select by path"
+                        },
+                        "insertUnformatted": {
+                            "mode": "chose"
+                        },
+                        "valueInputOption": {
+                            "mode": "chose",
+                            "label": "User entered"
+                        },
+                        "insertDataOption": {
+                            "mode": "chose",
+                            "label": "Insert rows"
+                        },
+                        "from": {
+                            "label": "My Drive"
+                        },
+                        "spreadsheetId": {
+                            "path": [
+                                "Medium Parasite SEO Campaign"
+                            ]
+                        },
+                        "sheetId": {
+                            "label": "Sheet1"
+                        },
+                        "includesHeaders": {
+                            "nested": [
+                                {
+                                    "name": "values",
+                                    "label": "Values",
+                                    "type": "collection",
+                                    "spec": [
+                                        {
+                                            "name": "0",
+                                            "label": "Date Scraped (A)",
+                                            "type": "text"
+                                        },
+                                        {
+                                            "name": "1",
+                                            "label": "Original Title (B)",
+                                            "type": "text"
+                                        },
+                                        {
+                                            "name": "2",
+                                            "label": "Original URL (C)",
+                                            "type": "text"
+                                        },
+                                        {
+                                            "name": "3",
+                                            "label": "Author (D)",
+                                            "type": "text"
+                                        },
+                                        {
+                                            "name": "4",
+                                            "label": "Author URL (E)",
+                                            "type": "text"
+                                        },
+                                        {
+                                            "name": "5",
+                                            "label": "Published At (F)",
+                                            "type": "text"
+                                        },
+                                        {
+                                            "name": "6",
+                                            "label": "Raw Article (G)",
+                                            "type": "text"
+                                        },
+                                        {
+                                            "name": "7",
+                                            "label": "Parasite Title (H)",
+                                            "type": "text"
+                                        },
+                                        {
+                                            "name": "8",
+                                            "label": "Parasite Article (I)",
+                                            "type": "text"
+                                        },
+                                        {
+                                            "name": "9",
+                                            "label": "(J)",
+                                            "type": "text"
+                                        },
+                                        {
+                                            "name": "10",
+                                            "label": "(K)",
+                                            "type": "text"
+                                        },
+                                        {
+                                            "name": "11",
+                                            "label": "(L)",
+                                            "type": "text"
+                                        },
+                                        {
+                                            "name": "12",
+                                            "label": "(M)",
+                                            "type": "text"
+                                        },
+                                        {
+                                            "name": "13",
+                                            "label": "(N)",
+                                            "type": "text"
+                                        },
+                                        {
+                                            "name": "14",
+                                            "label": "(O)",
+                                            "type": "text"
+                                        },
+                                        {
+                                            "name": "15",
+                                            "label": "(P)",
+                                            "type": "text"
+                                        },
+                                        {
+                                            "name": "16",
+                                            "label": "(Q)",
+                                            "type": "text"
+                                        },
+                                        {
+                                            "name": "17",
+                                            "label": "(R)",
+                                            "type": "text"
+                                        },
+                                        {
+                                            "name": "18",
+                                            "label": "(S)",
+                                            "type": "text"
+                                        },
+                                        {
+                                            "name": "19",
+                                            "label": "(T)",
+                                            "type": "text"
+                                        },
+                                        {
+                                            "name": "20",
+                                            "label": "(U)",
+                                            "type": "text"
+                                        },
+                                        {
+                                            "name": "21",
+                                            "label": "(V)",
+                                            "type": "text"
+                                        },
+                                        {
+                                            "name": "22",
+                                            "label": "(W)",
+                                            "type": "text"
+                                        },
+                                        {
+                                            "name": "23",
+                                            "label": "(X)",
+                                            "type": "text"
+                                        },
+                                        {
+                                            "name": "24",
+                                            "label": "(Y)",
+                                            "type": "text"
+                                        },
+                                        {
+                                            "name": "25",
+                                            "label": "(Z)",
+                                            "type": "text"
+                                        }
+                                    ]
+                                }
+                            ],
+                            "label": "Yes"
+                        }
+                    }
+                },
+                "parameters": [
+                    {
+                        "name": "__IMTCONN__",
+                        "type": "account:google",
+                        "label": "Connection",
+                        "required": true
+                    }
+                ],
+                "expect": [
+                    {
+                        "name": "mode",
+                        "type": "select",
+                        "label": "Choose a Method",
+                        "required": true,
+                        "validate": {
+                            "enum": [
+                                "select",
+                                "fromAll",
+                                "map"
+                            ]
+                        }
+                    },
+                    {
+                        "name": "insertUnformatted",
+                        "type": "boolean",
+                        "label": "Unformatted",
+                        "required": true
+                    },
+                    {
+                        "name": "valueInputOption",
+                        "type": "select",
+                        "label": "Value input option",
+                        "validate": {
+                            "enum": [
+                                "USER_ENTERED",
+                                "RAW"
+                            ]
+                        }
+                    },
+                    {
+                        "name": "insertDataOption",
+                        "type": "select",
+                        "label": "Insert data option",
+                        "validate": {
+                            "enum": [
+                                "INSERT_ROWS",
+                                "OVERWRITE"
+                            ]
+                        }
+                    },
+                    {
+                        "name": "from",
+                        "type": "select",
+                        "label": "Choose a Drive",
+                        "required": true,
+                        "validate": {
+                            "enum": [
+                                "drive",
+                                "share",
+                                "team"
+                            ]
+                        }
+                    },
+                    {
+                        "name": "spreadsheetId",
+                        "type": "file",
+                        "label": "Spreadsheet ID",
+                        "required": true
+                    },
+                    {
+                        "name": "sheetId",
+                        "type": "select",
+                        "label": "Sheet Name",
+                        "required": true
+                    },
+                    {
+                        "name": "includesHeaders",
+                        "type": "select",
+                        "label": "Table contains headers",
+                        "required": true,
+                        "validate": {
+                            "enum": [
+                                true,
+                                false
+                            ]
+                        }
+                    },
+                    {
+                        "name": "values",
+                        "type": "collection",
+                        "label": "Values",
+                        "spec": [
+                            {
+                                "name": "0",
+                                "type": "text",
+                                "label": "Date Scraped (A)"
+                            },
+                            {
+                                "name": "1",
+                                "type": "text",
+                                "label": "Original Title (B)"
+                            },
+                            {
+                                "name": "2",
+                                "type": "text",
+                                "label": "Original URL (C)"
+                            },
+                            {
+                                "name": "3",
+                                "type": "text",
+                                "label": "Author (D)"
+                            },
+                            {
+                                "name": "4",
+                                "type": "text",
+                                "label": "Author URL (E)"
+                            },
+                            {
+                                "name": "5",
+                                "type": "text",
+                                "label": "Published At (F)"
+                            },
+                            {
+                                "name": "6",
+                                "type": "text",
+                                "label": "Raw Article (G)"
+                            },
+                            {
+                                "name": "7",
+                                "type": "text",
+                                "label": "Parasite Title (H)"
+                            },
+                            {
+                                "name": "8",
+                                "type": "text",
+                                "label": "Parasite Article (I)"
+                            },
+                            {
+                                "name": "9",
+                                "type": "text",
+                                "label": "(J)"
+                            },
+                            {
+                                "name": "10",
+                                "type": "text",
+                                "label": "(K)"
+                            },
+                            {
+                                "name": "11",
+                                "type": "text",
+                                "label": "(L)"
+                            },
+                            {
+                                "name": "12",
+                                "type": "text",
+                                "label": "(M)"
+                            },
+                            {
+                                "name": "13",
+                                "type": "text",
+                                "label": "(N)"
+                            },
+                            {
+                                "name": "14",
+                                "type": "text",
+                                "label": "(O)"
+                            },
+                            {
+                                "name": "15",
+                                "type": "text",
+                                "label": "(P)"
+                            },
+                            {
+                                "name": "16",
+                                "type": "text",
+                                "label": "(Q)"
+                            },
+                            {
+                                "name": "17",
+                                "type": "text",
+                                "label": "(R)"
+                            },
+                            {
+                                "name": "18",
+                                "type": "text",
+                                "label": "(S)"
+                            },
+                            {
+                                "name": "19",
+                                "type": "text",
+                                "label": "(T)"
+                            },
+                            {
+                                "name": "20",
+                                "type": "text",
+                                "label": "(U)"
+                            },
+                            {
+                                "name": "21",
+                                "type": "text",
+                                "label": "(V)"
+                            },
+                            {
+                                "name": "22",
+                                "type": "text",
+                                "label": "(W)"
+                            },
+                            {
+                                "name": "23",
+                                "type": "text",
+                                "label": "(X)"
+                            },
+                            {
+                                "name": "24",
+                                "type": "text",
+                                "label": "(Y)"
+                            },
+                            {
+                                "name": "25",
+                                "type": "text",
+                                "label": "(Z)"
+                            }
+                        ]
+                    }
+                ]
+            }
+        }
+    ],
+    "metadata": {
+        "instant": true,
+        "version": 1,
+        "scenario": {
+            "roundtrips": 1,
+            "maxErrors": 3,
+            "autoCommit": true,
+            "autoCommitTriggerLast": true,
+            "sequential": false,
+            "slots": null,
+            "confidential": false,
+            "dataloss": false,
+            "dlq": false,
+            "freshVariables": false
+        },
+        "designer": {
+            "orphans": []
+        },
+        "zone": "us1.make.com"
+    }
+}

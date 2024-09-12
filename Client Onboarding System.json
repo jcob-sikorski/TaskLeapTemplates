@@ -1,0 +1,1544 @@
+{
+    "name": "Create ClickUp Dashboard",
+    "flow": [
+        {
+            "id": 4,
+            "module": "stripe:watchEvents",
+            "version": 1,
+            "parameters": {
+                "__IMTHOOK__": 1494271
+            },
+            "mapper": {},
+            "metadata": {
+                "designer": {
+                    "x": 0,
+                    "y": 0
+                },
+                "restore": {
+                    "parameters": {
+                        "__IMTHOOK__": {
+                            "data": {
+                                "editable": "false"
+                            },
+                            "label": "Stripe Watch Subscription Events Example (Jun 19 2024)"
+                        }
+                    }
+                },
+                "parameters": [
+                    {
+                        "name": "__IMTHOOK__",
+                        "type": "hook:stripe2",
+                        "label": "Webhook",
+                        "required": true
+                    }
+                ],
+                "interface": [
+                    {
+                        "name": "created",
+                        "type": "date",
+                        "label": "Created"
+                    },
+                    {
+                        "name": "event_type",
+                        "type": "text",
+                        "label": "Event Type"
+                    },
+                    {
+                        "name": "event_id",
+                        "type": "text",
+                        "label": "Event ID"
+                    },
+                    {
+                        "name": "object",
+                        "spec": [
+                            {
+                                "name": "id",
+                                "type": "text",
+                                "label": "ID"
+                            },
+                            {
+                                "name": "object",
+                                "type": "text",
+                                "label": "Object"
+                            },
+                            {
+                                "name": "application_fee_percent",
+                                "type": "text",
+                                "label": "Application fee percent"
+                            },
+                            {
+                                "name": "billing",
+                                "type": "text",
+                                "label": "Billing"
+                            },
+                            {
+                                "name": "billing_cycle_anchor",
+                                "type": "number",
+                                "label": "Billing cycle anchor"
+                            },
+                            {
+                                "name": "cancel_at_period_end",
+                                "type": "boolean",
+                                "label": "Cancel at perion end"
+                            },
+                            {
+                                "name": "canceled_at",
+                                "type": "text",
+                                "label": "Canceled at"
+                            },
+                            {
+                                "name": "created",
+                                "type": "number",
+                                "label": "Created"
+                            },
+                            {
+                                "name": "current_period_end",
+                                "type": "number",
+                                "label": "Current period end"
+                            },
+                            {
+                                "name": "current_period_start",
+                                "type": "number",
+                                "label": "Current period start"
+                            },
+                            {
+                                "name": "customer",
+                                "type": "text",
+                                "label": "Customer"
+                            },
+                            {
+                                "name": "days_until_due",
+                                "type": "text",
+                                "label": "Days until due"
+                            },
+                            {
+                                "name": "discount",
+                                "type": "text",
+                                "label": "Discount"
+                            },
+                            {
+                                "name": "ended_at",
+                                "type": "text",
+                                "label": "Ended at"
+                            },
+                            {
+                                "name": "items",
+                                "spec": [
+                                    {
+                                        "name": "object",
+                                        "type": "text",
+                                        "label": "Object"
+                                    },
+                                    {
+                                        "name": "data",
+                                        "spec": [
+                                            {
+                                                "name": "id",
+                                                "type": "text",
+                                                "label": "ID"
+                                            },
+                                            {
+                                                "name": "object",
+                                                "type": "text",
+                                                "label": "Object"
+                                            },
+                                            {
+                                                "name": "created",
+                                                "type": "number",
+                                                "label": "Created"
+                                            },
+                                            {
+                                                "name": "metadata",
+                                                "spec": [],
+                                                "type": "collection",
+                                                "label": "Metadata"
+                                            },
+                                            {
+                                                "name": "plan",
+                                                "spec": [
+                                                    {
+                                                        "name": "id",
+                                                        "type": "text",
+                                                        "label": "ID"
+                                                    },
+                                                    {
+                                                        "name": "object",
+                                                        "type": "text",
+                                                        "label": "Object"
+                                                    },
+                                                    {
+                                                        "name": "amount",
+                                                        "type": "number",
+                                                        "label": "Amount"
+                                                    },
+                                                    {
+                                                        "name": "created",
+                                                        "type": "number",
+                                                        "label": "Created"
+                                                    },
+                                                    {
+                                                        "name": "currency",
+                                                        "type": "text",
+                                                        "label": "Currency"
+                                                    },
+                                                    {
+                                                        "name": "interval",
+                                                        "type": "text",
+                                                        "label": "Interval"
+                                                    },
+                                                    {
+                                                        "name": "interval_count",
+                                                        "type": "number",
+                                                        "label": "Interval count"
+                                                    },
+                                                    {
+                                                        "name": "livemode",
+                                                        "type": "boolean",
+                                                        "label": "Livemode"
+                                                    },
+                                                    {
+                                                        "name": "metadata",
+                                                        "spec": [],
+                                                        "type": "collection",
+                                                        "label": "Metadata"
+                                                    },
+                                                    {
+                                                        "name": "nickname",
+                                                        "type": "text",
+                                                        "label": "Nickname"
+                                                    },
+                                                    {
+                                                        "name": "product",
+                                                        "type": "text",
+                                                        "label": "Product"
+                                                    },
+                                                    {
+                                                        "name": "trial_period_days",
+                                                        "type": "text",
+                                                        "label": "Trial period days"
+                                                    },
+                                                    {
+                                                        "name": "statement_descriptor",
+                                                        "type": "text",
+                                                        "label": "Statement descriptor"
+                                                    },
+                                                    {
+                                                        "name": "name",
+                                                        "type": "text",
+                                                        "label": "Name"
+                                                    }
+                                                ],
+                                                "type": "collection",
+                                                "label": "Plan"
+                                            },
+                                            {
+                                                "name": "quantity",
+                                                "type": "number",
+                                                "label": "Quantity"
+                                            },
+                                            {
+                                                "name": "subscription",
+                                                "type": "text",
+                                                "label": "Subscription"
+                                            }
+                                        ],
+                                        "type": "array",
+                                        "label": "Data"
+                                    },
+                                    {
+                                        "name": "has_more",
+                                        "type": "boolean",
+                                        "label": "Has more"
+                                    },
+                                    {
+                                        "name": "total_count",
+                                        "type": "number",
+                                        "label": "Total count"
+                                    },
+                                    {
+                                        "name": "url",
+                                        "type": "text",
+                                        "label": "URL"
+                                    }
+                                ],
+                                "type": "collection",
+                                "label": "Items"
+                            },
+                            {
+                                "name": "livemode",
+                                "type": "boolean",
+                                "label": "Livemode"
+                            },
+                            {
+                                "name": "metadata",
+                                "spec": [],
+                                "type": "collection",
+                                "label": "Metadata"
+                            },
+                            {
+                                "name": "plan",
+                                "spec": [
+                                    {
+                                        "name": "id",
+                                        "type": "text",
+                                        "label": "ID"
+                                    },
+                                    {
+                                        "name": "object",
+                                        "type": "text",
+                                        "label": "Object"
+                                    },
+                                    {
+                                        "name": "amount",
+                                        "type": "number",
+                                        "label": "Amount"
+                                    },
+                                    {
+                                        "name": "created",
+                                        "type": "number",
+                                        "label": "Created"
+                                    },
+                                    {
+                                        "name": "currency",
+                                        "type": "text",
+                                        "label": "Currency"
+                                    },
+                                    {
+                                        "name": "interval",
+                                        "type": "text",
+                                        "label": "Interval"
+                                    },
+                                    {
+                                        "name": "interval_count",
+                                        "type": "number",
+                                        "label": "Interval count"
+                                    },
+                                    {
+                                        "name": "livemode",
+                                        "type": "boolean",
+                                        "label": "Livemode"
+                                    },
+                                    {
+                                        "name": "metadata",
+                                        "spec": [],
+                                        "type": "collection",
+                                        "label": "Metadata"
+                                    },
+                                    {
+                                        "name": "nickname",
+                                        "type": "text",
+                                        "label": "Nickname"
+                                    },
+                                    {
+                                        "name": "product",
+                                        "type": "text",
+                                        "label": "Product"
+                                    },
+                                    {
+                                        "name": "trial_period_days",
+                                        "type": "text",
+                                        "label": "Trial period days"
+                                    },
+                                    {
+                                        "name": "statement_descriptor",
+                                        "type": "text",
+                                        "label": "Statement descriptor"
+                                    },
+                                    {
+                                        "name": "name",
+                                        "type": "text",
+                                        "label": "Name"
+                                    }
+                                ],
+                                "type": "collection",
+                                "label": "Plan"
+                            },
+                            {
+                                "name": "quantity",
+                                "type": "number",
+                                "label": "Quantity"
+                            },
+                            {
+                                "name": "start",
+                                "type": "number",
+                                "label": "Start"
+                            },
+                            {
+                                "name": "status",
+                                "type": "text",
+                                "label": "Status"
+                            },
+                            {
+                                "name": "tax_percent",
+                                "type": "text",
+                                "label": "Tax percent"
+                            },
+                            {
+                                "name": "trial_end",
+                                "type": "text",
+                                "label": "Trial end"
+                            },
+                            {
+                                "name": "trial_start",
+                                "type": "text",
+                                "label": "Trial start"
+                            }
+                        ],
+                        "type": "collection",
+                        "label": "Object"
+                    },
+                    {
+                        "name": "raw",
+                        "spec": [],
+                        "type": "collection",
+                        "label": "Raw Webhook Data"
+                    }
+                ]
+            }
+        },
+        {
+            "id": 5,
+            "module": "stripe:retrieveCustomer",
+            "version": 1,
+            "parameters": {
+                "__IMTCONN__": 231844
+            },
+            "mapper": {
+                "expand": [
+                    "default_source",
+                    "invoice_credit_balance",
+                    "subscriptions",
+                    "sources",
+                    "tax",
+                    "tax_ids"
+                ],
+                "customer": "{{4.object.customer}}"
+            },
+            "metadata": {
+                "designer": {
+                    "x": 300,
+                    "y": 0
+                },
+                "restore": {
+                    "expect": {
+                        "customer": {
+                            "mode": "edit"
+                        }
+                    },
+                    "parameters": {
+                        "__IMTCONN__": {
+                            "data": {
+                                "scoped": "true",
+                                "connection": "stripe"
+                            },
+                            "label": "1SecondCopy"
+                        }
+                    }
+                },
+                "parameters": [
+                    {
+                        "name": "__IMTCONN__",
+                        "type": "account:stripe",
+                        "label": "Connection",
+                        "required": true
+                    }
+                ],
+                "expect": [
+                    {
+                        "mode": "edit",
+                        "name": "customer",
+                        "type": "select",
+                        "label": "Customer ID",
+                        "required": true
+                    },
+                    {
+                        "name": "expand",
+                        "type": "select",
+                        "label": "Expand",
+                        "multiple": true,
+                        "validate": {
+                            "enum": [
+                                "default_source",
+                                "invoice_credit_balance",
+                                "subscriptions",
+                                "sources",
+                                "tax",
+                                "tax_ids"
+                            ]
+                        }
+                    }
+                ]
+            }
+        },
+        {
+            "id": 6,
+            "module": "email:ActionCreateDraft",
+            "version": 7,
+            "parameters": {
+                "account": 231843
+            },
+            "mapper": {
+                "cc": [],
+                "to": [
+                    "team@workflowloop.com"
+                ],
+                "bcc": [],
+                "from": "",
+                "html": "Hello team,<br><br>\nA new customer has just joined. Here is their information:<br>\n- {{5.email}}<br>\n- {{5.metadata}}<br>\n- {{5.name}}<br><br>\nThank you,<br>\nSystem",
+                "folder": "[Gmail]/Drafts",
+                "sender": "",
+                "headers": [],
+                "replyTo": "",
+                "subject": "New Subscription Created",
+                "priority": "normal",
+                "inReplyTo": "",
+                "references": [],
+                "attachments": [],
+                "contentType": "html"
+            },
+            "metadata": {
+                "designer": {
+                    "x": 600,
+                    "y": 0
+                },
+                "restore": {
+                    "expect": {
+                        "cc": {
+                            "mode": "chose"
+                        },
+                        "to": {
+                            "mode": "chose",
+                            "items": [
+                                null
+                            ]
+                        },
+                        "bcc": {
+                            "mode": "chose"
+                        },
+                        "folder": {
+                            "mode": "chose",
+                            "path": [
+                                "Drafts"
+                            ]
+                        },
+                        "priority": {
+                            "label": "Normal"
+                        },
+                        "references": {
+                            "mode": "chose"
+                        },
+                        "attachments": {
+                            "mode": "chose"
+                        },
+                        "contentType": {
+                            "label": "HTML"
+                        }
+                    },
+                    "parameters": {
+                        "account": {
+                            "data": {
+                                "scoped": "true",
+                                "connection": "google-restricted"
+                            },
+                            "label": "1SecondCopy (info@1secondcopy.com)"
+                        }
+                    }
+                },
+                "parameters": [
+                    {
+                        "name": "account",
+                        "type": "account:imap,google-restricted,microsoft-smtp-imap",
+                        "label": "Connection",
+                        "required": true
+                    }
+                ],
+                "expect": [
+                    {
+                        "type": "hidden"
+                    },
+                    {
+                        "name": "folder",
+                        "type": "folder",
+                        "label": "Folder",
+                        "required": true
+                    },
+                    {
+                        "name": "to",
+                        "spec": {
+                            "name": "value",
+                            "type": "email",
+                            "label": "Email address",
+                            "required": true
+                        },
+                        "type": "array",
+                        "label": "To",
+                        "required": true
+                    },
+                    {
+                        "name": "subject",
+                        "type": "text",
+                        "label": "Subject"
+                    },
+                    {
+                        "name": "contentType",
+                        "type": "select",
+                        "label": "Content Type",
+                        "required": true,
+                        "validate": {
+                            "enum": [
+                                "html",
+                                "text"
+                            ]
+                        }
+                    },
+                    {
+                        "name": "attachments",
+                        "spec": [
+                            {
+                                "name": "fileName",
+                                "type": "filename",
+                                "label": "File name",
+                                "required": true,
+                                "semantic": "file:name"
+                            },
+                            {
+                                "name": "data",
+                                "type": "buffer",
+                                "label": "Data",
+                                "required": true,
+                                "semantic": "file:data"
+                            },
+                            {
+                                "name": "cid",
+                                "type": "text",
+                                "label": "Content-ID"
+                            }
+                        ],
+                        "type": "array",
+                        "label": "Attachments"
+                    },
+                    {
+                        "name": "cc",
+                        "spec": {
+                            "name": "value",
+                            "type": "email",
+                            "label": "Email address"
+                        },
+                        "type": "array",
+                        "label": "Copy recipient"
+                    },
+                    {
+                        "name": "bcc",
+                        "spec": {
+                            "name": "value",
+                            "type": "email",
+                            "label": "Email address"
+                        },
+                        "type": "array",
+                        "label": "Blind copy recipient"
+                    },
+                    {
+                        "name": "from",
+                        "type": "text",
+                        "label": "From"
+                    },
+                    {
+                        "name": "sender",
+                        "type": "text",
+                        "label": "Sender"
+                    },
+                    {
+                        "name": "replyTo",
+                        "type": "text",
+                        "label": "Reply-To"
+                    },
+                    {
+                        "name": "inReplyTo",
+                        "type": "text",
+                        "label": "In-Reply-To"
+                    },
+                    {
+                        "name": "references",
+                        "spec": {
+                            "name": "value",
+                            "type": "text",
+                            "label": "Reference",
+                            "required": true
+                        },
+                        "type": "array",
+                        "label": "References"
+                    },
+                    {
+                        "name": "priority",
+                        "type": "select",
+                        "label": "Priority",
+                        "validate": {
+                            "enum": [
+                                "high",
+                                "normal",
+                                "low"
+                            ]
+                        }
+                    },
+                    {
+                        "name": "headers",
+                        "spec": [
+                            {
+                                "name": "key",
+                                "type": "text",
+                                "label": "Key",
+                                "required": true
+                            },
+                            {
+                                "name": "value",
+                                "type": "text",
+                                "label": "Value",
+                                "required": true
+                            }
+                        ],
+                        "type": "array",
+                        "label": "Headers"
+                    },
+                    {
+                        "name": "html",
+                        "type": "text",
+                        "label": "Content"
+                    }
+                ]
+            }
+        },
+        {
+            "id": 2,
+            "module": "util:SetVariable2",
+            "version": 1,
+            "parameters": {},
+            "mapper": {
+                "name": "apiKey",
+                "scope": "roundtrip",
+                "value": ""
+            },
+            "metadata": {
+                "designer": {
+                    "x": 900,
+                    "y": 0,
+                    "name": "API Key"
+                },
+                "restore": {
+                    "expect": {
+                        "scope": {
+                            "label": "One cycle"
+                        }
+                    }
+                },
+                "expect": [
+                    {
+                        "name": "name",
+                        "type": "text",
+                        "label": "Variable name",
+                        "required": true
+                    },
+                    {
+                        "name": "scope",
+                        "type": "select",
+                        "label": "Variable lifetime",
+                        "required": true,
+                        "validate": {
+                            "enum": [
+                                "roundtrip",
+                                "execution"
+                            ]
+                        }
+                    },
+                    {
+                        "name": "value",
+                        "type": "any",
+                        "label": "Variable value"
+                    }
+                ],
+                "interface": [
+                    {
+                        "name": "apiKey",
+                        "type": "any",
+                        "label": "apiKey"
+                    }
+                ]
+            }
+        },
+        {
+            "id": 1,
+            "module": "http:ActionSendData",
+            "version": 3,
+            "parameters": {
+                "handleErrors": false,
+                "useNewZLibDeCompress": true
+            },
+            "mapper": {
+                "ca": "",
+                "qs": [],
+                "url": "https://prod-us-west-2-3.clickup.com/dashboard/dhagt-202/copy",
+                "data": "{\n    \"id\": \"dhagt-477\",\n    \"name\": \"Client Example Dashboard Name\",\n    \"creator\": 26314840,\n    \"date_created\": \"1718821027687\",\n    \"date_updated\": \"1718821027687\",\n    \"team_id\": \"14199321\",\n    \"view_id\": null,\n    \"view_parent_id\": null,\n    \"view_parent_type\": null,\n    \"view_archived\": null,\n    \"view_share_with_team\": null,\n    \"private\": true,\n    \"deleted\": false,\n    \"date_deleted\": null,\n    \"deleted_by\": null,\n    \"is_time_tracking\": false,\n    \"auto_refresh_enabled\": null,\n    \"hierarchy\": null,\n    \"filters\": {\n        \"fields\": [],\n        \"filter_op\": \"AND\",\n        \"op\": \"AND\",\n        \"filter_groups\": {},\n        \"filter_group_ops\": []\n    },\n    \"group_members\": [],\n    \"members\": [\n        {\n            \"date_added\": \"1718821027687\",\n            \"permission_level\": 5,\n            \"role\": 2,\n            \"added_by\": 26314840,\n            \"user\": {\n                \"id\": 26310132,\n                \"username\": \"Cyrill\",\n                \"email\": \"cy@1secondcopy.com\",\n                \"color\": \"#388d3c\",\n                \"initials\": \"C\",\n                \"profilePicture\": \"https://attachments.clickup.com/profilePictures/26310132_Squ.jpg\"\n            }\n        },\n        {\n            \"date_added\": \"1718821027687\",\n            \"permission_level\": 5,\n            \"role\": 2,\n            \"added_by\": 26314840,\n            \"user\": {\n                \"id\": 26310133,\n                \"username\": \"Noah Edis\",\n                \"email\": \"noah@1secondcopy.com\",\n                \"color\": \"#cddc39\",\n                \"initials\": \"NE\",\n                \"profilePicture\": \"https://attachments.clickup.com/profilePictures/26310133_mdH.jpg\"\n            }\n        },\n        {\n            \"date_added\": \"1718821027687\",\n            \"permission_level\": 5,\n            \"role\": 2,\n            \"added_by\": 26314840,\n            \"user\": {\n                \"id\": 26314840,\n                \"username\": \"Nick Saraev\",\n                \"email\": \"nick@1secondcopy.com\",\n                \"color\": \"#aa2fff\",\n                \"initials\": \"NS\",\n                \"profilePicture\": \"https://attachments.clickup.com/profilePictures/26314840_VGz.jpg\"\n            }\n        },\n        {\n            \"date_added\": \"1718821027687\",\n            \"permission_level\": 5,\n            \"role\": 2,\n            \"added_by\": 26314840,\n            \"user\": {\n                \"id\": 26323839,\n                \"username\": \"Maddy Parise\",\n                \"email\": \"m.g.parise@outlook.com\",\n                \"color\": \"#d60800\",\n                \"initials\": \"MP\",\n                \"profilePicture\": \"https://attachments.clickup.com/profilePictures/26323839_aMw.jpg\"\n            }\n        },\n        {\n            \"date_added\": \"1718821027687\",\n            \"permission_level\": 1,\n            \"role\": 4,\n            \"added_by\": 26314840,\n            \"user\": {\n                \"id\": 37707142,\n                \"username\": \"Justine Jacinto\",\n                \"email\": \"jcjacinto1@up.edu.ph\",\n                \"color\": \"#ffa727\",\n                \"initials\": \"JJ\",\n                \"profilePicture\": \"https://attachments.clickup.com/profilePictures/37707142_QGD.jpg\"\n            }\n        },\n        {\n            \"date_added\": \"1718821027687\",\n            \"permission_level\": 5,\n            \"role\": 3,\n            \"added_by\": 26314840,\n            \"user\": {\n                \"id\": 48856322,\n                \"username\": \"Stef Atega\",\n                \"email\": \"stef.atega@gmail.com\",\n                \"color\": \"#181D21\",\n                \"initials\": \"SA\",\n                \"profilePicture\": \"https://attachments.clickup.com/profilePictures/48856322_NsC.jpg\"\n            }\n        },\n        {\n            \"date_added\": \"1718821027687\",\n            \"permission_level\": 5,\n            \"role\": 2,\n            \"added_by\": 26314840,\n            \"user\": {\n                \"id\": 54668278,\n                \"username\": \"Justine Jacinto\",\n                \"email\": \"justinejacinto@gmail.com\",\n                \"color\": \"#d60800\",\n                \"initials\": \"JJ\",\n                \"profilePicture\": \"https://attachments.clickup.com/profilePictures/54668278_w3K.jpg\"\n            }\n        }\n    ],\n    \"widget\": [\n        {\n            \"id\": \"4a2b8e6e-bde0-4871-81a5-32ef6b7edf4a\",\n            \"dashboard_id\": \"dhagt-477\",\n            \"calculation\": {},\n            \"creator\": 26314840,\n            \"date_created\": \"1718821027688\",\n            \"date_updated\": \"1718821027688\",\n            \"title\": \"Avg cycle time\",\n            \"type\": 1,\n            \"view_id\": null,\n            \"portfolio_id\": null,\n            \"deleted\": false,\n            \"deleted_by\": null,\n            \"date_deleted\": null,\n            \"x\": 0,\n            \"y\": 0,\n            \"rows\": 2,\n            \"cols\": 6,\n            \"meta\": null,\n            \"pre_made\": \"cycle\",\n            \"include_subtasks\": false,\n            \"include_archived\": false,\n            \"filters\": {\n                \"fields\": [],\n                \"search\": \"\",\n                \"show_closed\": false,\n                \"filter_op\": \"AND\",\n                \"op\": \"AND\",\n                \"filter_group_ops\": null,\n                \"filter_groups\": null\n            },\n            \"x_axis\": {\n                \"label\": null,\n                \"unit\": \"time\",\n                \"start\": null,\n                \"end\": \"90\",\n                \"step\": \"week\",\n                \"range_type\": \"rolling_days\"\n            },\n            \"y_axis\": {\n                \"label\": null,\n                \"unit\": \"cycle_time\"\n            },\n            \"group_by\": {\n                \"type\": \"date_done\",\n                \"value\": \"\",\n                \"range_type\": null,\n                \"start\": null,\n                \"end\": null,\n                \"step\": null\n            },\n            \"group_by_2\": {\n                \"type\": null\n            },\n            \"stacked\": null,\n            \"location\": [\n                {\n                    \"id\": \"122186074\",\n                    \"type\": \"subcategory\"\n                }\n            ],\n            \"cf_filter\": {\n                \"id\": null,\n                \"values\": null\n            },\n            \"show_average\": null,\n            \"visual_filter\": null,\n            \"show_legend\": true,\n            \"editor_token\": null,\n            \"show_value\": null,\n            \"delta\": null,\n            \"sample_period\": 4,\n            \"unstarted_status_group\": true,\n            \"exclude_multiple_lists\": null,\n            \"exclude_sub_multiple_lists\": null,\n            \"show_historical_list_data\": null,\n            \"sprint_source\": null,\n            \"compare_with_previous\": false,\n            \"display_data_type\": null,\n            \"timezone\": \"America/Edmonton\",\n            \"week_start_day\": 1,\n            \"parent_id\": null,\n            \"parent_type\": null,\n            \"workspace_id\": \"14199321\",\n            \"show_empty_dates\": null,\n            \"show_empty_field\": null,\n            \"drilldown_view_id\": null,\n            \"attachments\": []\n        },\n        {\n            \"id\": \"b552ea1c-d6e7-49ec-93ab-a7b5ecdda46f\",\n            \"dashboard_id\": \"dhagt-477\",\n            \"calculation\": {},\n            \"creator\": 26314840,\n            \"date_created\": \"1718821027688\",\n            \"date_updated\": \"1718821027688\",\n            \"title\": \"Quick links\",\n            \"type\": 8,\n            \"view_id\": null,\n            \"portfolio_id\": null,\n            \"deleted\": false,\n            \"deleted_by\": null,\n            \"date_deleted\": null,\n            \"x\": 6,\n            \"y\": 0,\n            \"rows\": 2,\n            \"cols\": 6,\n            \"meta\": null,\n            \"pre_made\": \"custom_description\",\n            \"include_subtasks\": true,\n            \"include_archived\": null,\n            \"filters\": {\n                \"fields\": [],\n                \"search\": null,\n                \"show_closed\": false,\n                \"filter_op\": \"AND\",\n                \"op\": \"AND\",\n                \"filter_group_ops\": null,\n                \"filter_groups\": null\n            },\n            \"x_axis\": {\n                \"label\": null,\n                \"unit\": \"time\",\n                \"start\": null,\n                \"end\": null,\n                \"step\": \"day\",\n                \"range_type\": \"this_month\"\n            },\n            \"y_axis\": {\n                \"label\": null,\n                \"unit\": \"tasks\"\n            },\n            \"group_by\": {\n                \"type\": \"status\",\n                \"value\": null,\n                \"range_type\": null,\n                \"start\": null,\n                \"end\": null,\n                \"step\": null\n            },\n            \"group_by_2\": {\n                \"type\": null\n            },\n            \"stacked\": null,\n            \"location\": [],\n            \"cf_filter\": {\n                \"id\": null,\n                \"values\": null\n            },\n            \"show_average\": null,\n            \"visual_filter\": null,\n            \"show_legend\": null,\n            \"editor_token\": \"widget:b552ea1c-d6e7-49ec-93ab-a7b5ecdda46f:6f4e3688-cc04-4c52-85ee-d16bf4c0b9af:20a6a01b-1e99-44e8-a4f8-5b6dce83add7\",\n            \"show_value\": null,\n            \"delta\": null,\n            \"sample_period\": null,\n            \"unstarted_status_group\": true,\n            \"exclude_multiple_lists\": null,\n            \"exclude_sub_multiple_lists\": null,\n            \"show_historical_list_data\": null,\n            \"sprint_source\": null,\n            \"compare_with_previous\": null,\n            \"display_data_type\": null,\n            \"timezone\": \"America/Edmonton\",\n            \"week_start_day\": 1,\n            \"parent_id\": null,\n            \"parent_type\": null,\n            \"workspace_id\": \"14199321\",\n            \"show_empty_dates\": null,\n            \"show_empty_field\": null,\n            \"drilldown_view_id\": null,\n            \"description\": \"{\\\"ops\\\":[{\\\"insert\\\":\\\"Onboarding\\\",\\\"attributes\\\":{\\\"color-class\\\":\\\"green\\\",\\\"link\\\":\\\"https://www.notion.so/1secondcopy/Onboarding-Instructions-ff5beb874b434f29a070bc05fdf18c31\\\"}},{\\\"insert\\\":\\\"\\\\n\\\",\\\"attributes\\\":{\\\"block-id\\\":\\\"block-3bb147cf-81b3-4edf-b2fa-feff60ae6b45\\\",\\\"list\\\":{\\\"list\\\":\\\"bullet\\\"}}},{\\\"insert\\\":\\\"Writer Feedback\\\",\\\"attributes\\\":{\\\"color-class\\\":\\\"green\\\",\\\"link\\\":\\\"https://docs.google.com/document/d/1zmyqj7uZERMBcFPu_wGhZ7EAm8Aao9GqI7J77IK9JDk/edit?usp=sharing\\\"}},{\\\"insert\\\":\\\"\\\\n\\\",\\\"attributes\\\":{\\\"block-id\\\":\\\"block-d4e52b9a-c7c7-4396-b8b0-6a37f6307f7e\\\",\\\"list\\\":{\\\"list\\\":\\\"bullet\\\"}}},{\\\"insert\\\":\\\"Monthly 1:1s\\\",\\\"attributes\\\":{\\\"color-class\\\":\\\"green\\\",\\\"link\\\":\\\"https://www.notion.so/1secondcopy/Monthly-1-1-Meetings-f4cf67aa1c60413fb39f69118c7e6b00\\\"}},{\\\"insert\\\":\\\"\\\\n\\\",\\\"attributes\\\":{\\\"block-id\\\":\\\"block-8cf4f185-ae33-4ef2-aab7-725378be61ce\\\",\\\"list\\\":{\\\"list\\\":\\\"bullet\\\"}}},{\\\"insert\\\":\\\"Playground\\\",\\\"attributes\\\":{\\\"color-class\\\":\\\"green\\\",\\\"link\\\":\\\"https://beta.openai.com/playground\\\"}},{\\\"insert\\\":\\\"\\\\n\\\",\\\"attributes\\\":{\\\"block-id\\\":\\\"block-8f17f7dc-eb1b-4ea0-b0ca-511e3fa997ba\\\",\\\"list\\\":{\\\"list\\\":\\\"bullet\\\"}}},{\\\"insert\\\":\\\"Management Hub\\\",\\\"attributes\\\":{\\\"color-class\\\":\\\"green\\\",\\\"link\\\":\\\"https://www.notion.so/1secondcopy/Management-Hub-092c4315220f4e6184081ee468092835\\\"}},{\\\"insert\\\":\\\"\\\\n\\\",\\\"attributes\\\":{\\\"block-id\\\":\\\"block-b5060f8c-8e53-4280-8adf-5807010f2a50\\\",\\\"list\\\":{\\\"list\\\":\\\"bullet\\\"}}},{\\\"insert\\\":\\\"Team Progress\\\",\\\"attributes\\\":{\\\"color-class\\\":\\\"green\\\",\\\"link\\\":\\\"https://www.notion.so/1secondcopy/f6de9c88c5fd403b83a0e2ddd902c646?v=1d987dff632549d599f05bebeed138b9\\\"}},{\\\"insert\\\":\\\"\\\\n\\\",\\\"attributes\\\":{\\\"block-id\\\":\\\"block-461518dc-74d0-4e0d-995b-918412e0d48a\\\",\\\"list\\\":{\\\"list\\\":\\\"bullet\\\"}}},{\\\"insert\\\":\\\"Website\\\",\\\"attributes\\\":{\\\"color-class\\\":\\\"green\\\",\\\"link\\\":\\\"https://1secondcopy.com/\\\"}},{\\\"insert\\\":\\\"\\\\n\\\",\\\"attributes\\\":{\\\"block-id\\\":\\\"block-74d2ee09-c8c3-49cf-87f0-fdccfefaacf9\\\",\\\"list\\\":{\\\"list\\\":\\\"bullet\\\"}}}]}\",\n            \"attachments\": []\n        }\n    ],\n    \"permission_level\": 5\n}",
+                "gzip": true,
+                "method": "post",
+                "headers": [
+                    {
+                        "name": "Authorization",
+                        "value": "{{2.apiKey}}"
+                    },
+                    {
+                        "name": "Sec-Ch-Ua",
+                        "value": "\"Google Chrome\";v=\"125\", \"Chromium\";v=\"125\", \"Not.A/Brand\";v=\"24\""
+                    },
+                    {
+                        "name": "User-Agent",
+                        "value": "Mozilla/5.0 (Linux; Android 6.0; Nexus 5 Build/MRA58N) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/125.0.0.0 Mobile Safari/537.36"
+                    }
+                ],
+                "timeout": "",
+                "useMtls": false,
+                "authPass": "",
+                "authUser": "",
+                "bodyType": "raw",
+                "contentType": "application/json",
+                "serializeUrl": false,
+                "shareCookies": false,
+                "parseResponse": true,
+                "followRedirect": true,
+                "useQuerystring": false,
+                "followAllRedirects": false,
+                "rejectUnauthorized": true
+            },
+            "metadata": {
+                "designer": {
+                    "x": 1200,
+                    "y": 0,
+                    "name": "Duplicate Dashboard"
+                },
+                "restore": {
+                    "expect": {
+                        "qs": {
+                            "mode": "chose"
+                        },
+                        "method": {
+                            "mode": "chose",
+                            "label": "POST"
+                        },
+                        "headers": {
+                            "mode": "chose",
+                            "items": [
+                                null,
+                                null,
+                                null
+                            ]
+                        },
+                        "bodyType": {
+                            "label": "Raw"
+                        },
+                        "contentType": {
+                            "label": "JSON (application/json)"
+                        }
+                    }
+                },
+                "parameters": [
+                    {
+                        "name": "handleErrors",
+                        "type": "boolean",
+                        "label": "Evaluate all states as errors (except for 2xx and 3xx )",
+                        "required": true
+                    },
+                    {
+                        "name": "useNewZLibDeCompress",
+                        "type": "hidden"
+                    }
+                ],
+                "expect": [
+                    {
+                        "name": "url",
+                        "type": "url",
+                        "label": "URL",
+                        "required": true
+                    },
+                    {
+                        "name": "serializeUrl",
+                        "type": "boolean",
+                        "label": "Serialize URL",
+                        "required": true
+                    },
+                    {
+                        "name": "method",
+                        "type": "select",
+                        "label": "Method",
+                        "required": true,
+                        "validate": {
+                            "enum": [
+                                "get",
+                                "head",
+                                "post",
+                                "put",
+                                "patch",
+                                "delete",
+                                "options"
+                            ]
+                        }
+                    },
+                    {
+                        "name": "headers",
+                        "spec": [
+                            {
+                                "name": "name",
+                                "type": "text",
+                                "label": "Name",
+                                "required": true
+                            },
+                            {
+                                "name": "value",
+                                "type": "text",
+                                "label": "Value"
+                            }
+                        ],
+                        "type": "array",
+                        "label": "Headers"
+                    },
+                    {
+                        "name": "qs",
+                        "spec": [
+                            {
+                                "name": "name",
+                                "type": "text",
+                                "label": "Name",
+                                "required": true
+                            },
+                            {
+                                "name": "value",
+                                "type": "text",
+                                "label": "Value"
+                            }
+                        ],
+                        "type": "array",
+                        "label": "Query String"
+                    },
+                    {
+                        "name": "bodyType",
+                        "type": "select",
+                        "label": "Body type",
+                        "validate": {
+                            "enum": [
+                                "raw",
+                                "x_www_form_urlencoded",
+                                "multipart_form_data"
+                            ]
+                        }
+                    },
+                    {
+                        "name": "parseResponse",
+                        "type": "boolean",
+                        "label": "Parse response",
+                        "required": true
+                    },
+                    {
+                        "name": "authUser",
+                        "type": "text",
+                        "label": "User name"
+                    },
+                    {
+                        "name": "authPass",
+                        "type": "password",
+                        "label": "Password"
+                    },
+                    {
+                        "name": "timeout",
+                        "type": "uinteger",
+                        "label": "Timeout",
+                        "validate": {
+                            "max": 300,
+                            "min": 1
+                        }
+                    },
+                    {
+                        "name": "shareCookies",
+                        "type": "boolean",
+                        "label": "Share cookies with other HTTP modules",
+                        "required": true
+                    },
+                    {
+                        "name": "ca",
+                        "type": "cert",
+                        "label": "Self-signed certificate"
+                    },
+                    {
+                        "name": "rejectUnauthorized",
+                        "type": "boolean",
+                        "label": "Reject connections that are using unverified (self-signed) certificates",
+                        "required": true
+                    },
+                    {
+                        "name": "followRedirect",
+                        "type": "boolean",
+                        "label": "Follow redirect",
+                        "required": true
+                    },
+                    {
+                        "name": "useQuerystring",
+                        "type": "boolean",
+                        "label": "Disable serialization of multiple same query string keys as arrays",
+                        "required": true
+                    },
+                    {
+                        "name": "gzip",
+                        "type": "boolean",
+                        "label": "Request compressed content",
+                        "required": true
+                    },
+                    {
+                        "name": "useMtls",
+                        "type": "boolean",
+                        "label": "Use Mutual TLS",
+                        "required": true
+                    },
+                    {
+                        "name": "contentType",
+                        "type": "select",
+                        "label": "Content type",
+                        "validate": {
+                            "enum": [
+                                "text/plain",
+                                "application/json",
+                                "application/xml",
+                                "text/xml",
+                                "text/html",
+                                "custom"
+                            ]
+                        }
+                    },
+                    {
+                        "name": "data",
+                        "type": "buffer",
+                        "label": "Request content"
+                    },
+                    {
+                        "name": "followAllRedirects",
+                        "type": "boolean",
+                        "label": "Follow all redirect",
+                        "required": true
+                    }
+                ]
+            }
+        },
+        {
+            "id": 3,
+            "module": "http:ActionSendData",
+            "version": 3,
+            "parameters": {
+                "handleErrors": false,
+                "useNewZLibDeCompress": true
+            },
+            "mapper": {
+                "ca": "",
+                "qs": [],
+                "url": "https://prod-us-west-2-3.clickup.com/dashboard/dhagt-497",
+                "data": "{\n   \"name\":\"{{5.name}}\"\n}",
+                "gzip": true,
+                "method": "put",
+                "headers": [
+                    {
+                        "name": "Authorization",
+                        "value": "{{2.apiKey}}"
+                    },
+                    {
+                        "name": "Sec-Ch-Ua",
+                        "value": "\"Google Chrome\";v=\"125\", \"Chromium\";v=\"125\", \"Not.A/Brand\";v=\"24\""
+                    },
+                    {
+                        "name": "User-Agent",
+                        "value": "Mozilla/5.0 (Linux; Android 6.0; Nexus 5 Build/MRA58N) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/125.0.0.0 Mobile Safari/537.36"
+                    }
+                ],
+                "timeout": "",
+                "useMtls": false,
+                "authPass": "",
+                "authUser": "",
+                "bodyType": "raw",
+                "contentType": "application/json",
+                "serializeUrl": false,
+                "shareCookies": false,
+                "parseResponse": true,
+                "followRedirect": true,
+                "useQuerystring": false,
+                "followAllRedirects": false,
+                "rejectUnauthorized": true
+            },
+            "metadata": {
+                "designer": {
+                    "x": 1500,
+                    "y": 0,
+                    "name": "Rename Dashboard"
+                },
+                "restore": {
+                    "expect": {
+                        "qs": {
+                            "mode": "chose"
+                        },
+                        "method": {
+                            "mode": "chose",
+                            "label": "PUT"
+                        },
+                        "headers": {
+                            "mode": "chose",
+                            "items": [
+                                null,
+                                null,
+                                null
+                            ]
+                        },
+                        "bodyType": {
+                            "label": "Raw"
+                        },
+                        "contentType": {
+                            "label": "JSON (application/json)"
+                        }
+                    }
+                },
+                "parameters": [
+                    {
+                        "name": "handleErrors",
+                        "type": "boolean",
+                        "label": "Evaluate all states as errors (except for 2xx and 3xx )",
+                        "required": true
+                    },
+                    {
+                        "name": "useNewZLibDeCompress",
+                        "type": "hidden"
+                    }
+                ],
+                "expect": [
+                    {
+                        "name": "url",
+                        "type": "url",
+                        "label": "URL",
+                        "required": true
+                    },
+                    {
+                        "name": "serializeUrl",
+                        "type": "boolean",
+                        "label": "Serialize URL",
+                        "required": true
+                    },
+                    {
+                        "name": "method",
+                        "type": "select",
+                        "label": "Method",
+                        "required": true,
+                        "validate": {
+                            "enum": [
+                                "get",
+                                "head",
+                                "post",
+                                "put",
+                                "patch",
+                                "delete",
+                                "options"
+                            ]
+                        }
+                    },
+                    {
+                        "name": "headers",
+                        "spec": [
+                            {
+                                "name": "name",
+                                "type": "text",
+                                "label": "Name",
+                                "required": true
+                            },
+                            {
+                                "name": "value",
+                                "type": "text",
+                                "label": "Value"
+                            }
+                        ],
+                        "type": "array",
+                        "label": "Headers"
+                    },
+                    {
+                        "name": "qs",
+                        "spec": [
+                            {
+                                "name": "name",
+                                "type": "text",
+                                "label": "Name",
+                                "required": true
+                            },
+                            {
+                                "name": "value",
+                                "type": "text",
+                                "label": "Value"
+                            }
+                        ],
+                        "type": "array",
+                        "label": "Query String"
+                    },
+                    {
+                        "name": "bodyType",
+                        "type": "select",
+                        "label": "Body type",
+                        "validate": {
+                            "enum": [
+                                "raw",
+                                "x_www_form_urlencoded",
+                                "multipart_form_data"
+                            ]
+                        }
+                    },
+                    {
+                        "name": "parseResponse",
+                        "type": "boolean",
+                        "label": "Parse response",
+                        "required": true
+                    },
+                    {
+                        "name": "authUser",
+                        "type": "text",
+                        "label": "User name"
+                    },
+                    {
+                        "name": "authPass",
+                        "type": "password",
+                        "label": "Password"
+                    },
+                    {
+                        "name": "timeout",
+                        "type": "uinteger",
+                        "label": "Timeout",
+                        "validate": {
+                            "max": 300,
+                            "min": 1
+                        }
+                    },
+                    {
+                        "name": "shareCookies",
+                        "type": "boolean",
+                        "label": "Share cookies with other HTTP modules",
+                        "required": true
+                    },
+                    {
+                        "name": "ca",
+                        "type": "cert",
+                        "label": "Self-signed certificate"
+                    },
+                    {
+                        "name": "rejectUnauthorized",
+                        "type": "boolean",
+                        "label": "Reject connections that are using unverified (self-signed) certificates",
+                        "required": true
+                    },
+                    {
+                        "name": "followRedirect",
+                        "type": "boolean",
+                        "label": "Follow redirect",
+                        "required": true
+                    },
+                    {
+                        "name": "useQuerystring",
+                        "type": "boolean",
+                        "label": "Disable serialization of multiple same query string keys as arrays",
+                        "required": true
+                    },
+                    {
+                        "name": "gzip",
+                        "type": "boolean",
+                        "label": "Request compressed content",
+                        "required": true
+                    },
+                    {
+                        "name": "useMtls",
+                        "type": "boolean",
+                        "label": "Use Mutual TLS",
+                        "required": true
+                    },
+                    {
+                        "name": "contentType",
+                        "type": "select",
+                        "label": "Content type",
+                        "validate": {
+                            "enum": [
+                                "text/plain",
+                                "application/json",
+                                "application/xml",
+                                "text/xml",
+                                "text/html",
+                                "custom"
+                            ]
+                        }
+                    },
+                    {
+                        "name": "data",
+                        "type": "buffer",
+                        "label": "Request content"
+                    },
+                    {
+                        "name": "followAllRedirects",
+                        "type": "boolean",
+                        "label": "Follow all redirect",
+                        "required": true
+                    }
+                ]
+            }
+        },
+        {
+            "id": 7,
+            "module": "email:ActionCreateDraft",
+            "version": 7,
+            "parameters": {
+                "account": 231843
+            },
+            "mapper": {
+                "cc": [],
+                "to": [
+                    "team@workflowloop.com"
+                ],
+                "bcc": [],
+                "from": "",
+                "html": "Hello {{5.metadata.firstName}},<br><br>\nThanks for trusting us with your project—can't wait to kick off and deliver something beautiful for you.<br><br>\nAdditional onboarding information—please do X Y Z. Book a call here, read this doc, etc.<br><br>\n<a href=\"https://app.clickup.com/14199321/dashboards/{{1.data.dashboard.id}}\">Here's your ClickUp Dashboard link.</a>\n<br><br> \nThank you,<br>\nStephanie @ WorkflowLoop",
+                "folder": "[Gmail]/Drafts",
+                "sender": "",
+                "headers": [],
+                "replyTo": "",
+                "subject": "Welcome aboard!",
+                "priority": "normal",
+                "inReplyTo": "",
+                "references": [],
+                "attachments": [],
+                "contentType": "html"
+            },
+            "metadata": {
+                "designer": {
+                    "x": 1800,
+                    "y": 0
+                },
+                "restore": {
+                    "expect": {
+                        "cc": {
+                            "mode": "chose"
+                        },
+                        "to": {
+                            "mode": "chose",
+                            "items": [
+                                null
+                            ]
+                        },
+                        "bcc": {
+                            "mode": "chose"
+                        },
+                        "folder": {
+                            "mode": "chose",
+                            "path": [
+                                "Drafts",
+                                "Drafts"
+                            ]
+                        },
+                        "priority": {
+                            "label": "Normal"
+                        },
+                        "references": {
+                            "mode": "chose"
+                        },
+                        "attachments": {
+                            "mode": "chose"
+                        },
+                        "contentType": {
+                            "label": "HTML"
+                        }
+                    },
+                    "parameters": {
+                        "account": {
+                            "data": {
+                                "scoped": "true",
+                                "connection": "google-restricted"
+                            },
+                            "label": "1SecondCopy (info@1secondcopy.com)"
+                        }
+                    }
+                },
+                "parameters": [
+                    {
+                        "name": "account",
+                        "type": "account:imap,google-restricted,microsoft-smtp-imap",
+                        "label": "Connection",
+                        "required": true
+                    }
+                ],
+                "expect": [
+                    {
+                        "type": "hidden"
+                    },
+                    {
+                        "name": "folder",
+                        "type": "folder",
+                        "label": "Folder",
+                        "required": true
+                    },
+                    {
+                        "name": "to",
+                        "spec": {
+                            "name": "value",
+                            "type": "email",
+                            "label": "Email address",
+                            "required": true
+                        },
+                        "type": "array",
+                        "label": "To",
+                        "required": true
+                    },
+                    {
+                        "name": "subject",
+                        "type": "text",
+                        "label": "Subject"
+                    },
+                    {
+                        "name": "contentType",
+                        "type": "select",
+                        "label": "Content Type",
+                        "required": true,
+                        "validate": {
+                            "enum": [
+                                "html",
+                                "text"
+                            ]
+                        }
+                    },
+                    {
+                        "name": "attachments",
+                        "spec": [
+                            {
+                                "name": "fileName",
+                                "type": "filename",
+                                "label": "File name",
+                                "required": true,
+                                "semantic": "file:name"
+                            },
+                            {
+                                "name": "data",
+                                "type": "buffer",
+                                "label": "Data",
+                                "required": true,
+                                "semantic": "file:data"
+                            },
+                            {
+                                "name": "cid",
+                                "type": "text",
+                                "label": "Content-ID"
+                            }
+                        ],
+                        "type": "array",
+                        "label": "Attachments"
+                    },
+                    {
+                        "name": "cc",
+                        "spec": {
+                            "name": "value",
+                            "type": "email",
+                            "label": "Email address"
+                        },
+                        "type": "array",
+                        "label": "Copy recipient"
+                    },
+                    {
+                        "name": "bcc",
+                        "spec": {
+                            "name": "value",
+                            "type": "email",
+                            "label": "Email address"
+                        },
+                        "type": "array",
+                        "label": "Blind copy recipient"
+                    },
+                    {
+                        "name": "from",
+                        "type": "text",
+                        "label": "From"
+                    },
+                    {
+                        "name": "sender",
+                        "type": "text",
+                        "label": "Sender"
+                    },
+                    {
+                        "name": "replyTo",
+                        "type": "text",
+                        "label": "Reply-To"
+                    },
+                    {
+                        "name": "inReplyTo",
+                        "type": "text",
+                        "label": "In-Reply-To"
+                    },
+                    {
+                        "name": "references",
+                        "spec": {
+                            "name": "value",
+                            "type": "text",
+                            "label": "Reference",
+                            "required": true
+                        },
+                        "type": "array",
+                        "label": "References"
+                    },
+                    {
+                        "name": "priority",
+                        "type": "select",
+                        "label": "Priority",
+                        "validate": {
+                            "enum": [
+                                "high",
+                                "normal",
+                                "low"
+                            ]
+                        }
+                    },
+                    {
+                        "name": "headers",
+                        "spec": [
+                            {
+                                "name": "key",
+                                "type": "text",
+                                "label": "Key",
+                                "required": true
+                            },
+                            {
+                                "name": "value",
+                                "type": "text",
+                                "label": "Value",
+                                "required": true
+                            }
+                        ],
+                        "type": "array",
+                        "label": "Headers"
+                    },
+                    {
+                        "name": "html",
+                        "type": "text",
+                        "label": "Content"
+                    }
+                ]
+            }
+        }
+    ],
+    "metadata": {
+        "instant": true,
+        "version": 1,
+        "scenario": {
+            "roundtrips": 1,
+            "maxErrors": 3,
+            "autoCommit": true,
+            "autoCommitTriggerLast": true,
+            "sequential": false,
+            "slots": null,
+            "confidential": false,
+            "dataloss": false,
+            "dlq": false,
+            "freshVariables": false
+        },
+        "designer": {
+            "orphans": []
+        },
+        "zone": "us1.make.com"
+    }
+}

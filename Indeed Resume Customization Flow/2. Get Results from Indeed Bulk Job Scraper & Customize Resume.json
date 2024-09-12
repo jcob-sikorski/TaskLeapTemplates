@@ -1,0 +1,1110 @@
+{
+    "name": "2. Get Results from Indeed Bulk Job Scraper & Customize Resume",
+    "flow": [
+        {
+            "id": 1,
+            "module": "apify:finishedActorRuns",
+            "version": 1,
+            "parameters": {
+                "__IMTHOOK__": 1390388
+            },
+            "mapper": {},
+            "metadata": {
+                "designer": {
+                    "x": 0,
+                    "y": 0
+                },
+                "restore": {
+                    "parameters": {
+                        "__IMTHOOK__": {
+                            "label": "Indeed Bulk Job Scraper Completed",
+                            "data": {
+                                "editable": "false"
+                            }
+                        }
+                    }
+                },
+                "parameters": [
+                    {
+                        "name": "__IMTHOOK__",
+                        "type": "hook:apify",
+                        "label": "Webhook",
+                        "required": true
+                    }
+                ]
+            }
+        },
+        {
+            "id": 2,
+            "module": "apify:fetchDatasetItems",
+            "version": 1,
+            "parameters": {
+                "__IMTCONN__": 482566
+            },
+            "mapper": {
+                "datasetId": "{{1.defaultDatasetId}}",
+                "type": "clean",
+                "format": "json",
+                "limit": "100"
+            },
+            "metadata": {
+                "designer": {
+                    "x": 296,
+                    "y": 3
+                },
+                "restore": {
+                    "parameters": {
+                        "__IMTCONN__": {
+                            "label": "1SecondCopy",
+                            "data": {
+                                "scoped": "true",
+                                "connection": "apify"
+                            }
+                        }
+                    },
+                    "expect": {
+                        "type": {
+                            "mode": "chose",
+                            "label": "Clean"
+                        },
+                        "format": {
+                            "mode": "chose",
+                            "label": "JSON"
+                        }
+                    }
+                },
+                "parameters": [
+                    {
+                        "name": "__IMTCONN__",
+                        "type": "account:apify",
+                        "label": "Connection",
+                        "required": true
+                    }
+                ],
+                "expect": [
+                    {
+                        "name": "datasetId",
+                        "type": "text",
+                        "label": "Dataset ID",
+                        "required": true
+                    },
+                    {
+                        "name": "type",
+                        "type": "select",
+                        "label": "Data transformation",
+                        "required": true,
+                        "validate": {
+                            "enum": [
+                                "clean",
+                                "simplified",
+                                "none"
+                            ]
+                        }
+                    },
+                    {
+                        "name": "format",
+                        "type": "select",
+                        "label": "Format",
+                        "required": true,
+                        "validate": {
+                            "enum": [
+                                "json",
+                                "csv",
+                                "html",
+                                "xml",
+                                "rss",
+                                "xlsx"
+                            ]
+                        }
+                    },
+                    {
+                        "name": "limit",
+                        "type": "uinteger",
+                        "label": "Limit",
+                        "validate": {
+                            "max": 100000,
+                            "min": 1
+                        }
+                    },
+                    {
+                        "name": "offset",
+                        "type": "uinteger",
+                        "label": "Offset",
+                        "validate": {
+                            "min": 0
+                        }
+                    }
+                ]
+            }
+        },
+        {
+            "id": 3,
+            "module": "openai-gpt-3:CreateCompletion",
+            "version": 1,
+            "parameters": {
+                "__IMTCONN__": 634823
+            },
+            "mapper": {
+                "select": "chat",
+                "max_tokens": "4096",
+                "temperature": "0.7",
+                "top_p": "1",
+                "n_completions": "1",
+                "response_format": "text",
+                "model": "gpt-4o",
+                "messages": [
+                    {
+                        "role": "system",
+                        "content": "You're a helpful, intelligent writing assistant."
+                    },
+                    {
+                        "role": "user",
+                        "content": "Below is a resume and a job post. Customize the resume to the job post. Keep the places worked the same, but modify everything else in the resume to match the job post's requested skills and qualifications. Write the new resume in Markdown (atx) format."
+                    },
+                    {
+                        "role": "user",
+                        "content": "---\n\nResume\n\nMax Davis  \n[maxdavis.com](http://maxdavis.com) • (233) 347-3103 • [linkedin.com/max-davis](http://linkedin.com/max-davis) • @maxdavis • [github.com/maxdavis](http://github.com/maxdavis)  \n\n**Security Engineer**\n\nPassionate and seasoned Security Engineer with over 5 years of hands-on experience in information security operations and data protection/privacy. Demonstrated ability to collaborate with engineering, operations, and network teams to drive security requirements and solutions. Skilled in conducting security assessments, developing security standards, and improving security posture through process improvement and automation. \n\n**Relevant Highlights**\n- Extensive experience in security controls assessments and remediation activities.\n- Proficient in security technologies such as network security appliances, identity and access management systems, and security scanning tools.\n- Strong knowledge of industry standards and regulations (ISO, NIST, CSA).\n- Hands-on experience with cloud security, especially AWS.\n\n**Work Experience**\n\n**Data Engineer**  \nNext Generation 3/2022 - Present\n- Led the development and implementation of a data lake, resulting in a 50% increase in data accessibility.\n- Developed and implemented data pipelines to improve data quality, resulting in a 30% increase in data accuracy.\n- Led a team of 5 data engineers to develop and implement data-driven solutions to improve business outcomes.\n\n**Cloud Data Engineer**  \nEnigma Enterprises 3/2020 - 3/2022\n- Assisted in the development and implementation of ETL processes.\n- Conducted data cleaning and preparation.\n- Collaborated with data engineers to develop data pipelines, improving data quality and accessibility.\n\n**Junior Data Engineer**  \nThunderbolt Inc. 3/2019 - 3/2020\n- Assisted in the development and implementation of ETL processes.\n- Conducted data cleaning and preparation tasks.\n- Collaborated with data engineers to develop data pipelines, improving data quality and accessibility.\n\n**Skills & Competencies**\n- **Information Security Operations:** Conducting security assessments, vulnerability testing, and remediation activities.\n- **Security Technologies:** Network security appliances, identity and access management systems, anti-malware solutions, security scanning tools.\n- **Cloud Security:** Experience with AWS and cloud business models like Software-as-a-Service.\n- **Security Protocols:** Strong understanding of cryptography, authentication, and authorization.\n- **Industry Standards:** In-depth knowledge of ISO 27001, SOC 2, FedRAMP, NIST.\n- **Process Improvement:** Developing security standards, procedures, and controls.\n\n**Education**\n- Bachelor’s degree in Information Technology\n\n---\n\nJob Post\n\nOur client, in the autonomous driving vehicle space, is looking for a meticulous and analytical individual to join our team as a Data Loss Prevention (DLP) Analyst. This role involves providing technical assistance in the deployment, configuration, and optimization of our client's DLP security platforms. This person will utilize the DLP tools to detect and identify data loss risks, validate the efficiencies of processes, systems and services that handle sensitive information. This is a 6 month contract opportunity with a hybrid schedule of 3 days onsite (minimum) at their Foster City, CA location.\n  \n  Responsibilities: \n \n  Serve as the inaugural analyst for the emerging team, spearheading efforts in data loss prevention (DLP) initiatives.\n   Collaborate closely with senior engineer, in crafting and refining policies for data collection- then cleaning, processing, and generating reports. This includes a focus on identifying patterns and problem-solving to enhance data insights.\n   Analyze a variety of data sources, including but not limited to Crowdstrike and DLP for Zoom, to determine their potential value in strengthening the organization's security \n  Proficiently handle raw data, whether structured or unstructured, utilizing analytical skills to extract meaningful insights and produce actionable reports.\n   Demonstrate proficiency in automation techniques to streamline data analysis processes and enhance efficiency.\n   Exercise keen problem-solving abilities to identify and address emerging challenges in data protection and loss prevention.\n  Requirements: \n \n  Associate's Degree or equivalent in computer science, statistics, mathematics, internet security, or related fields. Alternatively, relevant on-the-job experience from academia, law enforcement, military service, or government service.\n   Minimum of 5 years' experience in reviewing and resolving DLP alerts.\n   Familiarity with pertinent data privacy and protection regulations.\n   Ability to comprehend technical intricacies and eagerness to acquire knowledge of new and complex technologies. Enthusiastic about tackling challenging tasks.\n   Proficiency in critical thinking, objectivity, rationality, and the ability to communicate in a results-driven, data-centric manner.\n   Knowledge of NIST CSF, RMF, and SP 800-53.\n  Nice to Have: \n \n  Experience with CrowdStrike.\n   Familiarity with statistical analytical tools and data visualization techniques.\n   Experience with policy/rule software tools.\n  \n  About Vivo\n  \n  Having been in business since 2006, Vivo is a full-service recruiting and consulting company, specializing in mid to senior level technology resources. Our brand promise is simple: we get people. We get that our clients don t want to waste time and that our candidates and employees thrive when given honest feedback and an opportunity to grow.\n  \n  Whether you re onsite at our Pleasanton headquarters or working for one of Vivo s clients the best brand names out there our promise to you is unwavering: we will treat you like you are our most important employee.\n  \n  Do you think you get people get what they really need, and get how to deliver? We re not perfect but we re accountable. We re not in 32 countries, but we are in the heart of it all. So, if you are looking for a flexible, fun and high-energy work environment, along with the opportunity to work with some of the world s technology leaders, we can t wait to talk to you.\n   \n---"
+                    },
+                    {
+                        "role": "assistant",
+                        "content": "# Max Davis\n\n[maxdavis.com](http://maxdavis.com) • (233) 347-3103 • [linkedin.com/max-davis](http://linkedin.com/max-davis) • @maxdavis • [github.com/maxdavis](http://github.com/maxdavis)\n\n## Data Loss Prevention (DLP) Analyst\n\nMeticulous and analytical professional with over 5 years of experience in data loss prevention (DLP) initiatives. Adept at deploying, configuring, and optimizing DLP security platforms. Proven ability to analyze data sources, identify patterns, and enhance data insights. Skilled in automation techniques to streamline processes and improve efficiency.\n\n## Relevant Highlights\n\n- Extensive experience in reviewing and resolving DLP alerts.\n- Proficient in handling raw data, both structured and unstructured, to extract meaningful insights.\n- Strong knowledge of data privacy and protection regulations.\n- Skilled in using CrowdStrike and DLP tools for platforms like Zoom.\n- Proficient in critical thinking, objectivity, and rationality in a data-centric manner.\n- Knowledgeable in NIST CSF, RMF, and SP 800-53.\n- Experience with statistical analytical tools and data visualization techniques.\n\n## Work Experience\n\n### Data Engineer\n**Next Generation**  \n3/2022 - Present\n- Spearheaded efforts in data loss prevention (DLP) initiatives, improving data security posture.\n- Developed and optimized data pipelines to enhance data quality and accessibility.\n- Analyzed data sources to identify patterns and generate actionable reports, enhancing data insights.\n\n### Cloud Data Engineer\n**Enigma Enterprises**  \n3/2020 - 3/2022\n- Collaborated with senior engineers to craft and refine DLP policies for data collection and processing.\n- Conducted data cleaning and preparation, improving data accuracy and quality.\n- Utilized automation techniques to streamline data analysis processes, enhancing efficiency.\n\n### Junior Data Engineer\n**Thunderbolt Inc.**  \n3/2019 - 3/2020\n- Assisted in the development and implementation of data protection protocols.\n- Conducted data cleaning and preparation tasks to improve data accuracy.\n- Collaborated with data engineers to develop data pipelines, improving data quality and accessibility.\n\n## Skills & Competencies\n\n- **Data Loss Prevention:** Reviewing and resolving DLP alerts, deploying and configuring DLP security platforms.\n- **Data Analysis:** Handling raw data, structured and unstructured, to extract meaningful insights.\n- **Security Tools:** Proficient in using CrowdStrike and DLP tools for platforms like Zoom.\n- **Automation:** Implementing automation techniques to streamline data analysis processes.\n- **Regulations:** Familiarity with NIST CSF, RMF, SP 800-53, and relevant data privacy and protection regulations.\n- **Critical Thinking:** Strong proficiency in critical thinking, objectivity, and rationality in a data-centric manner.\n\n## Education\n\n- Associate's Degree in Computer Science"
+                    },
+                    {
+                        "role": "user",
+                        "content": "---\n\nResume\n\nMax Davis  \n[maxdavis.com](http://maxdavis.com) • (233) 347-3103 • [linkedin.com/max-davis](http://linkedin.com/max-davis) • @maxdavis • [github.com/maxdavis](http://github.com/maxdavis)  \n\n**Security Engineer**\n\nPassionate and seasoned Security Engineer with over 5 years of hands-on experience in information security operations and data protection/privacy. Demonstrated ability to collaborate with engineering, operations, and network teams to drive security requirements and solutions. Skilled in conducting security assessments, developing security standards, and improving security posture through process improvement and automation. \n\n**Relevant Highlights**\n- Extensive experience in security controls assessments and remediation activities.\n- Proficient in security technologies such as network security appliances, identity and access management systems, and security scanning tools.\n- Strong knowledge of industry standards and regulations (ISO, NIST, CSA).\n- Hands-on experience with cloud security, especially AWS.\n\n**Work Experience**\n\n**Data Engineer**  \nNext Generation 3/2022 - Present\n- Led the development and implementation of a data lake, resulting in a 50% increase in data accessibility.\n- Developed and implemented data pipelines to improve data quality, resulting in a 30% increase in data accuracy.\n- Led a team of 5 data engineers to develop and implement data-driven solutions to improve business outcomes.\n\n**Cloud Data Engineer**  \nEnigma Enterprises 3/2020 - 3/2022\n- Assisted in the development and implementation of ETL processes.\n- Conducted data cleaning and preparation.\n- Collaborated with data engineers to develop data pipelines, improving data quality and accessibility.\n\n**Junior Data Engineer**  \nThunderbolt Inc. 3/2019 - 3/2020\n- Assisted in the development and implementation of ETL processes.\n- Conducted data cleaning and preparation tasks.\n- Collaborated with data engineers to develop data pipelines, improving data quality and accessibility.\n\n**Skills & Competencies**\n- **Information Security Operations:** Conducting security assessments, vulnerability testing, and remediation activities.\n- **Security Technologies:** Network security appliances, identity and access management systems, anti-malware solutions, security scanning tools.\n- **Cloud Security:** Experience with AWS and cloud business models like Software-as-a-Service.\n- **Security Protocols:** Strong understanding of cryptography, authentication, and authorization.\n- **Industry Standards:** In-depth knowledge of ISO 27001, SOC 2, FedRAMP, NIST.\n- **Process Improvement:** Developing security standards, procedures, and controls.\n\n**Education**\n- Bachelor’s degree in Information Technology\n\n---\n\nJob Post\n\n{{2.description}}\n   \n---"
+                    }
+                ]
+            },
+            "metadata": {
+                "designer": {
+                    "x": 596,
+                    "y": 4
+                },
+                "restore": {
+                    "parameters": {
+                        "__IMTCONN__": {
+                            "label": "1SecondCopy",
+                            "data": {
+                                "scoped": "true",
+                                "connection": "openai-gpt-3"
+                            }
+                        }
+                    },
+                    "expect": {
+                        "select": {
+                            "label": "Create a Chat Completion (GPT Models)"
+                        },
+                        "logit_bias": {
+                            "mode": "chose"
+                        },
+                        "response_format": {
+                            "mode": "chose",
+                            "label": "Text"
+                        },
+                        "stop": {
+                            "mode": "chose"
+                        },
+                        "additionalParameters": {
+                            "mode": "chose"
+                        },
+                        "model": {
+                            "mode": "chose",
+                            "label": "gpt-4o (system)"
+                        },
+                        "messages": {
+                            "mode": "chose",
+                            "items": [
+                                {
+                                    "role": {
+                                        "mode": "chose",
+                                        "label": "System"
+                                    }
+                                },
+                                {
+                                    "role": {
+                                        "mode": "chose",
+                                        "label": "User"
+                                    }
+                                },
+                                {
+                                    "role": {
+                                        "mode": "chose",
+                                        "label": "User"
+                                    }
+                                },
+                                {
+                                    "role": {
+                                        "mode": "chose",
+                                        "label": "Assistant"
+                                    }
+                                },
+                                {
+                                    "role": {
+                                        "mode": "chose",
+                                        "label": "User"
+                                    }
+                                }
+                            ]
+                        }
+                    }
+                },
+                "parameters": [
+                    {
+                        "name": "__IMTCONN__",
+                        "type": "account:openai-gpt-3",
+                        "label": "Connection",
+                        "required": true
+                    }
+                ],
+                "expect": [
+                    {
+                        "name": "select",
+                        "type": "select",
+                        "label": "Select Method",
+                        "required": true,
+                        "validate": {
+                            "enum": [
+                                "chat",
+                                "prompt"
+                            ]
+                        }
+                    },
+                    {
+                        "name": "max_tokens",
+                        "type": "number",
+                        "label": "Max Tokens",
+                        "required": true
+                    },
+                    {
+                        "name": "temperature",
+                        "type": "number",
+                        "label": "Temperature",
+                        "validate": {
+                            "max": 2,
+                            "min": 0
+                        }
+                    },
+                    {
+                        "name": "top_p",
+                        "type": "number",
+                        "label": "Top P",
+                        "validate": {
+                            "max": 1,
+                            "min": 0
+                        }
+                    },
+                    {
+                        "name": "n_completions",
+                        "type": "number",
+                        "label": "Number"
+                    },
+                    {
+                        "name": "frequency_penalty",
+                        "type": "number",
+                        "label": "Frequency Penalty",
+                        "validate": {
+                            "max": 2,
+                            "min": -2
+                        }
+                    },
+                    {
+                        "name": "presence_penalty",
+                        "type": "number",
+                        "label": "Presence Penalty",
+                        "validate": {
+                            "max": 2,
+                            "min": -2
+                        }
+                    },
+                    {
+                        "name": "logit_bias",
+                        "type": "array",
+                        "label": "Token Probability",
+                        "spec": {
+                            "spec": [
+                                {
+                                    "name": "token",
+                                    "type": "text",
+                                    "label": "Token ID",
+                                    "required": true
+                                },
+                                {
+                                    "name": "probability",
+                                    "type": "number",
+                                    "label": "Probability",
+                                    "required": true,
+                                    "validate": {
+                                        "max": 100,
+                                        "min": -100
+                                    }
+                                }
+                            ],
+                            "type": "collection",
+                            "label": "Token Probability",
+                            "name": "value"
+                        }
+                    },
+                    {
+                        "name": "response_format",
+                        "type": "select",
+                        "label": "Response Format",
+                        "validate": {
+                            "enum": [
+                                "text",
+                                "json_object"
+                            ]
+                        }
+                    },
+                    {
+                        "name": "seed",
+                        "type": "integer",
+                        "label": "Seed"
+                    },
+                    {
+                        "name": "stop",
+                        "type": "array",
+                        "label": "Stop Sequences",
+                        "validate": {
+                            "maxItems": 4
+                        },
+                        "spec": {
+                            "type": "text",
+                            "label": "Stop Sequence",
+                            "name": "value"
+                        }
+                    },
+                    {
+                        "name": "additionalParameters",
+                        "type": "array",
+                        "label": "Other Input Parameters",
+                        "spec": {
+                            "spec": [
+                                {
+                                    "name": "key",
+                                    "type": "text",
+                                    "label": "Parameter Name",
+                                    "required": true
+                                },
+                                {
+                                    "name": "type",
+                                    "type": "select",
+                                    "label": "Input Type",
+                                    "options": [
+                                        {
+                                            "label": "Text",
+                                            "value": "text",
+                                            "nested": [
+                                                {
+                                                    "name": "value",
+                                                    "type": "text",
+                                                    "label": "Parameter Value"
+                                                }
+                                            ],
+                                            "default": true
+                                        },
+                                        {
+                                            "label": "Number",
+                                            "value": "number",
+                                            "nested": [
+                                                {
+                                                    "name": "value",
+                                                    "type": "number",
+                                                    "label": "Parameter Value"
+                                                }
+                                            ]
+                                        },
+                                        {
+                                            "label": "Boolean",
+                                            "value": "boolean",
+                                            "nested": [
+                                                {
+                                                    "name": "value",
+                                                    "type": "boolean",
+                                                    "label": "Parameter Value"
+                                                }
+                                            ]
+                                        },
+                                        {
+                                            "label": "Date",
+                                            "value": "date",
+                                            "nested": [
+                                                {
+                                                    "name": "value",
+                                                    "type": "date",
+                                                    "label": "Parameter Value"
+                                                }
+                                            ]
+                                        },
+                                        {
+                                            "label": "Any",
+                                            "value": "any",
+                                            "nested": [
+                                                {
+                                                    "name": "value",
+                                                    "type": "any",
+                                                    "label": "Parameter Value"
+                                                }
+                                            ]
+                                        }
+                                    ]
+                                }
+                            ],
+                            "type": "collection",
+                            "label": "Input Parameter",
+                            "name": "value"
+                        }
+                    },
+                    {
+                        "name": "model",
+                        "type": "select",
+                        "label": "Model",
+                        "required": true
+                    },
+                    {
+                        "name": "messages",
+                        "type": "array",
+                        "label": "Messages",
+                        "required": true,
+                        "spec": {
+                            "spec": [
+                                {
+                                    "name": "role",
+                                    "type": "select",
+                                    "label": "Role",
+                                    "options": [
+                                        {
+                                            "label": "System",
+                                            "value": "system"
+                                        },
+                                        {
+                                            "label": "User",
+                                            "value": "user"
+                                        },
+                                        {
+                                            "label": "Assistant",
+                                            "value": "assistant"
+                                        }
+                                    ],
+                                    "required": true
+                                },
+                                {
+                                    "name": "content",
+                                    "type": "text",
+                                    "label": "Message Content"
+                                }
+                            ],
+                            "type": "collection",
+                            "label": "Message",
+                            "name": "value"
+                        }
+                    }
+                ],
+                "advanced": true
+            }
+        },
+        {
+            "id": 5,
+            "module": "markdown:Compile",
+            "version": 2,
+            "parameters": {},
+            "mapper": {
+                "data": "{{3.result}}",
+                "gfm": true,
+                "sanitize": false
+            },
+            "metadata": {
+                "designer": {
+                    "x": 904,
+                    "y": 1
+                },
+                "restore": {
+                    "expect": {
+                        "gfm": {
+                            "mode": "chose"
+                        },
+                        "sanitize": {
+                            "mode": "chose"
+                        }
+                    }
+                },
+                "expect": [
+                    {
+                        "name": "data",
+                        "type": "text",
+                        "label": "Markdown"
+                    },
+                    {
+                        "name": "gfm",
+                        "type": "boolean",
+                        "label": "GitHub Flavored Markdown",
+                        "required": true
+                    },
+                    {
+                        "name": "sanitize",
+                        "type": "boolean",
+                        "label": "Sanitize",
+                        "required": true
+                    }
+                ]
+            }
+        },
+        {
+            "id": 4,
+            "module": "google-docs:createADocument",
+            "version": 1,
+            "parameters": {
+                "__IMTCONN__": 231853
+            },
+            "mapper": {
+                "name": "Max Davis Resume",
+                "content": "{{5.data}}",
+                "destination": "drive",
+                "header": false,
+                "footer": false,
+                "folderId": "/"
+            },
+            "metadata": {
+                "designer": {
+                    "x": 1184,
+                    "y": 1
+                },
+                "restore": {
+                    "parameters": {
+                        "__IMTCONN__": {
+                            "label": "1SecondCopy (info@1secondcopy.com)",
+                            "data": {
+                                "scoped": "true",
+                                "connection": "google"
+                            }
+                        }
+                    },
+                    "expect": {
+                        "destination": {
+                            "label": "My Drive"
+                        },
+                        "folderId": {
+                            "mode": "chose",
+                            "path": [
+                                "/"
+                            ]
+                        }
+                    }
+                },
+                "parameters": [
+                    {
+                        "name": "__IMTCONN__",
+                        "type": "account:google",
+                        "label": "Connection",
+                        "required": true
+                    }
+                ],
+                "expect": [
+                    {
+                        "name": "name",
+                        "type": "text",
+                        "label": "Name",
+                        "required": true
+                    },
+                    {
+                        "name": "content",
+                        "type": "text",
+                        "label": "Content",
+                        "required": true
+                    },
+                    {
+                        "name": "destination",
+                        "type": "select",
+                        "label": "Choose a Drive",
+                        "required": true,
+                        "validate": {
+                            "enum": [
+                                "drive",
+                                "share",
+                                "team"
+                            ]
+                        }
+                    },
+                    {
+                        "name": "header",
+                        "type": "boolean",
+                        "label": "Insert a Header",
+                        "required": true
+                    },
+                    {
+                        "name": "footer",
+                        "type": "boolean",
+                        "label": "Insert a Footer",
+                        "required": true
+                    },
+                    {
+                        "name": "folderId",
+                        "type": "folder",
+                        "label": "New Document's Location",
+                        "required": true
+                    }
+                ]
+            }
+        },
+        {
+            "id": 6,
+            "module": "google-sheets:addRow",
+            "version": 2,
+            "parameters": {
+                "__IMTCONN__": 231853
+            },
+            "mapper": {
+                "mode": "select",
+                "insertUnformatted": false,
+                "valueInputOption": "USER_ENTERED",
+                "insertDataOption": "INSERT_ROWS",
+                "from": "drive",
+                "spreadsheetId": "/1rjImXvQyNJXFDbeXGjk0LNXfTb_sHY9oL61HnBc4myc",
+                "sheetId": "Sheet1",
+                "includesHeaders": true,
+                "values": {
+                    "0": "{{2.positionName}}",
+                    "1": "{{2.postedAt}}",
+                    "2": "{{2.scrapedAt}}",
+                    "3": "{{2.salary}}",
+                    "4": "{{2.jobType[]}}",
+                    "5": "{{2.company}}",
+                    "6": "{{2.location}}",
+                    "7": "{{2.description}}",
+                    "8": "{{2.url}}",
+                    "9": "{{4.webViewLink}}"
+                }
+            },
+            "metadata": {
+                "designer": {
+                    "x": 1493,
+                    "y": 0
+                },
+                "restore": {
+                    "parameters": {
+                        "__IMTCONN__": {
+                            "label": "1SecondCopy (info@1secondcopy.com)",
+                            "data": {
+                                "scoped": "true",
+                                "connection": "google"
+                            }
+                        }
+                    },
+                    "expect": {
+                        "mode": {
+                            "label": "Select by path"
+                        },
+                        "insertUnformatted": {
+                            "mode": "chose"
+                        },
+                        "valueInputOption": {
+                            "mode": "chose",
+                            "label": "User entered"
+                        },
+                        "insertDataOption": {
+                            "mode": "chose",
+                            "label": "Insert rows"
+                        },
+                        "from": {
+                            "label": "My Drive"
+                        },
+                        "spreadsheetId": {
+                            "path": [
+                                "Indeed Jobs"
+                            ]
+                        },
+                        "sheetId": {
+                            "label": "Sheet1"
+                        },
+                        "includesHeaders": {
+                            "nested": [
+                                {
+                                    "name": "values",
+                                    "label": "Values",
+                                    "type": "collection",
+                                    "spec": [
+                                        {
+                                            "name": "0",
+                                            "label": "Position Name (A)",
+                                            "type": "text"
+                                        },
+                                        {
+                                            "name": "1",
+                                            "label": "Posted At (B)",
+                                            "type": "text"
+                                        },
+                                        {
+                                            "name": "2",
+                                            "label": "Scraped At (C)",
+                                            "type": "text"
+                                        },
+                                        {
+                                            "name": "3",
+                                            "label": "Salary (D)",
+                                            "type": "text"
+                                        },
+                                        {
+                                            "name": "4",
+                                            "label": "Job Type (E)",
+                                            "type": "text"
+                                        },
+                                        {
+                                            "name": "5",
+                                            "label": "Company (F)",
+                                            "type": "text"
+                                        },
+                                        {
+                                            "name": "6",
+                                            "label": "Location (G)",
+                                            "type": "text"
+                                        },
+                                        {
+                                            "name": "7",
+                                            "label": "Description (H)",
+                                            "type": "text"
+                                        },
+                                        {
+                                            "name": "8",
+                                            "label": "URL to Apply (I)",
+                                            "type": "text"
+                                        },
+                                        {
+                                            "name": "9",
+                                            "label": "Customized Resume (J)",
+                                            "type": "text"
+                                        },
+                                        {
+                                            "name": "10",
+                                            "label": "(K)",
+                                            "type": "text"
+                                        },
+                                        {
+                                            "name": "11",
+                                            "label": "(L)",
+                                            "type": "text"
+                                        },
+                                        {
+                                            "name": "12",
+                                            "label": "(M)",
+                                            "type": "text"
+                                        },
+                                        {
+                                            "name": "13",
+                                            "label": "(N)",
+                                            "type": "text"
+                                        },
+                                        {
+                                            "name": "14",
+                                            "label": "(O)",
+                                            "type": "text"
+                                        },
+                                        {
+                                            "name": "15",
+                                            "label": "(P)",
+                                            "type": "text"
+                                        },
+                                        {
+                                            "name": "16",
+                                            "label": "(Q)",
+                                            "type": "text"
+                                        },
+                                        {
+                                            "name": "17",
+                                            "label": "(R)",
+                                            "type": "text"
+                                        },
+                                        {
+                                            "name": "18",
+                                            "label": "(S)",
+                                            "type": "text"
+                                        },
+                                        {
+                                            "name": "19",
+                                            "label": "(T)",
+                                            "type": "text"
+                                        },
+                                        {
+                                            "name": "20",
+                                            "label": "(U)",
+                                            "type": "text"
+                                        },
+                                        {
+                                            "name": "21",
+                                            "label": "(V)",
+                                            "type": "text"
+                                        },
+                                        {
+                                            "name": "22",
+                                            "label": "(W)",
+                                            "type": "text"
+                                        },
+                                        {
+                                            "name": "23",
+                                            "label": "(X)",
+                                            "type": "text"
+                                        },
+                                        {
+                                            "name": "24",
+                                            "label": "(Y)",
+                                            "type": "text"
+                                        },
+                                        {
+                                            "name": "25",
+                                            "label": "(Z)",
+                                            "type": "text"
+                                        }
+                                    ]
+                                }
+                            ],
+                            "label": "Yes"
+                        }
+                    }
+                },
+                "parameters": [
+                    {
+                        "name": "__IMTCONN__",
+                        "type": "account:google",
+                        "label": "Connection",
+                        "required": true
+                    }
+                ],
+                "expect": [
+                    {
+                        "name": "mode",
+                        "type": "select",
+                        "label": "Choose a Method",
+                        "required": true,
+                        "validate": {
+                            "enum": [
+                                "select",
+                                "fromAll",
+                                "map"
+                            ]
+                        }
+                    },
+                    {
+                        "name": "insertUnformatted",
+                        "type": "boolean",
+                        "label": "Unformatted",
+                        "required": true
+                    },
+                    {
+                        "name": "valueInputOption",
+                        "type": "select",
+                        "label": "Value input option",
+                        "validate": {
+                            "enum": [
+                                "USER_ENTERED",
+                                "RAW"
+                            ]
+                        }
+                    },
+                    {
+                        "name": "insertDataOption",
+                        "type": "select",
+                        "label": "Insert data option",
+                        "validate": {
+                            "enum": [
+                                "INSERT_ROWS",
+                                "OVERWRITE"
+                            ]
+                        }
+                    },
+                    {
+                        "name": "from",
+                        "type": "select",
+                        "label": "Choose a Drive",
+                        "required": true,
+                        "validate": {
+                            "enum": [
+                                "drive",
+                                "share",
+                                "team"
+                            ]
+                        }
+                    },
+                    {
+                        "name": "spreadsheetId",
+                        "type": "file",
+                        "label": "Spreadsheet ID",
+                        "required": true
+                    },
+                    {
+                        "name": "sheetId",
+                        "type": "select",
+                        "label": "Sheet Name",
+                        "required": true
+                    },
+                    {
+                        "name": "includesHeaders",
+                        "type": "select",
+                        "label": "Table contains headers",
+                        "required": true,
+                        "validate": {
+                            "enum": [
+                                true,
+                                false
+                            ]
+                        }
+                    },
+                    {
+                        "name": "values",
+                        "type": "collection",
+                        "label": "Values",
+                        "spec": [
+                            {
+                                "name": "0",
+                                "type": "text",
+                                "label": "Position Name (A)"
+                            },
+                            {
+                                "name": "1",
+                                "type": "text",
+                                "label": "Posted At (B)"
+                            },
+                            {
+                                "name": "2",
+                                "type": "text",
+                                "label": "Scraped At (C)"
+                            },
+                            {
+                                "name": "3",
+                                "type": "text",
+                                "label": "Salary (D)"
+                            },
+                            {
+                                "name": "4",
+                                "type": "text",
+                                "label": "Job Type (E)"
+                            },
+                            {
+                                "name": "5",
+                                "type": "text",
+                                "label": "Company (F)"
+                            },
+                            {
+                                "name": "6",
+                                "type": "text",
+                                "label": "Location (G)"
+                            },
+                            {
+                                "name": "7",
+                                "type": "text",
+                                "label": "Description (H)"
+                            },
+                            {
+                                "name": "8",
+                                "type": "text",
+                                "label": "URL to Apply (I)"
+                            },
+                            {
+                                "name": "9",
+                                "type": "text",
+                                "label": "Customized Resume (J)"
+                            },
+                            {
+                                "name": "10",
+                                "type": "text",
+                                "label": "(K)"
+                            },
+                            {
+                                "name": "11",
+                                "type": "text",
+                                "label": "(L)"
+                            },
+                            {
+                                "name": "12",
+                                "type": "text",
+                                "label": "(M)"
+                            },
+                            {
+                                "name": "13",
+                                "type": "text",
+                                "label": "(N)"
+                            },
+                            {
+                                "name": "14",
+                                "type": "text",
+                                "label": "(O)"
+                            },
+                            {
+                                "name": "15",
+                                "type": "text",
+                                "label": "(P)"
+                            },
+                            {
+                                "name": "16",
+                                "type": "text",
+                                "label": "(Q)"
+                            },
+                            {
+                                "name": "17",
+                                "type": "text",
+                                "label": "(R)"
+                            },
+                            {
+                                "name": "18",
+                                "type": "text",
+                                "label": "(S)"
+                            },
+                            {
+                                "name": "19",
+                                "type": "text",
+                                "label": "(T)"
+                            },
+                            {
+                                "name": "20",
+                                "type": "text",
+                                "label": "(U)"
+                            },
+                            {
+                                "name": "21",
+                                "type": "text",
+                                "label": "(V)"
+                            },
+                            {
+                                "name": "22",
+                                "type": "text",
+                                "label": "(W)"
+                            },
+                            {
+                                "name": "23",
+                                "type": "text",
+                                "label": "(X)"
+                            },
+                            {
+                                "name": "24",
+                                "type": "text",
+                                "label": "(Y)"
+                            },
+                            {
+                                "name": "25",
+                                "type": "text",
+                                "label": "(Z)"
+                            }
+                        ]
+                    }
+                ]
+            }
+        }
+    ],
+    "metadata": {
+        "instant": true,
+        "version": 1,
+        "scenario": {
+            "roundtrips": 1,
+            "maxErrors": 3,
+            "autoCommit": true,
+            "autoCommitTriggerLast": true,
+            "sequential": false,
+            "slots": null,
+            "confidential": false,
+            "dataloss": false,
+            "dlq": false,
+            "freshVariables": false
+        },
+        "designer": {
+            "orphans": []
+        },
+        "zone": "us1.make.com"
+    }
+}

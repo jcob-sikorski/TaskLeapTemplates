@@ -1,0 +1,1265 @@
+{
+    "name": "3. Photography Example: Reminder Texts",
+    "flow": [
+        {
+            "id": 1,
+            "module": "clickup:getListTasks",
+            "version": 2,
+            "parameters": {
+                "__IMTCONN__": 231856
+            },
+            "mapper": {
+                "limit": "100",
+                "list_id": "901701902540",
+                "team_id": "14199321",
+                "space_id": "90170754355",
+                "folder_id": "folderlessList",
+                "map_or_select": "select"
+            },
+            "metadata": {
+                "designer": {
+                    "x": 85,
+                    "y": 65
+                },
+                "restore": {
+                    "expect": {
+                        "tags": {
+                            "mode": "chose"
+                        },
+                        "dates": {
+                            "mode": "chose"
+                        },
+                        "list_id": {
+                            "label": "Photography Example [Tasks: 1]"
+                        },
+                        "reverse": {
+                            "mode": "chose"
+                        },
+                        "team_id": {
+                            "label": "1SecondCopy"
+                        },
+                        "archived": {
+                            "mode": "chose"
+                        },
+                        "order_by": {
+                            "mode": "chose",
+                            "label": "Empty"
+                        },
+                        "space_id": {
+                            "label": "Test Build"
+                        },
+                        "statuses": {
+                            "mode": "chose"
+                        },
+                        "subtasks": {
+                            "mode": "chose"
+                        },
+                        "assignees": {
+                            "mode": "chose"
+                        },
+                        "folder_id": {
+                            "label": "<Folderless Lists>"
+                        },
+                        "custom_fields": {
+                            "mode": "chose"
+                        },
+                        "map_or_select": {
+                            "label": "Select"
+                        },
+                        "include_closed": {
+                            "mode": "chose"
+                        }
+                    },
+                    "parameters": {
+                        "__IMTCONN__": {
+                            "data": {
+                                "scoped": "true",
+                                "connection": "clickup2"
+                            },
+                            "label": "1SecondCopy (1SecondCopy)"
+                        }
+                    }
+                },
+                "parameters": [
+                    {
+                        "name": "__IMTCONN__",
+                        "type": "account:clickup2",
+                        "label": "Connection",
+                        "required": true
+                    }
+                ],
+                "expect": [
+                    {
+                        "name": "map_or_select",
+                        "type": "select",
+                        "label": "Map or Select",
+                        "required": true,
+                        "validate": {
+                            "enum": [
+                                "map",
+                                "select"
+                            ]
+                        }
+                    },
+                    {
+                        "name": "include_closed",
+                        "type": "boolean",
+                        "label": "Include closed"
+                    },
+                    {
+                        "name": "archived",
+                        "type": "boolean",
+                        "label": "Archived"
+                    },
+                    {
+                        "name": "subtasks",
+                        "type": "boolean",
+                        "label": "Include Subtasks"
+                    },
+                    {
+                        "name": "dates",
+                        "spec": [
+                            {
+                                "name": "dateId",
+                                "type": "select",
+                                "label": "Date",
+                                "options": [
+                                    {
+                                        "label": "After Due Date",
+                                        "value": "due_date_gt"
+                                    },
+                                    {
+                                        "label": "Before Due Date",
+                                        "value": "due_date_lt"
+                                    },
+                                    {
+                                        "label": "After Date Created",
+                                        "value": "date_created_gt"
+                                    },
+                                    {
+                                        "label": "Before Date Created",
+                                        "value": "date_created_lt"
+                                    },
+                                    {
+                                        "label": "After Date Updated",
+                                        "value": "date_updated_gt"
+                                    },
+                                    {
+                                        "label": "Before Date Updated",
+                                        "value": "date_updated_lt"
+                                    }
+                                ]
+                            },
+                            {
+                                "name": "value",
+                                "type": "date",
+                                "label": "Value"
+                            }
+                        ],
+                        "type": "array",
+                        "label": "Filter by Dates"
+                    },
+                    {
+                        "name": "order_by",
+                        "type": "select",
+                        "label": "Order By",
+                        "validate": {
+                            "enum": [
+                                "id",
+                                "created",
+                                "updated",
+                                "due_date"
+                            ]
+                        }
+                    },
+                    {
+                        "name": "reverse",
+                        "type": "boolean",
+                        "label": "Reverse order"
+                    },
+                    {
+                        "name": "limit",
+                        "type": "uinteger",
+                        "label": "Limit"
+                    },
+                    {
+                        "name": "team_id",
+                        "type": "select",
+                        "label": "Workspace",
+                        "required": true
+                    },
+                    {
+                        "name": "space_id",
+                        "type": "select",
+                        "label": "Space",
+                        "required": true
+                    },
+                    {
+                        "name": "folder_id",
+                        "type": "select",
+                        "label": "Folder",
+                        "required": true
+                    },
+                    {
+                        "name": "list_id",
+                        "type": "select",
+                        "label": "List",
+                        "required": true
+                    },
+                    {
+                        "name": "assignees",
+                        "type": "select",
+                        "label": "Assignee IDs",
+                        "multiple": true
+                    },
+                    {
+                        "name": "tags",
+                        "type": "select",
+                        "label": "Tags",
+                        "multiple": true
+                    },
+                    {
+                        "name": "statuses",
+                        "type": "select",
+                        "label": "Status",
+                        "multiple": true
+                    },
+                    {
+                        "name": "custom_fields",
+                        "spec": [
+                            {
+                                "name": "field_id",
+                                "type": "select",
+                                "label": "Custom Field ID",
+                                "options": [
+                                    {
+                                        "label": "Package",
+                                        "value": "33fe3d83-3281-4ca4-9999-61dbc43102d3",
+                                        "nested": [
+                                            {
+                                                "name": "operator",
+                                                "type": "select",
+                                                "label": "Operator",
+                                                "options": "rpc://clickup/2/listTasksOperators"
+                                            },
+                                            {
+                                                "name": "value",
+                                                "type": "select",
+                                                "label": "Custom Field value",
+                                                "options": [
+                                                    {
+                                                        "label": "Newborn",
+                                                        "value": "646a7533-64b7-4f1d-9275-74e93155d0ed"
+                                                    },
+                                                    {
+                                                        "label": "Pregnancy",
+                                                        "value": "80421d3a-05e9-418f-baf9-62d501c2fc91"
+                                                    },
+                                                    {
+                                                        "label": "Family",
+                                                        "value": "88016623-cb81-4e7d-868e-69ae37987f76"
+                                                    }
+                                                ]
+                                            }
+                                        ]
+                                    },
+                                    {
+                                        "label": "Amount Paid",
+                                        "value": "36e58ac1-220f-4ea3-878b-610ce07125ee",
+                                        "nested": [
+                                            {
+                                                "name": "operator",
+                                                "type": "select",
+                                                "label": "Operator",
+                                                "options": "rpc://clickup/2/listTasksOperators"
+                                            },
+                                            {
+                                                "help": "Currency: USD",
+                                                "name": "value",
+                                                "type": "number",
+                                                "label": "Custom Field value"
+                                            }
+                                        ]
+                                    },
+                                    {
+                                        "label": "First",
+                                        "value": "4d9de377-6b69-4f9e-9e9c-7ae432cfa989",
+                                        "nested": [
+                                            {
+                                                "name": "operator",
+                                                "type": "select",
+                                                "label": "Operator",
+                                                "options": "rpc://clickup/2/listTasksOperators"
+                                            },
+                                            {
+                                                "name": "value",
+                                                "type": "text",
+                                                "label": "Custom Field value"
+                                            }
+                                        ]
+                                    },
+                                    {
+                                        "label": "First Name",
+                                        "value": "8251cc5f-c9d6-4043-9c66-2e8d97a8193e",
+                                        "nested": [
+                                            {
+                                                "name": "operator",
+                                                "type": "select",
+                                                "label": "Operator",
+                                                "options": "rpc://clickup/2/listTasksOperators"
+                                            },
+                                            {
+                                                "name": "value",
+                                                "type": "text",
+                                                "label": "Custom Field value"
+                                            }
+                                        ]
+                                    },
+                                    {
+                                        "label": "FirstName",
+                                        "value": "b47bac1d-f3e7-4014-a250-19878996a971",
+                                        "nested": [
+                                            {
+                                                "name": "operator",
+                                                "type": "select",
+                                                "label": "Operator",
+                                                "options": "rpc://clickup/2/listTasksOperators"
+                                            },
+                                            {
+                                                "name": "value",
+                                                "type": "text",
+                                                "label": "Custom Field value"
+                                            }
+                                        ]
+                                    },
+                                    {
+                                        "label": "Email",
+                                        "value": "bf8f086c-cc23-4e3c-8980-0cbc029abaff",
+                                        "nested": [
+                                            {
+                                                "name": "operator",
+                                                "type": "select",
+                                                "label": "Operator",
+                                                "options": "rpc://clickup/2/listTasksOperators"
+                                            },
+                                            {
+                                                "name": "value",
+                                                "type": "email",
+                                                "label": "Custom Field value"
+                                            }
+                                        ]
+                                    },
+                                    {
+                                        "label": "Phone",
+                                        "value": "d6a68f08-bcad-41d6-ac32-67789c1a6e3a",
+                                        "nested": [
+                                            {
+                                                "name": "operator",
+                                                "type": "select",
+                                                "label": "Operator",
+                                                "options": "rpc://clickup/2/listTasksOperators"
+                                            },
+                                            {
+                                                "help": "Must contain country code. Otherwise not filled.\ne.g. **+14445556666** , **+420777666888**",
+                                                "name": "value",
+                                                "type": "text",
+                                                "label": "Custom Field value"
+                                            }
+                                        ]
+                                    },
+                                    {
+                                        "label": "LastName",
+                                        "value": "f76da876-8f56-40ea-82ac-db6a8dbfcea0",
+                                        "nested": [
+                                            {
+                                                "name": "operator",
+                                                "type": "select",
+                                                "label": "Operator",
+                                                "options": "rpc://clickup/2/listTasksOperators"
+                                            },
+                                            {
+                                                "name": "value",
+                                                "type": "text",
+                                                "label": "Custom Field value"
+                                            }
+                                        ]
+                                    }
+                                ]
+                            }
+                        ],
+                        "type": "array",
+                        "label": "Custom Fields"
+                    }
+                ],
+                "interface": [
+                    {
+                        "name": "__IMTLENGTH__",
+                        "type": "uinteger",
+                        "label": "Total number of bundles"
+                    },
+                    {
+                        "name": "__IMTINDEX__",
+                        "type": "uinteger",
+                        "label": "Bundle order position"
+                    },
+                    {
+                        "name": "id",
+                        "type": "text",
+                        "label": "Task ID"
+                    },
+                    {
+                        "name": "name",
+                        "type": "text",
+                        "label": "Task Name"
+                    },
+                    {
+                        "name": "custom_id",
+                        "type": "text",
+                        "label": "Custom ID"
+                    },
+                    {
+                        "name": "description",
+                        "type": "text",
+                        "label": "Description"
+                    },
+                    {
+                        "name": "text_content",
+                        "type": "text",
+                        "label": "Text Content"
+                    },
+                    {
+                        "name": "status",
+                        "spec": [
+                            {
+                                "name": "status",
+                                "type": "text",
+                                "label": "Status"
+                            },
+                            {
+                                "name": "color",
+                                "type": "color",
+                                "label": "Color"
+                            },
+                            {
+                                "name": "type",
+                                "type": "text",
+                                "label": "Type"
+                            },
+                            {
+                                "name": "orderindex",
+                                "type": "number",
+                                "label": "Order Index"
+                            }
+                        ],
+                        "type": "collection",
+                        "label": "Status"
+                    },
+                    {
+                        "name": "orderindex",
+                        "type": "text",
+                        "label": "Order Index"
+                    },
+                    {
+                        "name": "date_created",
+                        "type": "date",
+                        "label": "Date Created"
+                    },
+                    {
+                        "name": "date_updated",
+                        "type": "date",
+                        "label": "Date Updated"
+                    },
+                    {
+                        "name": "date_closed",
+                        "type": "date",
+                        "label": "Date Closed"
+                    },
+                    {
+                        "name": "archived",
+                        "type": "boolean",
+                        "label": "Archived"
+                    },
+                    {
+                        "name": "creator",
+                        "spec": [
+                            {
+                                "name": "id",
+                                "type": "number",
+                                "label": "User ID"
+                            },
+                            {
+                                "name": "username",
+                                "type": "text",
+                                "label": "Username"
+                            },
+                            {
+                                "name": "color",
+                                "type": "color",
+                                "label": "Color"
+                            },
+                            {
+                                "name": "profilePicture",
+                                "type": "text",
+                                "label": "Profile Picture"
+                            },
+                            {
+                                "name": "email",
+                                "type": "text",
+                                "label": "Email"
+                            }
+                        ],
+                        "type": "collection",
+                        "label": "Creator"
+                    },
+                    {
+                        "name": "assignees",
+                        "spec": {
+                            "spec": [
+                                {
+                                    "name": "id",
+                                    "type": "number",
+                                    "label": "User ID"
+                                },
+                                {
+                                    "name": "username",
+                                    "type": "text",
+                                    "label": "Username"
+                                },
+                                {
+                                    "name": "color",
+                                    "type": "color",
+                                    "label": "Color"
+                                },
+                                {
+                                    "name": "initials",
+                                    "type": "text",
+                                    "label": "Initials"
+                                },
+                                {
+                                    "name": "profilePicture",
+                                    "type": "url",
+                                    "label": "Profile Picture"
+                                },
+                                {
+                                    "name": "email",
+                                    "type": "email",
+                                    "label": "Email"
+                                }
+                            ],
+                            "type": "collection"
+                        },
+                        "type": "array",
+                        "label": "Assignees"
+                    },
+                    {
+                        "name": "checklists",
+                        "spec": [
+                            {
+                                "name": "id",
+                                "type": "text",
+                                "label": "ID"
+                            },
+                            {
+                                "name": "task_id",
+                                "type": "text",
+                                "label": "Task ID"
+                            },
+                            {
+                                "name": "name",
+                                "type": "text",
+                                "label": "Name"
+                            },
+                            {
+                                "name": "date_created",
+                                "type": "date",
+                                "label": "Date Created"
+                            },
+                            {
+                                "name": "orderindex",
+                                "type": "number",
+                                "label": "Orderindex"
+                            },
+                            {
+                                "name": "creator",
+                                "type": "number",
+                                "label": "Creator"
+                            },
+                            {
+                                "name": "resolved",
+                                "type": "number",
+                                "label": "Resolved"
+                            },
+                            {
+                                "name": "unresolved",
+                                "type": "number",
+                                "label": "Unresolved"
+                            },
+                            {
+                                "name": "items",
+                                "spec": {
+                                    "spec": [
+                                        {
+                                            "name": "id",
+                                            "type": "text",
+                                            "label": "ID"
+                                        },
+                                        {
+                                            "name": "name",
+                                            "type": "text",
+                                            "label": "Name"
+                                        },
+                                        {
+                                            "name": "orderindex",
+                                            "type": "number",
+                                            "label": "Orderindex"
+                                        },
+                                        {
+                                            "name": "assignee",
+                                            "type": "text",
+                                            "label": "Assignee"
+                                        },
+                                        {
+                                            "name": "group_assignee",
+                                            "type": "text",
+                                            "label": "Group Assignee"
+                                        },
+                                        {
+                                            "name": "resolved",
+                                            "type": "boolean",
+                                            "label": "Resolved"
+                                        },
+                                        {
+                                            "name": "parent",
+                                            "type": "text",
+                                            "label": "Parent"
+                                        },
+                                        {
+                                            "name": "date_created",
+                                            "type": "date",
+                                            "label": "Date Created"
+                                        },
+                                        {
+                                            "name": "children",
+                                            "type": "array",
+                                            "label": "Children"
+                                        }
+                                    ],
+                                    "type": "collection"
+                                },
+                                "type": "array",
+                                "label": "Items"
+                            }
+                        ],
+                        "type": "array",
+                        "label": "Checklists"
+                    },
+                    {
+                        "name": "watchers",
+                        "spec": {
+                            "spec": [
+                                {
+                                    "name": "id",
+                                    "type": "number",
+                                    "label": "User ID"
+                                },
+                                {
+                                    "name": "username",
+                                    "type": "text",
+                                    "label": "Username"
+                                },
+                                {
+                                    "name": "color",
+                                    "type": "color",
+                                    "label": "Color"
+                                },
+                                {
+                                    "name": "initials",
+                                    "type": "text",
+                                    "label": "Initials"
+                                },
+                                {
+                                    "name": "profilePicture",
+                                    "type": "url",
+                                    "label": "Profile Picture"
+                                },
+                                {
+                                    "name": "email",
+                                    "type": "email",
+                                    "label": "Email"
+                                }
+                            ],
+                            "type": "collection"
+                        },
+                        "type": "array",
+                        "label": "Watchers"
+                    },
+                    {
+                        "name": "tags",
+                        "spec": {
+                            "spec": [
+                                {
+                                    "name": "name",
+                                    "type": "text",
+                                    "label": "Name"
+                                },
+                                {
+                                    "name": "creator",
+                                    "type": "text",
+                                    "label": "Creator"
+                                },
+                                {
+                                    "name": "tag_fg",
+                                    "type": "color",
+                                    "label": "Tag Fg"
+                                },
+                                {
+                                    "name": "tag_bg",
+                                    "type": "color",
+                                    "label": "Tag Bg"
+                                }
+                            ],
+                            "type": "collection"
+                        },
+                        "type": "array",
+                        "label": "Tags"
+                    },
+                    {
+                        "name": "parent",
+                        "type": "text",
+                        "label": "Parent"
+                    },
+                    {
+                        "name": "linked_tasks",
+                        "spec": {
+                            "spec": [
+                                {
+                                    "name": "task_id",
+                                    "type": "text",
+                                    "label": "Task ID"
+                                },
+                                {
+                                    "name": "link_id",
+                                    "type": "text",
+                                    "label": "Link ID"
+                                },
+                                {
+                                    "name": "date_created",
+                                    "type": "date",
+                                    "label": "Date Created"
+                                },
+                                {
+                                    "name": "userid",
+                                    "type": "text",
+                                    "label": "User ID"
+                                },
+                                {
+                                    "name": "workspace_id",
+                                    "type": "text",
+                                    "label": "Workspace ID"
+                                }
+                            ],
+                            "type": "collection"
+                        },
+                        "type": "array",
+                        "label": "Linked Tasks"
+                    },
+                    {
+                        "name": "permission_level",
+                        "type": "text",
+                        "label": "Permission Level"
+                    },
+                    {
+                        "name": "priority",
+                        "spec": [
+                            {
+                                "name": "id",
+                                "type": "text",
+                                "label": "ID"
+                            },
+                            {
+                                "name": "priority",
+                                "type": "text",
+                                "label": "Priority"
+                            },
+                            {
+                                "name": "color",
+                                "type": "color",
+                                "label": "Color"
+                            },
+                            {
+                                "name": "orderindex",
+                                "type": "text",
+                                "label": "Order Index"
+                            }
+                        ],
+                        "type": "collection",
+                        "label": "Priority"
+                    },
+                    {
+                        "name": "due_date",
+                        "type": "date",
+                        "label": "Due Date"
+                    },
+                    {
+                        "name": "start_date",
+                        "type": "date",
+                        "label": "Start Date"
+                    },
+                    {
+                        "name": "points",
+                        "type": "text",
+                        "label": "Points"
+                    },
+                    {
+                        "name": "time_estimate",
+                        "type": "integer",
+                        "label": "Time Estimate (in minutes)"
+                    },
+                    {
+                        "name": "time_spent",
+                        "type": "uinteger",
+                        "label": "Time Spent"
+                    },
+                    {
+                        "name": "list",
+                        "spec": [
+                            {
+                                "name": "id",
+                                "type": "text",
+                                "label": "List ID"
+                            },
+                            {
+                                "name": "name",
+                                "type": "text",
+                                "label": "List Name"
+                            },
+                            {
+                                "name": "access",
+                                "type": "boolean",
+                                "label": "Access"
+                            }
+                        ],
+                        "type": "collection",
+                        "label": "List"
+                    },
+                    {
+                        "name": "project",
+                        "spec": [
+                            {
+                                "name": "id",
+                                "type": "text",
+                                "label": "Project ID"
+                            },
+                            {
+                                "name": "name",
+                                "type": "text",
+                                "label": "Project Name"
+                            },
+                            {
+                                "name": "hidden",
+                                "type": "boolean",
+                                "label": "Hidden"
+                            },
+                            {
+                                "name": "access",
+                                "type": "boolean",
+                                "label": "Access"
+                            }
+                        ],
+                        "type": "collection",
+                        "label": "Project"
+                    },
+                    {
+                        "name": "folder",
+                        "spec": [
+                            {
+                                "name": "id",
+                                "type": "text",
+                                "label": "Folder ID"
+                            },
+                            {
+                                "name": "name",
+                                "type": "text",
+                                "label": "Folder Name"
+                            },
+                            {
+                                "name": "hidden",
+                                "type": "boolean",
+                                "label": "Hidden"
+                            },
+                            {
+                                "name": "access",
+                                "type": "boolean",
+                                "label": "Access"
+                            }
+                        ],
+                        "type": "collection",
+                        "label": "Folder"
+                    },
+                    {
+                        "name": "space",
+                        "spec": [
+                            {
+                                "name": "id",
+                                "type": "text",
+                                "label": "Space ID"
+                            }
+                        ],
+                        "type": "collection",
+                        "label": "Space"
+                    },
+                    {
+                        "name": "dependencies",
+                        "spec": {
+                            "spec": [
+                                {
+                                    "name": "task_id",
+                                    "type": "text",
+                                    "label": "Task ID"
+                                },
+                                {
+                                    "name": "depends_on",
+                                    "type": "text",
+                                    "label": "Depends On Task ID"
+                                },
+                                {
+                                    "name": "type",
+                                    "type": "number",
+                                    "label": "Type"
+                                },
+                                {
+                                    "name": "date_created",
+                                    "type": "date",
+                                    "label": "Date Created"
+                                },
+                                {
+                                    "name": "userid",
+                                    "type": "text",
+                                    "label": "User ID"
+                                },
+                                {
+                                    "name": "workspace_id",
+                                    "type": "text",
+                                    "label": "Workspace ID"
+                                }
+                            ],
+                            "type": "collection"
+                        },
+                        "type": "array",
+                        "label": "Dependencies"
+                    },
+                    {
+                        "name": "team_id",
+                        "type": "text",
+                        "label": "Workspace ID"
+                    },
+                    {
+                        "name": "url",
+                        "type": "url",
+                        "label": "URL"
+                    },
+                    {
+                        "name": "custom_fields_original",
+                        "spec": {
+                            "spec": [
+                                {
+                                    "name": "id",
+                                    "type": "text",
+                                    "label": "ID"
+                                },
+                                {
+                                    "name": "name",
+                                    "type": "text",
+                                    "label": "Name"
+                                },
+                                {
+                                    "name": "type",
+                                    "type": "text",
+                                    "label": "Type"
+                                },
+                                {
+                                    "name": "type_config",
+                                    "spec": [],
+                                    "type": "collection",
+                                    "label": "Type Config"
+                                },
+                                {
+                                    "name": "date_created",
+                                    "type": "date",
+                                    "label": "Date Created"
+                                },
+                                {
+                                    "name": "hide_from_guests",
+                                    "type": "boolean",
+                                    "label": "Hide From Guests"
+                                },
+                                {
+                                    "name": "value",
+                                    "type": "any",
+                                    "label": "Value"
+                                },
+                                {
+                                    "name": "required",
+                                    "type": "boolean",
+                                    "label": "Required"
+                                }
+                            ],
+                            "type": "collection"
+                        },
+                        "type": "array",
+                        "label": "Custom Fields (original)"
+                    },
+                    {
+                        "name": "custom_fields",
+                        "spec": [
+                            {
+                                "name": "Assignee",
+                                "spec": {
+                                    "spec": [
+                                        {
+                                            "name": "id",
+                                            "label": "Assignee User ID"
+                                        },
+                                        {
+                                            "name": "username",
+                                            "label": "Username"
+                                        },
+                                        {
+                                            "name": "email",
+                                            "label": "Email"
+                                        },
+                                        {
+                                            "name": "color",
+                                            "label": "Color"
+                                        },
+                                        {
+                                            "name": "initials",
+                                            "label": "Initials"
+                                        },
+                                        {
+                                            "name": "profilePicture",
+                                            "label": "Profile Picture"
+                                        }
+                                    ],
+                                    "type": "collection"
+                                },
+                                "type": "array",
+                                "label": "Assignee"
+                            },
+                            {
+                                "name": "Package",
+                                "type": "number",
+                                "label": "Package"
+                            },
+                            {
+                                "name": "Amount Paid",
+                                "type": "number",
+                                "label": "Amount Paid"
+                            },
+                            {
+                                "name": "First",
+                                "type": "any",
+                                "label": "First"
+                            },
+                            {
+                                "name": "First Name",
+                                "type": "any",
+                                "label": "First Name"
+                            },
+                            {
+                                "name": "FirstName",
+                                "type": "any",
+                                "label": "FirstName"
+                            },
+                            {
+                                "name": "Email",
+                                "type": "text",
+                                "label": "Email"
+                            },
+                            {
+                                "name": "Phone",
+                                "type": "text",
+                                "label": "Phone"
+                            },
+                            {
+                                "name": "LastName",
+                                "type": "any",
+                                "label": "LastName"
+                            }
+                        ],
+                        "type": "collection",
+                        "label": "Custom Fields"
+                    }
+                ]
+            }
+        },
+        {
+            "id": 3,
+            "module": "twilio:SendSMS",
+            "version": 2,
+            "parameters": {
+                "__IMTCONN__": 2232415
+            },
+            "filter": {
+                "name": "If 1 Day Out",
+                "conditions": [
+                    [
+                        {
+                            "a": "{{ceil(((1.due_date - now) / 86400000))}}",
+                            "b": "1",
+                            "o": "number:equal"
+                        }
+                    ]
+                ]
+            },
+            "mapper": {
+                "to": "{{1.custom_fields.Phone}}",
+                "body": "Hi {{1.custom_fields.FirstName}}, just a reminder that your photography session is tomorrow. Let me know if you have any q's. Thanks, Wojtek.",
+                "from": "+15673472003",
+                "fromType": "phone"
+            },
+            "metadata": {
+                "designer": {
+                    "x": 399,
+                    "y": 67
+                },
+                "restore": {
+                    "expect": {
+                        "from": {
+                            "mode": "chose",
+                            "label": "(567) 347-2003"
+                        },
+                        "fromType": {
+                            "mode": "chose",
+                            "label": "phone number"
+                        },
+                        "mediaUrl": {
+                            "mode": "chose"
+                        },
+                        "smartEncoded": {
+                            "mode": "chose"
+                        },
+                        "applicationSid": {
+                            "mode": "chose"
+                        },
+                        "provideFeedback": {
+                            "mode": "chose"
+                        }
+                    },
+                    "parameters": {
+                        "__IMTCONN__": {
+                            "data": {
+                                "scoped": "true",
+                                "connection": "twilio"
+                            },
+                            "label": "Example Twilio Connection (Feb 28 2024)"
+                        }
+                    }
+                },
+                "parameters": [
+                    {
+                        "name": "__IMTCONN__",
+                        "type": "account:twilio",
+                        "label": "Connection",
+                        "required": true
+                    }
+                ],
+                "expect": [
+                    {
+                        "name": "fromType",
+                        "type": "select",
+                        "label": "Send a message from",
+                        "required": true,
+                        "validate": {
+                            "enum": [
+                                "phone",
+                                "service",
+                                "channel"
+                            ]
+                        }
+                    },
+                    {
+                        "name": "to",
+                        "type": "text",
+                        "label": "To",
+                        "required": true
+                    },
+                    {
+                        "name": "body",
+                        "type": "text",
+                        "label": "Body",
+                        "required": true,
+                        "validate": {
+                            "max": 1600
+                        }
+                    },
+                    {
+                        "name": "mediaUrl",
+                        "spec": {
+                            "name": "value",
+                            "type": "url"
+                        },
+                        "type": "array",
+                        "label": "Media URL"
+                    },
+                    {
+                        "name": "smartEncoded",
+                        "type": "boolean",
+                        "label": "Smart encoded"
+                    },
+                    {
+                        "name": "validityPeriod",
+                        "type": "uinteger",
+                        "label": "Validity period"
+                    },
+                    {
+                        "name": "statusCallback",
+                        "type": "url",
+                        "label": "Status callback"
+                    },
+                    {
+                        "name": "applicationSid",
+                        "type": "select",
+                        "label": "Application"
+                    },
+                    {
+                        "name": "maxPrice",
+                        "type": "number",
+                        "label": "Max price"
+                    },
+                    {
+                        "name": "provideFeedback",
+                        "type": "boolean",
+                        "label": "Provide feedback"
+                    },
+                    {
+                        "name": "from",
+                        "type": "select",
+                        "label": "Phone number",
+                        "required": true
+                    }
+                ]
+            }
+        }
+    ],
+    "metadata": {
+        "instant": false,
+        "version": 1,
+        "scenario": {
+            "roundtrips": 1,
+            "maxErrors": 3,
+            "autoCommit": true,
+            "autoCommitTriggerLast": true,
+            "sequential": false,
+            "slots": null,
+            "confidential": false,
+            "dataloss": false,
+            "dlq": false,
+            "freshVariables": false
+        },
+        "designer": {
+            "orphans": []
+        },
+        "zone": "us1.make.com"
+    }
+}
